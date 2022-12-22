@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
 import entity.Player;
+import object.SuperObject;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable{
@@ -35,7 +36,10 @@ public class GamePanel extends JPanel implements Runnable{
 	TileManager tileM = new TileManager(this);
 	KeyHandler keyH = new KeyHandler();
 	Thread gameThread;
+	public CollisionChecker cChecker = new CollisionChecker(this);
+	public AssetSetter aSetter = new AssetSetter(this);
 	public Player player = new Player(this, keyH);
+	public SuperObject obj[] = new SuperObject[10];
 	
 	
 	public GamePanel() {
@@ -46,6 +50,10 @@ public class GamePanel extends JPanel implements Runnable{
 		this.setFocusable(true);
 		
 
+	}
+	
+	public void setupGame() {
+		aSetter.setObject();
 	}
 
 	public void startGameThread() {
@@ -87,41 +95,7 @@ public class GamePanel extends JPanel implements Runnable{
 		}
 		
 		
-		/*
-		double drawInterval = 1000000000/FPS; //0.01666 seconds
-		double nextDrawTime = System.nanoTime() + drawInterval;
 		
-		while (gameThread != null) {
-
-			
-			//1 UPDATE: update information such as character positions
-			update();
-			
-			//2 Draw: draw the screen with the updated information. THe repaint method is needed
-			repaint();
-			
-			
-			try {
-				double remainingTime = nextDrawTime - System.nanoTime();
-				
-				remainingTime = remainingTime / 1000000;
-				
-				if (remainingTime < 0 ) {
-					remainingTime = 0;
-				}
-				
-				Thread.sleep((long)remainingTime);
-				
-				nextDrawTime += drawInterval;
-				
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			
-		}
-		*/
 	}
 	public void update() {
 		
@@ -136,8 +110,17 @@ public class GamePanel extends JPanel implements Runnable{
 		//Graphics 2D is a subclass and has more function than the standard Graphics class
 		Graphics2D g2 =  (Graphics2D)g;
 		
+		//Drawing the tile
 		tileM.draw(g2);
 		
+		//Object
+		for (int i = 0; i < obj.length; i++) {
+			if (obj[i] != null) {
+				obj[i].draw(g2, this);
+			}
+		}
+		
+		//Drawing the player
 		player.draw(g2);
 
 		

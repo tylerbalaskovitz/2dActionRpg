@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
+import entity.Entity;
 import entity.Player;
 import object.SuperObject;
 import tile.TileManager;
@@ -34,7 +35,7 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	//System
 	TileManager tileM = new TileManager(this);
-	KeyHandler keyH = new KeyHandler();
+	KeyHandler keyH = new KeyHandler(this);
 	Sound se = new Sound();
 	Sound music = new Sound();
 	
@@ -47,6 +48,12 @@ public class GamePanel extends JPanel implements Runnable{
 	//Entity and Object
 	public Player player = new Player(this, keyH);
 	public SuperObject obj[] = new SuperObject[10];
+	public Entity npc[] = new Entity[10];
+	
+	//Game State Integers. This is used so that way depending on the state of the game, the same key can do multiple things at the same time. 
+	public int gameState;
+	public final int playState = 1;
+	public final int pauseState = 2;
 	
 	
 	public GamePanel() {
@@ -61,8 +68,10 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	public void setupGame() {
 		aSetter.setObject();
-		
+		aSetter.setNPC();
 		playMusic(0);
+		stopMusic();
+		gameState = playState;
 	}
 
 	public void startGameThread() {
@@ -110,8 +119,12 @@ public class GamePanel extends JPanel implements Runnable{
 		
 	}
 	public void update() {
-		
+		if (gameState == playState) {
 		player.update();
+		}
+		if(gameState == pauseState) {
+			
+		}
 
 	}
 	
@@ -121,6 +134,13 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		//Graphics 2D is a subclass and has more function than the standard Graphics class
 		Graphics2D g2 =  (Graphics2D)g;
+		
+		//Code that's used to Debug the rest of the game
+		long drawStart = 0;
+		if (keyH.checkDrawTime == true) {
+			drawStart = System.nanoTime();
+		}
+		
 		
 		//Drawing the tile
 		tileM.draw(g2);
@@ -132,11 +152,29 @@ public class GamePanel extends JPanel implements Runnable{
 			}
 		}
 		
+		//Drawing the NPC's within the game. 
+		
+		for(int i = 0; i < npc.length; i++) {
+			if (npc[i] != null) {
+				npc[i].draw(g2);
+			}
+		}
+		
 		//Drawing the player
 		player.draw(g2);
 		
 		//UI since it comes at the top of the layers
 		ui.draw(g2);
+		
+		if (keyH.checkDrawTime == true) {
+		long drawEnd = System.nanoTime();
+		long passed = drawEnd - drawStart;
+		
+		g2.setColor(Color.white);
+		g2.drawString("Draw Time: " + passed, 10, 400);
+		
+		System.out.println("Draw Time: " + passed);
+		}
 		
 		g2.dispose();
 		

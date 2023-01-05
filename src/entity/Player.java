@@ -9,19 +9,19 @@ import javax.imageio.ImageIO;
 
 import main.GamePanel;
 import main.KeyHandler;
+import main.UtilityTool;
 
 public class Player extends Entity{
 
-	GamePanel gp;
 	KeyHandler keyH;
 	
 	public final int screenX;
 	public final int screenY;
 	
-	public int hasKey = 0;
 	
 	public Player(GamePanel gp, KeyHandler keyH) {
-		this.gp = gp;
+		super(gp);
+		
 		this.keyH = keyH;
 		
 		screenX = gp.screenWidth /2 - (gp.tileSize/2);
@@ -50,22 +50,19 @@ public class Player extends Entity{
 	}
 	
 	public void getPlayerImage() {
-		try {
-			up1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_up_1.png"));
-			up2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_up_2.png"));
-			down1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_down_1.png"));
-			down2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_down_2.png"));
-			left1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_left_1.png"));
-			left2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_left_2.png"));
-			right1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_right_1.png"));
-			right2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_right_2.png"));
-			
-			
-			
-		} catch(IOException e) {
-			
-		}
+		
+		up1 = setup("/player/boy_up_1");
+		up2 = setup("/player/boy_up_2");
+		down1 = setup("/player/boy_down_1");
+		down2 = setup("/player/boy_down_2");
+		left1 = setup("/player/boy_left_1");
+		left2 = setup("/player/boy_left_2");
+		right1 = setup("/player/boy_right_1");
+		right2 = setup("/player/boy_right_2");
+		
+		
 	}
+	
 	
 	public void update() {
 		
@@ -136,50 +133,14 @@ public class Player extends Entity{
 	}
 	
 	public void pickUpObject(int i) {
-		if (i != 999){
-			
-			String objectName = gp.obj[i].name;
-			
-			switch(objectName) {
-			
-			case "Key":
-				gp.playSE(1);
-				hasKey++;
-				gp.obj[i] = null;
-				gp.ui.showMessage("You got a key!");
-				System.out.println("KEYS: " + hasKey);
-				break;
-			case "Door":
-				if (hasKey > 0) {
-					gp.playSE(3);
-					gp.obj[i] = null;
-					hasKey--;
-					gp.ui.showMessage("You opened the door");
-					System.out.println("Door unlocked! KEYS: "  + hasKey);
-				} else {
-					gp.ui.showMessage("You need a key!");
-				}
-				
-				break;
-			case "Boots":
-				//Increasing the players movement speed when they get boots
-				speed +=2;
-				gp.playSE(2);
-				gp.obj[i]= null;
-				gp.ui.showMessage("You got boots! Speed up!");
-				break;
-			case "Chest":
-				gp.ui.gameFinished = true;
-				gp.stopMusic();
-				gp.playSE(4);
-				
-				break;
-			
-			}
-			
+
+		if (i != 999) {
 			
 		}
+	
 	}
+	
+	
 	public void draw(Graphics2D g2) {
 //		g2.setColor(Color.white);
 //		
@@ -221,7 +182,7 @@ public class Player extends Entity{
 			break;
 		
 		}
-		g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+		g2.drawImage(image, screenX, screenY, null);
 	}
 	
 	

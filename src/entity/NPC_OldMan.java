@@ -13,6 +13,7 @@ public class NPC_OldMan extends Entity{
 		speed = 1;
 		
 		getImage();
+		setDialogue();
 	}
 	
 	public void getImage() {
@@ -28,13 +29,26 @@ public class NPC_OldMan extends Entity{
 		
 	}
 	
+	public void setDialogue() {
+		
+		dialogues[0] = "Hello, back in the day,";
+		dialogues[1] = "I used to sell nice rock";
+		dialogues[2] = "Now, all I do is sell ho's.";
+		dialogues[3] = "Lemme know if you're buying you";
+		
+		
+	}
+	
 	public void setAction() {
+		actionLockCounter++;
+		
+		if(actionLockCounter == 120) {
 		
 		Random random = new Random();
 		int i = random.nextInt(100) + 1; //pick a number from 1 to 100;
 		
 			if (i <= 25) {
-			direction = "up";
+				direction = "up";
 			}
 			
 			if (i > 25 && i <= 50 ) {
@@ -48,10 +62,15 @@ public class NPC_OldMan extends Entity{
 			if (i > 75 && i <=100 ) {
 				direction = "right";
 			}
+			
+			actionLockCounter = 0;
+		}
 	}
 		
-	
-	
+	public void speak() {
 
+	super.speak();
+	
+	}
 	
 }

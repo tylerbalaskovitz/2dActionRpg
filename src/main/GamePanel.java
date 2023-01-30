@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -35,7 +36,7 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	//System
 	TileManager tileM = new TileManager(this);
-	KeyHandler keyH = new KeyHandler(this);
+	public KeyHandler keyH = new KeyHandler(this);
 	Sound se = new Sound();
 	Sound music = new Sound();
 	
@@ -54,6 +55,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public int gameState;
 	public final int playState = 1;
 	public final int pauseState = 2;
+	public final int dialogueState = 3;
 	
 	
 	public GamePanel() {
@@ -121,6 +123,14 @@ public class GamePanel extends JPanel implements Runnable{
 	public void update() {
 		if (gameState == playState) {
 		player.update();
+		
+		//NPC update
+		for(int i = 0; i < npc.length; i++) {
+			if(npc[i] != null) {
+				npc[i].update();
+			}
+		}
+		
 		}
 		if(gameState == pauseState) {
 			
@@ -194,5 +204,6 @@ public class GamePanel extends JPanel implements Runnable{
 		se.setFile(i);
 		se.play();
 	}
+
 
 }

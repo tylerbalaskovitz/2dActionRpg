@@ -53,9 +53,11 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	//Game State Integers. This is used so that way depending on the state of the game, the same key can do multiple things at the same time. 
 	public int gameState;
+	public final int titleState = 0;
 	public final int playState = 1;
 	public final int pauseState = 2;
 	public final int dialogueState = 3;
+	
 	
 	
 	public GamePanel() {
@@ -73,7 +75,7 @@ public class GamePanel extends JPanel implements Runnable{
 		aSetter.setNPC();
 		playMusic(0);
 		stopMusic();
-		gameState = playState;
+		gameState = titleState;
 	}
 
 	public void startGameThread() {
@@ -150,8 +152,15 @@ public class GamePanel extends JPanel implements Runnable{
 		if (keyH.checkDrawTime == true) {
 			drawStart = System.nanoTime();
 		}
+		//Title Screen
+		if (gameState == titleState) {
+			
+		}
 		
 		
+		//Others
+		
+		else {
 		//Drawing the tile
 		tileM.draw(g2);
 		
@@ -175,9 +184,14 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		//UI since it comes at the top of the layers
 		ui.draw(g2);
+		}
+	
+		//debugging stuff
 		
 		if (keyH.checkDrawTime == true) {
 		long drawEnd = System.nanoTime();
+		
+		
 		long passed = drawEnd - drawStart;
 		
 		g2.setColor(Color.white);
@@ -185,6 +199,11 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		System.out.println("Draw Time: " + passed);
 		}
+		
+		if (gameState == titleState) {
+			ui.draw(g2);
+		}
+		
 		
 		g2.dispose();
 		

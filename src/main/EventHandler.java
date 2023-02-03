@@ -8,6 +8,9 @@ public class EventHandler {
 	
 	EventRect eventRect[][];
 	
+	int previousEventX, previousEventY;
+	boolean canTouchEvent = true;
+	
 	public EventHandler(GamePanel gp) {
 		this.gp = gp;
 		eventRect = new EventRect[gp.maxWorldCol][gp.maxWorldRow];
@@ -35,10 +38,24 @@ public class EventHandler {
 	
 	public void checkEvent() {
 		
-		if (hit(27,16, "right") == true) {damagePit(gp.dialogueState);}
-		if(hit(27,16, "right") == true) {teleport(gp.dialogueState);}
-		if (hit(23,12,"up") == true) { healingPool(gp.dialogueState);}
-
+		//Check if the player character is more than one tile from the last event. the .abs() method used and is useful to know
+		//the pure distance between objects so if the value is either negative or positve based on the difference it will always return 
+		// a positive result allowing you to measure the distance in a game. 
+		int xDistance = Math.abs(gp.player.worldX - previousEventX);
+		int yDistance = Math.abs(gp.player.worldY - previousEventY);
+		
+		//the .max(int x, int y) method takes the greater of two different numbers allowingg you to know the 
+		int distance = Math.max(xDistance, yDistance);
+		if (distance >gp.tileSize) {
+			canTouchEvent = true;
+		}
+		
+		if(canTouchEvent == true) {
+		if (hit(27,16, "right") == true) {damagePit(27, 16, gp.dialogueState);}
+		if (hit(23,19, "any") == true) {damagePit(23, 19, gp.dialogueState);}
+		if (hit(23,12,"up") == true) { healingPool(23, 12, gp.dialogueState);}
+		}
+		
 	}
 	
 	
@@ -52,9 +69,12 @@ public class EventHandler {
 		eventRect[col][row].x = col*gp.tileSize + eventRect[col][row].x;
 		eventRect[col][row].y = row*gp.tileSize + eventRect[col][row].y;
 		
-		if(gp.player.solidArea.intersects(eventRect[col][row])) {
+		if(gp.player.solidArea.intersects(eventRect[col][row]) && eventRect[col][row].eventDone == false) {
 			if(gp.player.direction.contentEquals(reqDirection)||reqDirection.contentEquals("any")) {
 				hit = true;
+				
+				previousEventX = gp.player.worldX;
+				previousEventY = gp.player.worldY;
 			}
 		}
 		
@@ -74,15 +94,17 @@ public class EventHandler {
 		
 	}
 	
-	public void damagePit( int gameState) {
+	public void damagePit(int col, int row, int gameState) {
 		gp.gameState = gameState;
 		
 		gp.ui.currentDialogue = "You fall into a pit!";
 		
 		gp.player.life -= 1;
+		//eventRect[col][row].eventDone = true;
+		canTouchEvent = false;
 	}
 	
-	public void healingPool(int gameState) {
+	public void healingPool(int col, int row, int gameState) {
 		if (gp.keyH.enterPressed == true) {
 			gp.gameState = gameState;
 			gp.ui.currentDialogue = "You drink the water . \n You feel a little more rested.";

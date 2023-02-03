@@ -1,16 +1,17 @@
 package main;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javax.swing.JPanel;
 
 import entity.Entity;
 import entity.Player;
-import object.SuperObject;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable{
@@ -49,8 +50,11 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	//Entity and Object
 	public Player player = new Player(this, keyH);
-	public SuperObject obj[] = new SuperObject[10];
+	public Entity obj[] = new Entity[10];
 	public Entity npc[] = new Entity[10];
+	//This is used to create a large entity list so that way the order can be sorted out the order so the entity with the lower worldY value comes in at index 0.
+	//this is used to solve the drawing order for entities so there isn't any awkard overlapping and what not. 
+	ArrayList<Entity> entityList = new ArrayList<>();
 	
 	//Game State Integers. This is used so that way depending on the state of the game, the same key can do multiple things at the same time. 
 	public int gameState;
@@ -165,23 +169,40 @@ public class GamePanel extends JPanel implements Runnable{
 		//Drawing the tile
 		tileM.draw(g2);
 		
-		//Object
-		for (int i = 0; i < obj.length; i++) {
-			if (obj[i] != null) {
-				obj[i].draw(g2, this);
-			}
-		}
-		
-		//Drawing the NPC's within the game. 
-		
+		//Adding entities to the ArrayList
+		entityList.add(player);
 		for(int i = 0; i < npc.length; i++) {
 			if (npc[i] != null) {
-				npc[i].draw(g2);
+				entityList.add(npc[i]);
 			}
 		}
 		
-		//Drawing the player
-		player.draw(g2);
+		for(int i = 0; i < obj.length; i++) {
+			if(obj[i] != null) {
+				entityList.add(npc[i]);
+			}
+		}
+		
+		//Sorting the array list
+		Collections.sort(entityList, new Comparator<Entity>() {
+
+			@Override
+			public int compare(Entity e1, Entity e2) {
+				int result = Integer.compare(e1.worldY, e2.worldY);
+				return result;
+			}
+			
+		});
+		//Draw Entities
+		for(int i = 0; i < entityList.size(); i++) {
+			entityList.get(i).draw(g2);
+		}
+		
+		//Reset entityList otherwise it gets larger in every loop and will consume more resources
+		for(int i = 0; i < entityList.size(); i++) {
+			entityList.remove(i);
+		}
+		
 		
 		//UI since it comes at the top of the layers
 		ui.draw(g2);

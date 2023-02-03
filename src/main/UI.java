@@ -5,14 +5,19 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+
+import object.OBJ_Heart;
+import object.SuperObject;
 
 
 public class UI {
 	
 	//handles text messages, item icons, etc.
 	Font maruMonica, purisaB;
+	BufferedImage heart_full, heart_half, heart_blank;
 	GamePanel gp;
 	Graphics2D g2;
 	int messageCounter = 0;
@@ -38,6 +43,15 @@ public class UI {
 			
 			e.printStackTrace();
 		}
+		
+		//Creating the HUD object
+		SuperObject heart = new OBJ_Heart(gp);
+		heart_full = heart.image;
+		heart_half = heart.image2;
+		heart_blank = heart.image3;
+		
+		
+		
 	}
 	
 	public void showMessage(String text) {
@@ -59,15 +73,49 @@ public class UI {
 		//Play state
 		if(gp.gameState == gp.playState) {
 			//Do play state stuff when doing the draw method
+			drawPlayerLife();
 		}
 		
 		//Pause State
 		if (gp.gameState == gp.pauseState) {
+			drawPlayerLife();
 			drawPauseScreen();
 		}
 		if (gp.gameState == gp.dialogueState) {
+			drawPlayerLife();
 			drawDialogueScreen();
 		}
+	}
+	
+	public void drawPlayerLife() {
+		
+		int x = gp.tileSize/2;
+		int y = gp.tileSize/2;
+		int i = 0;
+		
+		//Draw a blank heart
+		while (i<  gp.player.maxLife/2) {
+			g2.drawImage(heart_blank, x, y, null);
+			i++;
+			x+= gp.tileSize;
+		}
+		
+		x = gp.tileSize/2;
+		y = gp.tileSize/2;
+		i = 0;
+		
+		//draw current LIfe
+		
+		while(i < gp.player.life) {
+			g2.drawImage(heart_half, x, y, null);
+			i++;
+			if(i < gp.player.life) {
+				g2.drawImage(heart_full, x, y, null);
+			}
+			i++;
+			x+= gp.tileSize;
+		}
+		
 	}
 	
 	public void drawTitleScreen() {

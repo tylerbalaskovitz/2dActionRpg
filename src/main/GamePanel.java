@@ -214,10 +214,7 @@ public class GamePanel extends JPanel implements Runnable{
 		}
 		
 		//Reset entityList otherwise it gets larger in every loop and will consume more resources
-		for(int i = 0; i < entityList.size(); i++) {
-			entityList.remove(i);
-		}
-		
+		entityList.clear();
 		
 		//UI since it comes at the top of the layers
 		ui.draw(g2);

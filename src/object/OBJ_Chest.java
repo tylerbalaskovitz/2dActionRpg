@@ -12,7 +12,7 @@ public class OBJ_Chest extends Entity {
 		super(gp);
 		
 		name = "Chest";
-		image = setup("/objects/chest");
+		image = setup("/objects/chest", gp.tileSize, gp.tileSize);
 		
 	}
 	

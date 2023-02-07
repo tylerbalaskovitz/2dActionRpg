@@ -1,5 +1,6 @@
 package entity;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -229,12 +230,20 @@ public class Player extends Entity{
 			break;
 		
 		}
+		
+		//drawing the player so they are somewhat more transparent depending on whether or not they are under the timer of being invincible
+		if (invincible == true) {
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+		}
+		
 		g2.drawImage(image, screenX, screenY, null);
 		
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+		
 		//Debugging Text
-		g2.setFont(new Font("Arial", Font.PLAIN, 26));
-		g2.setColor(Color.white);
-		g2.drawString("Invincible:" + invincibleCounter, 10, 400);
+//		g2.setFont(new Font("Arial", Font.PLAIN, 26));
+//		g2.setColor(Color.white);
+//		g2.drawString("Invincible:" + invincibleCounter, 10, 400);
 	}
 	
 	

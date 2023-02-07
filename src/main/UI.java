@@ -127,7 +127,7 @@ public class UI {
 		
 		//Title name
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 96F));
-		String text = "New Druqs";
+		String text = "Defender Rush";
 		int x = getXForCenteredText(text);
 		int y = gp.tileSize*3;
 		//Adding shadows

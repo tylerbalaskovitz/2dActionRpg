@@ -1,5 +1,7 @@
 package entity;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -108,6 +110,7 @@ public class Player extends Entity{
 		interactNPC(npcIndex);
 		//checks the collision of monsters
 		int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
+		contactMonster(monsterIndex);
 		
 		//checks the event
 		gp.eHandler.checkEvent();
@@ -144,6 +147,15 @@ public class Player extends Entity{
 			spriteCounter = 0;
 		}
 		}
+		
+		//This needs to be outside of the key if statement to work whether or not you're moving
+		if (invincible == true) {
+			invincibleCounter++;
+			if (invincibleCounter > 60) {
+				invincible = false;
+				invincibleCounter = 0;
+			}
+		}
 	}
 	
 	public void pickUpObject(int i) {
@@ -167,6 +179,14 @@ public class Player extends Entity{
 		
 	}
 	
+	public void contactMonster(int i) {
+		if (i != 999) {
+			if (invincible == false) {
+			life -=1;
+			invincible = true;
+			}
+		}
+	}
 	
 	public void draw(Graphics2D g2) {
 //		g2.setColor(Color.white);
@@ -210,6 +230,11 @@ public class Player extends Entity{
 		
 		}
 		g2.drawImage(image, screenX, screenY, null);
+		
+		//Debugging Text
+		g2.setFont(new Font("Arial", Font.PLAIN, 26));
+		g2.setColor(Color.white);
+		g2.drawString("Invincible:" + invincibleCounter, 10, 400);
 	}
 	
 	

@@ -185,6 +185,36 @@ public class Player extends Entity{
 		}
 		if(spriteCounter > 5 && spriteCounter <25) {
 			spriteNum = 2;
+			
+			//Save the current WorldX, Y and solid area values
+			int currentWorldX = worldX;
+			int currentWorldY = worldY;
+			int solidAreaWidth = solidArea.width;
+			int solidAreaHeight = solidArea.height;
+			
+			//Adjust the player's worldX and Y for the attackArea
+			switch (direction) {
+			case "up": worldY -= attackArea.height;break;
+			case "down": worldY += attackArea.height; break;
+			case "left": worldX -= attackArea.width; break;
+			case "right": worldX += attackArea.width; break;
+			}
+			
+			//attackArea becomes the solid area
+			solidArea.width = attackArea.width;
+			solidArea.height = attackArea.height;
+			
+			//checks the monster collision with the update world X and world Y and solidArea
+			int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
+			damageMonster(monsterIndex);
+			
+			//After checking collision, then restore the original data. 
+			worldX = currentWorldX;
+			worldY = currentWorldY;
+			solidArea.width = solidAreaWidth;
+			solidArea.height = solidAreaHeight;
+			
+			
 		}
 		if (spriteCounter > 25) {
 			spriteNum = 1;
@@ -220,6 +250,22 @@ public class Player extends Entity{
 			life -=1;
 			invincible = true;
 			}
+		}
+	}
+	
+	public void damageMonster(int i) {
+		if (i != 999) {
+			
+			if(gp.monster[i].invincible == false) {
+				gp.monster[i].life -=1;
+				gp.monster[i].invincible = true;
+				
+				if(gp.monster[i].life<0) {
+					gp.monster[i] = null;
+				}
+				
+			}
+			
 		}
 	}
 	

@@ -68,23 +68,26 @@ public class UI {
 		if(gp.gameState == gp.titleState) {
 			drawTitleScreen();
 		}
-		
-		
 		//Play state
 		if(gp.gameState == gp.playState) {
 			//Do play state stuff when doing the draw method
 			drawPlayerLife();
 		}
-		
 		//Pause State
 		if (gp.gameState == gp.pauseState) {
 			drawPlayerLife();
 			drawPauseScreen();
 		}
+		//Dialogue State
 		if (gp.gameState == gp.dialogueState) {
 			drawPlayerLife();
 			drawDialogueScreen();
 		}
+		//Character state	
+		if (gp.gameState == gp.characterState) {
+			drawCharacterScreen();
+		}
+		
 	}
 	
 	public void drawPlayerLife() {
@@ -233,6 +236,8 @@ public class UI {
 	}
 	
 	public void drawDialogueScreen() {
+
+		
 		//create a window for the dialogue
 		int x = gp.tileSize*2;
 		int y = gp.tileSize/2;
@@ -249,6 +254,32 @@ public class UI {
 			g2.drawString(line, x, y);
 			y+= 40;
 		}
+		
+		
+	}
+	
+	public void drawCharacterScreen() {
+		//Creating a frame for the 
+		final int frameX = gp.tileSize*2;
+		final int frameY = gp.tileSize;
+		final int frameWidth = gp.tileSize * 5;
+		final int frameHeight = gp.tileSize * 10;
+		
+		drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+		
+		//Text and other attributes
+		g2.setColor(Color.white);
+		g2.setFont(g2.getFont().deriveFont(32F));
+		
+		int textX = frameX + 20;
+		int textY = frameY + gp.tileSize;
+		final int lineHeight = 32;
+		
+		//parameter names
+		g2.drawString("Level", textX, textY);
+		textY += lineHeight;
+		g2.drawString("Life", textX, textY);
+		textY += lineHeight;
 		
 		
 	}

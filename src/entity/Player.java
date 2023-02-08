@@ -1,18 +1,14 @@
 package entity;
 
 import java.awt.AlphaComposite;
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 import main.GamePanel;
 import main.KeyHandler;
-import main.UtilityTool;
+import object.OBJ_Shield_Wood;
+import object.OBJ_Sword_Normal;
 
 public class Player extends Entity{
 
@@ -21,6 +17,7 @@ public class Player extends Entity{
 	public final int screenX;
 	public final int screenY;
 	
+	public boolean attackCanceled = false;
 	
 	public Player(GamePanel gp, KeyHandler keyH) {
 		super(gp);
@@ -55,10 +52,28 @@ public class Player extends Entity{
 		direction = "down";
 		
 		//Default player status
+		level = 1;
 		maxLife = 6;
 		life = maxLife;
+		strength = 1; //The more strength you have the more damage that you'll do
+		dexterity = 1; // the more dexterity you have the less damage that you'll received
+		exp = 0; 
+		nextLevelExp = 5;
+		coin = 0;
+		currentWeapon = new OBJ_Sword_Normal(gp);
+		currentShield = new OBJ_Shield_Wood(gp);
+		attack = getAttack(); //Total attack value is decided by strength and weapon
+		defense = getDefense(); //the total defense is decided by dexterity and your shield. So both of these stats are based on multiple elements
 	}
 	
+	public int getAttack()	{
+		return attack = strength * currentWeapon.attackValue;
+	}
+	
+	public int getDefense() {
+		return defense = dexterity * currentShield.defenseValue;
+		
+	}
 	public void getPlayerImage() {
 		
 		up1 = setup("/player/boy_up_1", gp.tileSize, gp.tileSize);
@@ -135,24 +150,24 @@ public class Player extends Entity{
 		
 		
 		
-		//if collision if false, then the player can move
+		//if collision is false, then the player can move
 		
 		if (collisionOn == false && keyH.enterPressed == false) {
 			switch(direction) {
-			case "up":
-				worldY -= speed;
-				break;
-			case "down":
-				worldY += speed;
-				break;
-			case "left":
-				worldX -= speed;
-				break;
-			case "right":
-				worldX += speed;
-				break;
+			case "up": worldY -= speed; break;
+			case "down": worldY += speed; break;
+			case "left": worldX -= speed; break;
+			case "right": worldX += speed; break;
 			}
 		}
+		
+		if (keyH.enterPressed == true && attackCanceled == false) {
+			gp.playSE(7);
+			attacking = true;
+			spriteCounter = 0;
+		}
+		
+		attackCanceled = false;
 		
 		gp.keyH.enterPressed = false;
 		
@@ -234,13 +249,10 @@ public class Player extends Entity{
 	public void interactNPC(int i) {
 		if (gp.keyH.enterPressed == true) {
 		if (i != 999) {
+				attackCanceled = true;
 				gp.gameState = gp.dialogueState;
 				gp.npc[i].speak();
 		}
-		else {
-				gp.playSE(7);
-				attacking = true;
-			}
 		}
 		
 	}

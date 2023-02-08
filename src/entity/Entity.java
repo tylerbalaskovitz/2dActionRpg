@@ -1,6 +1,7 @@
 package entity;
 
 import java.awt.AlphaComposite;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -33,12 +34,14 @@ public class Entity {
 	public boolean attacking = false;
 	public boolean dying = false;
 	public boolean alive = true;
+	public boolean hpBarOn = false;
 
 	//Counters for the sprite, how long someone is invisble
 	public int spriteCounter = 0;
 	public int actionLockCounter = 0;
 	public int invincibleCounter =0;
 	public int dyingCounter;
+	int hpBarCounter = 0;
 	
 	//Character attributes
 	public int type; // 0 = player, 1 = npc, and 2 = monster
@@ -79,7 +82,9 @@ public class Entity {
 	
 	public void setAction() {
 		
-		
+	}
+	
+	public void damageReaction() {
 		
 	}
 	
@@ -97,7 +102,7 @@ public class Entity {
 		if (this.type == 2 && contactPlayer == true) {
 			if (gp.player.invincible == false) {
 				//we can give damage 
-				
+				gp.playSE(6);
 				gp.player.life -=1;
 				gp.player.invincible = true;
 			}
@@ -105,18 +110,10 @@ public class Entity {
 		
 		if (collisionOn == false) {
 			switch(direction) {
-			case "up":
-				worldY -= speed;
-				break;
-			case "down":
-				worldY += speed;
-				break;
-			case "left":
-				worldX -= speed;
-				break;
-			case "right":
-				worldX += speed;
-				break;
+			case "up": worldY -= speed; break;
+			case "down": worldY += speed; break;
+			case "left": worldX -= speed; break;
+			case "right": worldX += speed; break;
 			}
 		}
 		
@@ -174,8 +171,28 @@ public class Entity {
 			
 			}
 			
+			//Drawing the monster H2 bar
+			if (type == 2 && hpBarOn == true) {
+				double oneScale = (double)gp.tileSize/maxLife;
+				double hpBarValue = oneScale*life;
+				
+				g2.setColor(new Color(35, 35, 35));
+				g2.fillRect(screenX-2, screenY-16, gp.tileSize+2, 12);
+				
+				g2.setColor(new Color(255, 0, 30));
+				g2.fillRect(screenX, screenY - 15, (int)hpBarValue, 10);
+				
+				hpBarCounter++;
+				if(hpBarCounter > 600) {
+					hpBarCounter = 0;
+					hpBarOn = false;
+				}
+			}
+			
 			if (invincible == true) {
-				g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
+				hpBarOn = true;
+				hpBarCounter = 0;
+				changeAlpha(g2, 0.4f);
 			}
 			
 			if(dying == true) {
@@ -183,7 +200,7 @@ public class Entity {
 			}
 				g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
 			
-				g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+				changeAlpha(g2, 1f);
 			}
 	}
 	

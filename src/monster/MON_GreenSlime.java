@@ -18,7 +18,8 @@ public class MON_GreenSlime extends Entity{
 		speed = 1;
 		maxLife = 4;
 		life = maxLife;
-		
+		attack = 5;
+		defense = 0;
 		//setting a solid area of the slime. Since it's smaller it needs to be customized.
 		
 		solidArea.x = 3;

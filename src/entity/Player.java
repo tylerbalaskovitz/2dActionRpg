@@ -260,8 +260,9 @@ public class Player extends Entity{
 	public void contactMonster(int i) {
 		if (i != 999) {
 			if (invincible == false) {
+				int damage = gp.monster[i].attack - defense;
 			gp.playSE(6);
-			life -=1;
+			life -= damage;
 			invincible = true;
 			}
 		}
@@ -278,11 +279,15 @@ public class Player extends Entity{
 					damage = 0;
 				}
 				gp.monster[i].life -= damage;
+				gp.ui.addMessage(damage + " damage!");
+				
+				
 				gp.monster[i].invincible = true;
 				gp.monster[i].damageReaction();
 				
 				if(gp.monster[i].life <= 0) {
 					gp.monster[i].dying = true;
+					gp.ui.addMessage("Killed the " + gp.monster[i].name + "!");
 				}
 				
 			}

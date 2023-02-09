@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import entity.Entity;
 import object.OBJ_Heart;
@@ -20,11 +21,10 @@ public class UI {
 	BufferedImage heart_full, heart_half, heart_blank;
 	GamePanel gp;
 	Graphics2D g2;
-	int messageCounter = 0;
-	
+	public ArrayList<String> message = new ArrayList<>();
+	public ArrayList<Integer> messageCounter = new ArrayList<>(); 	
 	public boolean gameFinished = false;
 	public boolean messageOn = false;
-	public String message = "";
 	public String currentDialogue = "";
 	public int commandNum = 0;
 	public int titleScreenState = 0;//0: is the first screen, 1: the second screen, etc. etc.
@@ -54,9 +54,13 @@ public class UI {
 		
 	}
 	
-	public void showMessage(String text) {
-		message = text;
-		messageOn = true;
+	public void addMessage(String text) {
+		
+		//message and message counter are a pair
+		message.add(text);
+		messageCounter.add(0);
+		
+	
 	}
 	
 	public void draw(Graphics2D g2) {
@@ -72,6 +76,7 @@ public class UI {
 		if(gp.gameState == gp.playState) {
 			//Do play state stuff when doing the draw method
 			drawPlayerLife();
+			drawMessage();
 		}
 		//Pause State
 		if (gp.gameState == gp.pauseState) {
@@ -90,6 +95,25 @@ public class UI {
 		
 	}
 	
+	public void drawMessage() {
+		int messageX = gp.tileSize;
+		int messageY = gp.tileSize * 4;
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 32));
+		
+		for (int i = 0; i < message.size(); i++) {
+			
+			if(message.get(i) != null) {
+				g2.setColor(Color.white);
+				g2.drawString(message.get(i), messageX, messageY);
+				
+				int counter = messageCounter.get(i) + 1; //THis is an array list so more or less it's messageCounter++
+				messageCounter.set(i, counter); //set the counter to the array
+			}
+			
+		}
+		
+	}
+
 	public void drawPlayerLife() {
 		
 		int x = gp.tileSize/2;

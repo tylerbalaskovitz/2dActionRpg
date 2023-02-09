@@ -28,6 +28,8 @@ public class UI {
 	public String currentDialogue = "";
 	public int commandNum = 0;
 	public int titleScreenState = 0;//0: is the first screen, 1: the second screen, etc. etc.
+	public int slotCol = 0;
+	public int slotRow = 0;
 
 	
 	
@@ -91,6 +93,7 @@ public class UI {
 		//Character state	
 		if (gp.gameState == gp.characterState) {
 			drawCharacterScreen();
+			drawInventory();
 		}
 		
 	}
@@ -388,7 +391,44 @@ public class UI {
 		g2.drawImage(gp.player.currentShield.down1, tailX- gp.tileSize, textY-14, null);
 		
 	}
-	
+	public void drawInventory() {
+		
+		int frameX = gp.tileSize*9;
+		int frameY = gp.tileSize;
+		int frameWidth = gp.tileSize*6;
+		int frameHeight = gp.tileSize*5;
+		drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+		
+		//Code for different slots
+		final int slotXStart = frameX+ 20;
+		final int slotYStart = frameY+ 20;
+		int slotX = slotXStart;
+		int slotY = slotYStart;
+		
+		//Drawing the player's items
+		for (int i = 0; i < gp.player.inventory.size(); i++) {
+			g2.drawImage(gp.player.inventory.get(i).down1, slotX, slotY, null);
+			
+			slotX += gp.tileSize;
+			if (i == 4|| i == 9 || i == 14) {
+				slotX = slotXStart;
+				slotY += gp.tileSize;
+			}
+		}
+		
+		
+		//Drawing a cursor so we can move an item
+		int cursorX = slotXStart + (gp.tileSize * slotCol);
+		int cursorY = slotYStart + (gp.tileSize * slotRow);
+		int cursorWidth = gp.tileSize;
+		int cursorHeight = gp.tileSize;
+		
+		//Drawing the cursor
+		g2.setColor(Color.white);
+		g2.setStroke(new BasicStroke(3));
+		g2.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight, 10, 10);
+		
+	}
 	public void drawSubWindow(int x, int y,  int width, int height) {
 		
 		Color c = new Color(0, 0, 0, 210); //you can adjust the alpha value which allows for some transparency to exist

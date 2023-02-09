@@ -104,10 +104,18 @@ public class UI {
 			
 			if(message.get(i) != null) {
 				g2.setColor(Color.white);
-				g2.drawString(message.get(i), messageX, messageY);
+				g2.drawString(message.get(i), messageX+2, messageY+2);
 				
 				int counter = messageCounter.get(i) + 1; //THis is an array list so more or less it's messageCounter++
 				messageCounter.set(i, counter); //set the counter to the array
+				messageY += 50;//used so we can display the next message
+				
+				if (messageCounter.get(i) > 180) {
+					message.remove(i);
+					messageCounter.remove(i);
+					
+				}
+				
 			}
 			
 		}

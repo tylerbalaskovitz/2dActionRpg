@@ -41,8 +41,7 @@ public class Player extends Entity{
 		solidArea.width = 32;
 		solidArea.height = 32;
 		
-		attackArea.width = 36;
-		attackArea.height = 36;
+		
 		
 		setDefaultValues();
 		getPlayerImage();
@@ -85,6 +84,7 @@ public class Player extends Entity{
 	}
 	
 	public int getAttack()	{
+		attackArea = currentWeapon.attackArea;
 		return attack = strength * currentWeapon.attackValue;
 	}
 	
@@ -260,6 +260,20 @@ public class Player extends Entity{
 
 		if (i != 999) {
 			
+			String text;
+			
+			if (inventory.size() != maxInventorySize) {
+				inventory.add(gp.obj[i]);
+				gp.playSE(1);
+				
+				text = "Got a " + gp.obj[i].name + "!";
+			}
+			else {
+				text = "You cannot carry any more items!";
+			}
+			
+			gp.ui.addMessage(text);
+			gp.obj[i] = null;
 		}
 	
 	}
@@ -334,6 +348,26 @@ public class Player extends Entity{
 		
 	}
 	
+	public void selectItem() {
+		int itemIndex = gp.ui.getItemIndexOnSlot();
+		
+		if (itemIndex < inventory.size()) {
+			Entity selectedItem = inventory.get(itemIndex);
+			
+			if (selectedItem.type == type_sword || selectedItem.type == type_axe) {
+				currentWeapon = selectedItem;
+			
+				attack = getAttack();
+			}
+			if (selectedItem.type == type_shield) {
+				currentShield = selectedItem;
+				defense = getDefense();
+			}
+			if (selectedItem.type == type_consumable) {
+				//later consumables will be added into the game
+			}
+		}
+	}
 	
 	public void draw(Graphics2D g2) {
 //		g2.setColor(Color.white);

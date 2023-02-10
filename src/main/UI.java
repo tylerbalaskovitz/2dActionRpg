@@ -404,22 +404,23 @@ public class UI {
 		final int slotYStart = frameY+ 20;
 		int slotX = slotXStart;
 		int slotY = slotYStart;
+		int slotSize = gp.tileSize+3;
 		
 		//Drawing the player's items
 		for (int i = 0; i < gp.player.inventory.size(); i++) {
 			g2.drawImage(gp.player.inventory.get(i).down1, slotX, slotY, null);
 			
-			slotX += gp.tileSize;
+			slotX += slotSize;
 			if (i == 4|| i == 9 || i == 14) {
 				slotX = slotXStart;
-				slotY += gp.tileSize;
+				slotY += slotSize;
 			}
 		}
 		
 		
 		//Drawing a cursor so we can move an item
-		int cursorX = slotXStart + (gp.tileSize * slotCol);
-		int cursorY = slotYStart + (gp.tileSize * slotRow);
+		int cursorX = slotXStart + (slotSize * slotCol);
+		int cursorY = slotYStart + (slotSize * slotRow);
 		int cursorWidth = gp.tileSize;
 		int cursorHeight = gp.tileSize;
 		
@@ -428,7 +429,36 @@ public class UI {
 		g2.setStroke(new BasicStroke(3));
 		g2.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight, 10, 10);
 		
+		//Description frame
+		int dFrameX = frameX;
+		int dFrameY = frameY + frameHeight;
+		int dFrameWidth = frameWidth;
+		int dFrameHeight = gp.tileSize*3;
+		
+		drawSubWindow(dFrameX, dFrameY, dFrameWidth, dFrameHeight);
+		
+		//draw the text for the description
+		int textX = dFrameX + 20;
+		int textY = dFrameY + gp.tileSize;
+		g2.setFont(g2.getFont().deriveFont(28F));
+		
+		int itemIndex = getItemIndexOnSlot();
+		
+		if (itemIndex < gp.player.inventory.size()) {
+			for (String line: gp.player.inventory.get(itemIndex).description.split("\n")) {
+				g2.drawString(line, textX, textY);
+				textY += 32;
+			}
+			
+			
+		}
+		
 	}
+	public int getItemIndexOnSlot() {
+		int itemIndex = slotCol + (slotRow*5);
+		return itemIndex;
+	}
+	
 	public void drawSubWindow(int x, int y,  int width, int height) {
 		
 		Color c = new Color(0, 0, 0, 210); //you can adjust the alpha value which allows for some transparency to exist

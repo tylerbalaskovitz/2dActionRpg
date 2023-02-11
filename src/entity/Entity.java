@@ -104,14 +104,12 @@ public class Entity {
 		
 	}
 	}
+	//meant to be overridden so it is left empty
+	public void use (Entity entity) {}
 	
-	public void setAction() {
-		
-	}
+	public void setAction() {}
 	
-	public void damageReaction() {
-		
-	}
+	public void damageReaction() {}
 	
 	public void update() {
 		

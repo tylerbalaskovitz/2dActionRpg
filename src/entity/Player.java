@@ -86,6 +86,7 @@ public class Player extends Entity{
 		return defense = dexterity * currentShield.defenseValue;
 		
 	}
+	
 	public void getPlayerImage() {
 		
 		up1 = setup("/player/boy_up_1", gp.tileSize, gp.tileSize);
@@ -123,7 +124,6 @@ public class Player extends Entity{
 			attackRight2 = setup("/player/boy_axe_right_2", gp.tileSize*2, gp.tileSize);
 		}
 	}
-	
 	
 	public void update() {
 		
@@ -298,7 +298,7 @@ public class Player extends Entity{
 	
 	public void contactMonster(int i) {
 		if (i != 999) {
-			if (invincible == false) {
+			if (invincible == false && gp.monster[i].dying == false) {
 				int damage = gp.monster[i].attack - defense;
 			gp.playSE(6);
 			life -= damage;
@@ -307,7 +307,7 @@ public class Player extends Entity{
 		}
 	}
 	
-	public void damageMonster(int i) {
+	public void damageMonster(int i) { 
 		if (i != 999) {
 			
 			if(gp.monster[i].invincible == false) {

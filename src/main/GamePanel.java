@@ -57,7 +57,8 @@ public class GamePanel extends JPanel implements Runnable{
 	public Entity monster[] = new Entity[20];
 	//This is used to create a large entity list so that way the order can be sorted out the order so the entity with the lower worldY value comes in at index 0.
 	//this is used to solve the drawing order for entities so there isn't any awkard overlapping and what not. 
-	ArrayList<Entity> entityList = new ArrayList<>();
+	public ArrayList<Entity> projectileList = new ArrayList<>();
+	public ArrayList<Entity> entityList = new ArrayList<>();
 	
 	//Game State Integers. This is used so that way depending on the state of the game, the same key can do multiple things at the same time. 
 	public int gameState;
@@ -154,6 +155,19 @@ public class GamePanel extends JPanel implements Runnable{
 			}
 		}
 		
+		//The array list allows you to perform the action on the ArrayList with projectiles. The projectiles have an update method that is executed while they're alive.
+		// if the projecitle is no longer alive, the second if statement is executed removing it from the list and thus the projectile is destroyed. 
+		for (int i = 0; i < projectileList.size(); i++) {
+			if (projectileList.get(i) != null) {
+				if (projectileList.get(i).alive == true) {
+					projectileList.get(i).update();
+				}
+				if(projectileList.get(i).alive == false) {
+					projectileList.remove(i);
+				}
+			}
+		}
+		
 		}
 		if(gameState == pauseState) {
 			
@@ -202,6 +216,11 @@ public class GamePanel extends JPanel implements Runnable{
 		for(int i = 0; i < monster.length; i++) {
 			if(monster[i] != null) {
 				entityList.add(monster[i]);
+			}
+		}
+		for (int i = 0; i < projectileList.size(); i++) {
+			if (projectileList.get(i) != null) {
+				entityList.add(projectileList.get(i));
 			}
 		}
 		

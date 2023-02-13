@@ -140,6 +140,9 @@ public class KeyHandler implements KeyListener{
 			enterPressed = true;
 			
 		}
+		if (code == KeyEvent.VK_F) {
+			shotKeyPressed = true;
+		}
 		
 		
 		//Used to enable/disable Debugging information
@@ -225,6 +228,9 @@ public class KeyHandler implements KeyListener{
 		
 		if (code == KeyEvent.VK_D) {
 			rightPressed=false;
+		}
+		if (code == KeyEvent.VK_F) {
+			shotKeyPressed = false;
 		}
 		
 		

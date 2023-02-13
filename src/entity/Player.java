@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import main.GamePanel;
 import main.KeyHandler;
+import object.OBJ_Fireball;
 import object.OBJ_Key;
 import object.OBJ_Shield_Wood;
 import object.OBJ_Sword_Normal;
@@ -66,6 +67,7 @@ public class Player extends Entity{
 		coin = 0;
 		currentWeapon = new OBJ_Sword_Normal(gp);
 		currentShield = new OBJ_Shield_Wood(gp);
+		projectile = new OBJ_Fireball(gp);
 		attack = getAttack(); //Total attack value is decided by strength and weapon
 		defense = getDefense(); //the total defense is decided by dexterity and your shield. So both of these stats are based on multiple elements
 	}
@@ -206,6 +208,16 @@ public class Player extends Entity{
 			}
 			spriteCounter = 0;
 		}
+		}
+		//this means that if the key is pressed and the previous projectile is still alive/active then you're unable to shoot another projectile
+		if (gp.keyH.shotKeyPressed == true && projectile.alive == false) {
+			
+			// sets the default coordinates, and direction, and who is shooting the projectile. The boolean, sets the projectile to be alive.
+			projectile.set(worldX, worldY, direction, true, this);
+			
+			// Add it to the list
+			gp.projectileList.add(projectile);
+			gp.playSE(10);
 		}
 		
 		//This needs to be outside of the key if statement to work whether or not you're moving

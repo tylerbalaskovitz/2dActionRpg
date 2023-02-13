@@ -10,6 +10,7 @@ import main.GamePanel;
 import main.KeyHandler;
 import object.OBJ_Fireball;
 import object.OBJ_Key;
+import object.OBJ_Rock;
 import object.OBJ_Shield_Wood;
 import object.OBJ_Sword_Normal;
 
@@ -60,6 +61,9 @@ public class Player extends Entity{
 		level = 1;
 		maxLife = 6;
 		life = maxLife;
+		maxMana = 4;
+		mana = maxMana;
+		ammo = 10;
 		strength = 1; //The more strength you have the more damage that you'll do
 		dexterity = 1; // the more dexterity you have the less damage that you'll received
 		exp = 0; 
@@ -210,10 +214,13 @@ public class Player extends Entity{
 		}
 		}
 		//this means that if the key is pressed and the previous projectile is still alive/active then you're unable to shoot another projectile
-		if (gp.keyH.shotKeyPressed == true && projectile.alive == false && shotAvailableCounter == 30) {
+		if (gp.keyH.shotKeyPressed == true && projectile.alive == false && shotAvailableCounter == 30 && projectile.haveResource(this) == true) {
 			
 			// sets the default coordinates, and direction, and who is shooting the projectile. The boolean, sets the projectile to be alive.
 			projectile.set(worldX, worldY, direction, true, this);
+			
+			//subtract the cost for using the projectile
+			projectile.subtractResource(this);
 			
 			// Add it to the list
 			gp.projectileList.add(projectile);

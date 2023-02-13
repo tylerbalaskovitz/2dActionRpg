@@ -112,6 +112,7 @@ public class EventHandler {
 			gp.playSE(2);
 			gp.ui.currentDialogue = "You drink the water . \n You feel a little more rested.";
 			gp.player.life = gp.player.maxLife;
+			gp.player.mana = gp.player.maxMana;
 			gp.aSetter.setMonster();
 		}
 		

@@ -40,6 +40,7 @@ public class Entity {
 	public int spriteCounter = 0;
 	public int actionLockCounter = 0;
 	public int invincibleCounter =0;
+	public int shotAvailableCounter = 0;
 	public int dyingCounter;
 	int hpBarCounter = 0;
 	

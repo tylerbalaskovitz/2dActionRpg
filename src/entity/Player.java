@@ -210,13 +210,16 @@ public class Player extends Entity{
 		}
 		}
 		//this means that if the key is pressed and the previous projectile is still alive/active then you're unable to shoot another projectile
-		if (gp.keyH.shotKeyPressed == true && projectile.alive == false) {
+		if (gp.keyH.shotKeyPressed == true && projectile.alive == false && shotAvailableCounter == 30) {
 			
 			// sets the default coordinates, and direction, and who is shooting the projectile. The boolean, sets the projectile to be alive.
 			projectile.set(worldX, worldY, direction, true, this);
 			
 			// Add it to the list
 			gp.projectileList.add(projectile);
+			
+			shotAvailableCounter = 0;
+			
 			gp.playSE(10);
 		}
 		
@@ -227,6 +230,10 @@ public class Player extends Entity{
 				invincible = false;
 				invincibleCounter = 0;
 			}
+		}
+		
+		if (shotAvailableCounter < 30) {
+			shotAvailableCounter++;
 		}
 	}
 	
@@ -258,7 +265,7 @@ public class Player extends Entity{
 			
 			//checks the monster collision with the update world X and world Y and solidArea
 			int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
-			damageMonster(monsterIndex);
+			damageMonster(monsterIndex, attack);
 			
 			//After checking collision, then restore the original data. 
 			worldX = currentWorldX;
@@ -319,7 +326,7 @@ public class Player extends Entity{
 		}
 	}
 	
-	public void damageMonster(int i) { 
+	public void damageMonster(int i, int attack) { 
 		if (i != 999) {
 			
 			if(gp.monster[i].invincible == false) {

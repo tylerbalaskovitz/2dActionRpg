@@ -21,6 +21,18 @@ public class Projectile extends Entity {
 	public void update() {
 		//projectiles are actually just another kid of NPC, monster, etc. This is because projectiles move ased on their speed and direction
 		//with the exception that projectiles continuously go in a single direction based on the direction they initially started out as.
+		if (user == gp.player) {
+			int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
+			if (monsterIndex != 999) {
+				gp.player.damageMonster(monsterIndex, attack);
+				alive = false;
+			}
+		}
+		
+		if (user != gp.player) {
+			
+		}
+		
 		switch (direction) {
 		case "up": worldY -= speed; break;
 		case "down": worldY += speed; break;

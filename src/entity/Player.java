@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import main.GamePanel;
 import main.KeyHandler;
+import object.OBJ_Axe;
 import object.OBJ_Fireball;
 import object.OBJ_Key;
 import object.OBJ_Rock;
@@ -81,6 +82,7 @@ public class Player extends Entity{
 		inventory.add(currentShield);
 		inventory.add(new OBJ_Key(gp));
 		inventory.add(new OBJ_Key(gp));
+		inventory.add(new OBJ_Axe(gp));
 	}
 	
 	public int getAttack()	{
@@ -175,6 +177,9 @@ public class Player extends Entity{
 		//checks the collision of monsters
 		int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
 		contactMonster(monsterIndex);
+		
+		//checks collision with the interactive tiles
+		int iTileIndex = gp.cChecker.checkEntity(this, gp.iTile);
 		
 		//checks the event
 		gp.eHandler.checkEvent();
@@ -280,6 +285,9 @@ public class Player extends Entity{
 			int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
 			damageMonster(monsterIndex, attack);
 			
+			int iTileIndex = gp.cChecker.checkEntity(this, gp.iTile);
+			damageInteractiveTile(iTileIndex);
+			
 			//After checking collision, then restore the original data. 
 			worldX = currentWorldX;
 			worldY = currentWorldY;
@@ -377,6 +385,19 @@ public class Player extends Entity{
 				
 			}
 			
+		}
+	}
+	
+	public void damageInteractiveTile(int i) {
+		if (i != 999 && gp.iTile[i].destructible == true && gp.iTile[i].invincible == false && gp.iTile[i].isCorrectItem(this) == true) {
+			
+			gp.iTile[i].playSE();
+			gp.iTile[i].life--;
+			gp.iTile[i].invincible = true;
+			
+			if (gp.iTile[i].life <= 0) {
+				gp.iTile[i] = gp.iTile[i].getDestroyedForm();
+			}
 		}
 	}
 	

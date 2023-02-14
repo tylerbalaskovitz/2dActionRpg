@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import entity.Entity;
 import entity.Player;
 import tile.TileManager;
+import tile_interactive.InteractiveTile;
 
 public class GamePanel extends JPanel implements Runnable{
 
@@ -57,6 +58,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public Entity monster[] = new Entity[20];
 	//This is used to create a large entity list so that way the order can be sorted out the order so the entity with the lower worldY value comes in at index 0.
 	//this is used to solve the drawing order for entities so there isn't any awkard overlapping and what not. 
+	public InteractiveTile iTile[] = new InteractiveTile[50];
 	public ArrayList<Entity> projectileList = new ArrayList<>();
 	public ArrayList<Entity> entityList = new ArrayList<>();
 	
@@ -84,6 +86,7 @@ public class GamePanel extends JPanel implements Runnable{
 		aSetter.setObject();
 		aSetter.setNPC();
 		aSetter.setMonster();
+		aSetter.setInteractiveTile();
 		playMusic(0);
 		stopMusic();
 		gameState = titleState;
@@ -169,6 +172,12 @@ public class GamePanel extends JPanel implements Runnable{
 			}
 		}
 		
+		for (int i = 0; i < iTile.length; i++) {
+			if (iTile[i] != null) {
+				iTile[i].update();
+			}
+		}
+		
 		}
 		if(gameState == pauseState) {
 			
@@ -199,6 +208,12 @@ public class GamePanel extends JPanel implements Runnable{
 		else {
 		//Drawing the tile
 		tileM.draw(g2);
+		
+		for(int i = 0; i < iTile.length; i++) {
+			if (iTile[i] != null) {
+				iTile[i].draw(g2);
+			}
+		}
 		
 		//Adding entities to the ArrayList
 		entityList.add(player);

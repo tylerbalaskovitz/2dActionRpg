@@ -512,7 +512,7 @@ public class UI {
 		drawSubWindow(frameX, frameY, frameWidth, frameHeight);
 		
 		switch(subState) {
-		case 0: break;
+		case 0: options_top(frameX, frameY); break;
 		case 1: break;
 		case 2: break;
 		}
@@ -520,8 +520,42 @@ public class UI {
 	}
 	
 	public void options_top(int frameX, int frameY) {
+		int textX;
+		int textY;
+		
+		//Title
+		String text = "Options";
+		textX = getXForCenteredText(text);
+		textY = frameY + gp.tileSize;
+		g2.drawString(text, textX, textY);
+		
+		//Full Screen on/off
+		textX = frameX + gp.tileSize;
+		textY = gp.tileSize*2;
+		g2.drawString("Full Screen", textX, textY);
+		
+		//Music
+		textY += gp.tileSize;
+		g2.drawString("Music", textX, textY);
+		
+		//SE
+		textY += gp.tileSize;
+		g2.drawString("Sound", textX, textY);
+		
+		//Controls
+		textY += gp.tileSize;
+		g2.drawString("Controls", textX, textY);
+		
+		//End Game
+		textY += gp.tileSize;
+		g2.drawString("End Game", textX, textY);
+		
+		textY += gp.tileSize*2;
+		g2.drawString("Return", textX, textY);
 		
 	}
+	
+	
 	
 	public int getItemIndexOnSlot() {
 		int itemIndex = slotCol + (slotRow*5);

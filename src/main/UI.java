@@ -31,6 +31,7 @@ public class UI {
 	public int titleScreenState = 0;//0: is the first screen, 1: the second screen, etc. etc.
 	public int slotCol = 0;
 	public int slotRow = 0;
+	public int subState = 0;
 
 	
 	
@@ -97,6 +98,10 @@ public class UI {
 		if (gp.gameState == gp.characterState) {
 			drawCharacterScreen();
 			drawInventory();
+		}
+		//Options state
+		if (gp.gameState == gp.optionsState) {
+			drawOptionsScreen();
 		}
 		
 	}
@@ -493,6 +498,31 @@ public class UI {
 		}
 		
 	}
+	
+	public void drawOptionsScreen() {
+		g2.setColor(Color.white);
+		g2.setFont(g2.getFont().deriveFont(32F));
+
+		//Sub window
+		int frameX = gp.tileSize * 6;
+		int frameY = gp.tileSize;
+		int frameWidth = gp.tileSize*8;
+		int frameHeight = gp.tileSize*10;
+		
+		drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+		
+		switch(subState) {
+		case 0: break;
+		case 1: break;
+		case 2: break;
+		}
+		
+	}
+	
+	public void options_top(int frameX, int frameY) {
+		
+	}
+	
 	public int getItemIndexOnSlot() {
 		int itemIndex = slotCol + (slotRow*5);
 		return itemIndex;

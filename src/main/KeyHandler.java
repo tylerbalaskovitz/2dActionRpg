@@ -43,6 +43,9 @@ public class KeyHandler implements KeyListener{
 		else if (gp.gameState == gp.characterState) {
 			characterState(code);
 		}
+		else if (gp.gameState == gp.optionsState) {
+			optionsState(code);
+		}
 		
 	}
 	
@@ -93,17 +96,17 @@ public class KeyHandler implements KeyListener{
 					if(gp.ui.commandNum == 0) {
 						System.out.println("Do some fighter stuff");
 						gp.gameState=gp.playState;
-						gp.playMusic(0);
+						//gp.playMusic(0);
 					}
 					if(gp.ui.commandNum == 1) {
 						System.out.println("Do some thief stuff");
 						gp.gameState=gp.playState;
-						gp.playMusic(0);
+						//gp.playMusic(0);
 					}
 					if(gp.ui.commandNum == 2) {
 						System.out.println("Do some sorcerer stuff");
 						gp.gameState=gp.playState;
-						gp.playMusic(0);
+						//gp.playMusic(0);
 					}
 					if(gp.ui.commandNum == 3) {
 						gp.ui.titleScreenState = 0;
@@ -142,6 +145,9 @@ public class KeyHandler implements KeyListener{
 		}
 		if (code == KeyEvent.VK_F) {
 			shotKeyPressed = true;
+		}
+		if (code == KeyEvent.VK_ESCAPE) {
+			gp.gameState = gp.optionsState;
 		}
 		
 		
@@ -208,6 +214,16 @@ public class KeyHandler implements KeyListener{
 		
 		if (code == KeyEvent.VK_ENTER) {
 			gp.player.selectItem();
+		}
+	}
+	
+	public void optionsState(int code){
+		if (code == KeyEvent.VK_ESCAPE) {
+			gp.gameState = gp.playState;
+		}
+		
+		if (code == KeyEvent.VK_ENTER) {
+			enterPressed = true;
 		}
 	}
 	

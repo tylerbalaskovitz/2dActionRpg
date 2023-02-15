@@ -60,6 +60,7 @@ public class GamePanel extends JPanel implements Runnable{
 	//this is used to solve the drawing order for entities so there isn't any awkard overlapping and what not. 
 	public InteractiveTile iTile[] = new InteractiveTile[50];
 	public ArrayList<Entity> projectileList = new ArrayList<>();
+	public ArrayList<Entity> particleList = new ArrayList<>();
 	public ArrayList<Entity> entityList = new ArrayList<>();
 	
 	//Game State Integers. This is used so that way depending on the state of the game, the same key can do multiple things at the same time. 

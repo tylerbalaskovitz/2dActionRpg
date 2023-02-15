@@ -158,6 +158,13 @@ public class Entity {
 	
 	public void generateParticle(Entity generator, Entity target) {
 		//to be done later
+		Color color = generator.getParticleColor();
+		int size = generator.getParticleSize();
+		int speed = generator.getParticleSpeed();
+		int maxLife = generator.getParticleMaxLife();
+		
+		Particle p1 = new Particle(gp, generator, color, size, speed, maxLife, -1, -1);
+		gp.particleList.add(p1);
 	}
 	
 	public void update() {

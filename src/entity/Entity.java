@@ -135,6 +135,31 @@ public class Entity {
 	
 	public void damageReaction() {}
 	
+	public Color getParticleColor() {
+		Color color = null;
+		return color;
+	}
+	
+	public int getParticleSize() {
+		int size = 0; //6 pixels in size
+		return size;
+	}
+	
+	public int getParticleSpeed() {
+		//how fast the particles move
+		int speed = 0;
+		return speed;
+	}
+	
+	public int getParticleMaxLife() {
+		int maxLife = 0;
+		return maxLife;
+	}
+	
+	public void generateParticle(Entity generator, Entity target) {
+		//to be done later
+	}
+	
 	public void update() {
 		
 		setAction();

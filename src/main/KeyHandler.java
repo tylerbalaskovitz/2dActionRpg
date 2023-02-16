@@ -96,7 +96,7 @@ public class KeyHandler implements KeyListener{
 					if(gp.ui.commandNum == 0) {
 						System.out.println("Do some fighter stuff");
 						gp.gameState=gp.playState;
-						//gp.playMusic(0);
+						gp.playMusic(0);
 					}
 					if(gp.ui.commandNum == 1) {
 						System.out.println("Do some thief stuff");
@@ -224,6 +224,59 @@ public class KeyHandler implements KeyListener{
 		
 		if (code == KeyEvent.VK_ENTER) {
 			enterPressed = true;
+		}
+		
+		int maxCommandNum = 0;
+		switch (gp.ui.subState) {
+		case 0: maxCommandNum = 5;
+		}
+		
+		
+		if (code == KeyEvent.VK_W) {
+			gp.ui.commandNum--;
+			gp.playSE(9);
+			if (gp.ui.commandNum < 0) {
+				gp.ui.commandNum = maxCommandNum;
+			}
+		}
+		if (code == KeyEvent.VK_S) {
+			gp.ui.commandNum++;
+			gp.playSE(9);
+			if (gp.ui.commandNum > maxCommandNum) {
+				gp.ui.commandNum = 0;
+			}
+		}
+		
+		if (code == KeyEvent.VK_A) {
+			if (gp.ui.subState == 0) {
+				if (gp.ui.commandNum == 1 && gp.music.volumeScale > 0) {
+					gp.music.volumeScale--;
+					gp.music.checkVolume();
+					gp.playSE(9);
+					
+				}
+				if (gp.ui.commandNum == 2 && gp.se.volumeScale > 0) {
+					gp.se.volumeScale--;
+					gp.playSE(9);
+					
+				}
+			}
+		}
+		
+		if (code == KeyEvent.VK_D) {
+			if (gp.ui.subState == 0) {
+				if (gp.ui.commandNum == 1 && gp.music.volumeScale < 5) {
+					gp.music.volumeScale++;
+					gp.music.checkVolume();
+					gp.playSE(9);
+					
+				}
+				if (gp.ui.commandNum == 2 && gp.se.volumeScale < 5) {
+					gp.se.volumeScale++;
+					gp.playSE(9);
+					
+				}
+			}
 		}
 	}
 	

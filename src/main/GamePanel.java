@@ -40,6 +40,7 @@ public class GamePanel extends JPanel implements Runnable{
 	int screenHeight2 = screenHeight;
 	BufferedImage tempScreen;
 	Graphics2D g2;
+	public boolean fullScreenOn = false;
 	
 	//FPS
 	
@@ -154,6 +155,8 @@ public class GamePanel extends JPanel implements Runnable{
 				drawToScreen(); //draws everything to the screen
 				delta--;
 				drawCount++;
+				System.gc();
+				
 			}
 			
 			if (timer >= 1000000000) {
@@ -163,6 +166,7 @@ public class GamePanel extends JPanel implements Runnable{
 				System.out.println("LAST TIME: " + lastTime);
 				drawCount = 0;
 				timer = 0;
+				
 			}
 			
 		}
@@ -227,7 +231,7 @@ public class GamePanel extends JPanel implements Runnable{
 		if(gameState == pauseState) {
 			
 		}
-
+		
 	}
 	
 	public void drawToTempScreen() {
@@ -335,7 +339,6 @@ public class GamePanel extends JPanel implements Runnable{
 		if (gameState == titleState) {
 			ui.draw(g2);
 		}
-		
 	}
 	
 	// the paintComponent method is used to draw things directly to the JPanel in this case GamePanel, but because we're creating a temporary buffered screen,

@@ -99,8 +99,6 @@ public class GamePanel extends JPanel implements Runnable{
 		aSetter.setNPC();
 		aSetter.setMonster();
 		aSetter.setInteractiveTile();
-		playMusic(0);
-		stopMusic();
 		gameState = titleState;
 		
 		tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
@@ -108,7 +106,7 @@ public class GamePanel extends JPanel implements Runnable{
 		//everything g2 draws will be recorded in the temporary screen
 		g2 = (Graphics2D)tempScreen.getGraphics();
 		
-		setFullScreen();
+		//setFullScreen();
 		
 		
 	}

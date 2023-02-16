@@ -66,7 +66,9 @@ public class KeyHandler implements KeyListener{
 			}
 			if (code == KeyEvent.VK_ENTER) {
 				if(gp.ui.commandNum == 0) {
-					gp.ui.titleScreenState = 1;
+					gp.ui.titleScreenState = 0;
+					gp.gameState = gp.playState;
+					gp.playMusic(0);
 				}
 				if(gp.ui.commandNum == 1) {
 					//adding serialization later
@@ -228,7 +230,8 @@ public class KeyHandler implements KeyListener{
 		
 		int maxCommandNum = 0;
 		switch (gp.ui.subState) {
-		case 0: maxCommandNum = 5;
+		case 0: maxCommandNum = 5; break;
+		case 3: maxCommandNum = 1; break;
 		}
 		
 		

@@ -514,12 +514,15 @@ public class UI {
 		switch(subState) {
 		case 0: options_top(frameX, frameY); break;
 		case 1: options_fullScreenNotification(frameX, frameY); break;
-		case 2: break;
+		case 2: options_control(frameX, frameY); break;
+		case 3: options_endGameConfirmation(frameX, frameY); break;
 		}
 		
 		gp.keyH.enterPressed = false;
 	}
 	
+
+
 	public void options_top(int frameX, int frameY) {
 		int textX;
 		int textY;
@@ -564,18 +567,32 @@ public class UI {
 		g2.drawString("Controls", textX, textY);
 		if (commandNum == 3) {
 			g2.drawString(">", textX- 25, textY);
+			if (gp.keyH.enterPressed == true) {
+				subState = 2;
+				commandNum = 0;
+			}
+			
 		}
 		//End Game
 		textY += gp.tileSize;
 		g2.drawString("End Game", textX, textY);
 		if (commandNum == 4) {
 			g2.drawString(">", textX- 25, textY);
+			if (gp.keyH.enterPressed == true) {
+				subState = 3;
+				commandNum = 0;
+			}
 		}
 		
 		textY += gp.tileSize*2;
 		g2.drawString("Return", textX, textY);
 		if (commandNum == 5) {
 			g2.drawString(">", textX- 25, textY);
+			if (gp.keyH.enterPressed == true) {
+				subState = 0;
+				commandNum = 0;
+				gp.gameState = gp.playState;
+			}
 		}
 		
 		//Checkbox for a full screen
@@ -601,6 +618,46 @@ public class UI {
 		
 	}
 	
+	public void options_control(int frameX, int frameY) {
+		int textX;
+		int textY;
+		String text ="Control";
+		textX = getXForCenteredText(text);
+		textY = frameY + gp.tileSize;
+		g2.drawString(text, textX, textY);
+		
+		textX = frameX + gp.tileSize;
+		textY += gp.tileSize;
+		g2.drawString("Move", textX, textY); textY += gp.tileSize;
+		g2.drawString("Confirm/Attack", textX, textY); textY += gp.tileSize;
+		g2.drawString("Shoot/Cast", textX, textY); textY += gp.tileSize;
+		g2.drawString("Character Screen", textX, textY); textY += gp.tileSize;
+		g2.drawString("Pause", textX, textY); textY += gp.tileSize;
+		g2.drawString("Options", textX, textY); textY += gp.tileSize;
+		
+		textX = frameX + gp.tileSize * 6;
+		textY = frameY + gp.tileSize *2;
+		g2.drawString("WASD", textX, textY); textY += gp.tileSize;
+		g2.drawString("ENTER", textX, textY); textY += gp.tileSize;
+		g2.drawString("F", textX, textY); textY += gp.tileSize;
+		g2.drawString("C", textX, textY); textY += gp.tileSize;
+		g2.drawString("P", textX, textY); textY += gp.tileSize;
+		g2.drawString("ESC", textX, textY); textY += gp.tileSize;
+		
+		textX = frameX + gp.tileSize;
+		textY = frameY + gp.tileSize * 9;
+		g2.drawString("Return", textX, textY);
+		if (commandNum == 0) {
+			g2.drawString(">", textX-25, textY);
+			if (gp.keyH.enterPressed == true) {
+				subState = 0;
+				commandNum = 3;
+			}
+			
+		}
+		
+	}
+	
 	public void options_fullScreenNotification(int frameX, int frameY) {
 		int textX = frameX + gp.tileSize;
 		int textY = frameY + gp.tileSize*3;
@@ -613,14 +670,61 @@ public class UI {
 		}
 		
 		//Back
-		textY = frameY +  gp.tileSize * 9;
+		textY = frameY +  gp.tileSize*9;
 		g2.drawString("Return", textX, textY);
 		if (commandNum == 0) {
 			g2.drawString(">", textX-25, textY);
 			if (gp.keyH.enterPressed == true) {
 				subState = 0;
+				commandNum = 0;
+				if (gp.keyH.enterPressed == true) {
+					commandNum = 0;
+				}
 			}
 		}
+	}
+	
+	public void options_endGameConfirmation(int frameX, int frameY) {
+		int textX = frameX + gp.tileSize;
+		int textY = frameY + gp.tileSize*3;
+
+		currentDialogue = "Quit the game and \nreturn to the title screen?";
+		
+		for (String line: currentDialogue.split("\n")) {
+			g2.drawString(line, textX, textY);
+			textY += 40;
+		}
+		
+		//Yes
+		String text = "Yes";
+		textX = getXForCenteredText(text);
+		textY += gp.tileSize * 3;
+		g2.drawString(text, textX, textY);
+		if (commandNum == 0) {
+			g2.drawString(">", textX-25, textY);
+			if (gp.keyH.enterPressed == true) {
+				subState = 0;
+				gp.gameState = gp.titleState;
+				gp.music.stop();
+			}
+		}
+		
+		//No
+		
+		text = "No";
+		textX = getXForCenteredText(text);
+		textY += gp.tileSize;
+		g2.drawString(text, textX, textY);
+		//the command numbers are relative to where the arrow is going to render on screen. Each number represents a row that will correspond to a line of text
+		if (commandNum == 1) {
+			g2.drawString(">", textX-25, textY);
+			if (gp.keyH.enterPressed == true) {
+				subState = 0;
+				commandNum = 4;
+				titleScreenState = 0;
+			}
+		}
+		
 	}
 	
 	public int getItemIndexOnSlot() {

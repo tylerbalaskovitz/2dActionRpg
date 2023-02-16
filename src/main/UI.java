@@ -616,6 +616,8 @@ public class UI {
 		volumeWidth = 24 * gp.se.volumeScale;
 		g2.fillRect(textX, textY, volumeWidth, 24);
 		
+		gp.config.saveConfig();
+		
 	}
 	
 	public void options_control(int frameX, int frameY) {

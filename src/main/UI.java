@@ -567,8 +567,6 @@ public class UI {
 		gp.keyH.enterPressed = false;
 	}
 	
-
-
 	public void options_top(int frameX, int frameY) {
 		int textX;
 		int textY;

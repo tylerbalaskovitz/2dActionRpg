@@ -44,8 +44,6 @@ public class Player extends Entity{
 		solidArea.width = 32;
 		solidArea.height = 32;
 		
-		
-		
 		setDefaultValues();
 		getPlayerImage();
 		getPlayerAttackImage();
@@ -77,7 +75,20 @@ public class Player extends Entity{
 		defense = getDefense(); //the total defense is decided by dexterity and your shield. So both of these stats are based on multiple elements
 	}
 	
+	public void setDefaultPosition() {
+		worldX = gp.tileSize * 23;
+		worldY = gp.tileSize * 21;
+		direction = "down";
+	}
+	
+	public void restoreLifeAndMana(){
+		life = maxLife;
+		mana = maxMana;
+		invincible = false;
+	}
+	
 	public void setItems() {
+		inventory.clear();
 		inventory.add(currentWeapon);
 		inventory.add(currentShield);
 		inventory.add(new OBJ_Key(gp));
@@ -142,23 +153,18 @@ public class Player extends Entity{
 		
 		if (keyH.upPressed == true) {
 			direction = "up";
-			
 		}
-		
 		
 		if (keyH.downPressed == true) {
 			direction = "down";
-			
 		}
 		
 		if (keyH.leftPressed == true) {
 			direction = "left";
-			
 		}
 		
 		if (keyH.rightPressed == true ) {
 			direction = "right";
-			
 		}
 		
 		//Check tile collision
@@ -183,8 +189,6 @@ public class Player extends Entity{
 		
 		//checks the event
 		gp.eHandler.checkEvent();
-		
-		
 		
 		//if collision is false, then the player can move
 		
@@ -252,6 +256,10 @@ public class Player extends Entity{
 		}
 		if(mana > maxMana) {
 			mana = maxMana;
+		}
+		if (life <= 0) {
+			gp.gameState = gp.gameOverState;
+			gp.playSE(12);
 		}
 	}
 	

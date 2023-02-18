@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -45,7 +46,7 @@ public class Entity {
 	int hpBarCounter = 0;
 	
 	//Character attributes
-	
+	public int map;
 	public String name;
 	public int speed;
 	public int maxLife;
@@ -66,6 +67,8 @@ public class Entity {
 	public Projectile projectile;
 	
 	//Item Attributes
+	public ArrayList<Entity> inventory = new ArrayList<>();
+	public final int maxInventorySize = 20;
 	public int value;
 	public int attackValue;
 	public int defenseValue;

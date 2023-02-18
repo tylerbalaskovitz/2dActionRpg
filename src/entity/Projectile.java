@@ -10,7 +10,8 @@ public class Projectile extends Entity {
 		super(gp);
 	}
 	//this allows players and monsters to be able to use the projectiles method within the game
-	public void set(int worldX, int worldY, String direction, boolean alive, Entity user) {
+	public void set(int map, int worldX, int worldY, String direction, boolean alive, Entity user) {
+		this.map = map;
 		this.worldX = worldX;
 		this.worldY = worldY;
 		this.direction = direction;
@@ -25,7 +26,7 @@ public class Projectile extends Entity {
 			int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
 			if (monsterIndex != 999) {
 				gp.player.damageMonster(monsterIndex, attack);
-				generateParticle(user.projectile, gp.monster[gp.currentMap][monsterIndex]);
+				generateParticle(user.projectile, gp.monster[map][monsterIndex]);
 				alive = false;
 			}
 		}
@@ -46,7 +47,9 @@ public class Projectile extends Entity {
 		case "left": worldX -= speed; break;
 		case "right": worldX +=speed; break;
 		}
-		
+		if (map != gp.currentMap) {
+			life = 0;
+		}
 		//when the projectile runs out of life then the projectile disappears. Otherwise the projectile will just keep going on forever. 
 		life --;
 		if (life <= 0) {

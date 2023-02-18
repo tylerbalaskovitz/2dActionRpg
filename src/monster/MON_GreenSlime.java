@@ -53,7 +53,7 @@ public class MON_GreenSlime extends Entity{
 	public void setAction() {
 		//this allows us to set the behavior of the monster. This is more or less the same thing as the old man's AI.
 		
-actionLockCounter++;
+		actionLockCounter++;
 		
 		if(actionLockCounter == 120) {
 		
@@ -82,7 +82,7 @@ actionLockCounter++;
 		}
 		int i = new Random().nextInt(100) + 1;
 		if (i < 99 && projectile.alive == false && shotAvailableCounter == 30) {
-			projectile.set(worldX, worldY, direction, true, this);
+			projectile.set(gp.currentMap, worldX, worldY, direction, true, this);
 			gp.projectileList.add(projectile);
 			shotAvailableCounter = 0;
 		}

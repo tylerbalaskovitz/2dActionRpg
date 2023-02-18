@@ -23,8 +23,7 @@ public class Player extends Entity{
 	public final int screenY;
 	
 	public boolean attackCanceled = false;
-	public ArrayList<Entity> inventory = new ArrayList<>();
-	public final int maxInventorySize = 20;
+
 	
 	public Player(GamePanel gp, KeyHandler keyH) {
 		super(gp);
@@ -77,6 +76,7 @@ public class Player extends Entity{
 	
 	public void setDefaultPosition() {
 		
+		gp.currentMap = 
 		worldX = gp.tileSize * 23;
 		worldY = gp.tileSize * 21;
 		
@@ -228,7 +228,7 @@ public class Player extends Entity{
 		if (gp.keyH.shotKeyPressed == true && projectile.alive == false && shotAvailableCounter == 30 && projectile.haveResource(this) == true) {
 			
 			// sets the default coordinates, and direction, and who is shooting the projectile. The boolean, sets the projectile to be alive.
-			projectile.set(worldX, worldY, direction, true, this);
+			projectile.set(gp.currentMap, worldX, worldY, direction, true, this);
 			
 			//subtract the cost for using the projectile
 			projectile.subtractResource(this);

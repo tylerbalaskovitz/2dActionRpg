@@ -1,6 +1,6 @@
 package main;
 
-import java.awt.Rectangle;
+import entity.Entity;
 
 public class EventHandler {
 
@@ -65,6 +65,7 @@ public class EventHandler {
 		else if (hit(0, 23,12,"up") == true) { healingPool(gp.dialogueState);}
 		else if (hit(0, 10, 39, "any") == true){teleport(1, 12, 13);}
 		else if (hit(1, 12, 13, "any") == true){teleport(0, 10, 39);}
+		else if (hit(1, 12, 9, "up") == true) {speak(gp.npc[1][0]);}
 		}
 		
 	}
@@ -130,6 +131,14 @@ public class EventHandler {
 			gp.aSetter.setMonster();
 		}
 		
+	}
+	
+	public void speak (Entity entity) {
+		if (gp.keyH.enterPressed) {
+			gp.gameState = gp.dialogueState;
+			gp.player.attackCanceled = true;
+			entity.speak();
+		}
 	}
 	
 	

@@ -1,5 +1,6 @@
 package main;
 
+import entity.NPC_Merchant;
 import entity.NPC_OldMan;
 import monster.MON_GreenSlime;
 import object.OBJ_Axe;
@@ -68,9 +69,20 @@ public class AssetSetter {
 	
 	public void setNPC() {
 		int mapNum = 0;
-		gp.npc[mapNum][0] = new NPC_OldMan(gp);
-		gp.npc[mapNum][0].worldX = gp.tileSize * 12;
-		gp.npc[mapNum][0].worldY = gp.tileSize * 8;
+		int i = 0;
+		gp.npc[mapNum][i] = new NPC_OldMan(gp);
+		gp.npc[mapNum][i].worldX = gp.tileSize * 12;
+		gp.npc[mapNum][i].worldY = gp.tileSize * 8;
+		i++;
+		//i++ is used for everything within the first map. 
+
+		//since a different map is used, that's a different valu for the multidimensional array, meaning that the second dimension of the two
+		//dimensional array needs to be put back to 0 otherwise an exception will be thrown.
+		mapNum = 1;
+		i = 0;
+		gp.npc[mapNum][i] = new NPC_Merchant(gp);
+		gp.npc[mapNum][i].worldX = gp.tileSize * 12;
+		gp.npc[mapNum][i].worldY = gp.tileSize * 7;
 		
 	}
 	

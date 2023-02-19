@@ -825,18 +825,29 @@ public class UI {
 		g2.drawString("Buy", x, y);
 		if (commandNum == 0) {
 			g2.drawString(">", x-24, y);
+			if (gp.keyH.enterPressed == true) {
+				subState = 1;
+			}
 		}
 		y += gp.tileSize;
 		
 		g2.drawString("Sell", x, y);
 		if (commandNum == 1) {
 			g2.drawString(">", x-24, y);
+			if (gp.keyH.enterPressed == true) {
+				subState = 2;
+			}
 		}
 		y += gp.tileSize;
 		
 		g2.drawString("Leave", x, y);
-		if (commandNum == 0) {
+		if (commandNum == 2) {
 			g2.drawString(">", x-24, y);
+			if (gp.keyH.enterPressed == true) {
+				commandNum = 0;
+				gp.gameState = gp.dialogueState;
+				currentDialogue = "Come again, you little prick!";
+			}
 		}
 		y += gp.tileSize;
 		

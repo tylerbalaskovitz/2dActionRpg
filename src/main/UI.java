@@ -494,8 +494,8 @@ public class UI {
 		
 		//Drawing a cursor so we can move an item
 		if (cursor == true) {
-			int cursorX = slotXStart + (slotSize * playerSlotCol);
-			int cursorY = slotYStart + (slotSize * playerSlotRow);
+			int cursorX = slotXStart + (slotSize * slotCol);
+			int cursorY = slotYStart + (slotSize * slotRow);
 			int cursorWidth = gp.tileSize;
 			int cursorHeight = gp.tileSize;
 			
@@ -517,7 +517,7 @@ public class UI {
 			int textY = dFrameY + gp.tileSize;
 			g2.setFont(g2.getFont().deriveFont(28F));
 			
-			int itemIndex = getItemIndexOnSlot();
+			int itemIndex = getItemIndexOnSlot(slotCol, slotRow);
 			
 			if (itemIndex < entity.inventory.size()) {
 				
@@ -874,14 +874,20 @@ public class UI {
 	
 	public void trade_buy() {
 		
+		//drawing two inventories. First the player inventory
+		drawInventory(gp.player, false);
+		
+		//draw NPC inventory
+		drawInventory(npc, true);
+		
 	}
 	
 	public void trade_sell() {
 		
 	}
 	
-	public int getItemIndexOnSlot() {
-		int itemIndex = playerSlotCol + (playerSlotRow*5);
+	public int getItemIndexOnSlot(int slotCol, int slotRow) {
+		int itemIndex = slotCol + (slotRow*5);
 		return itemIndex;
 	}
 	

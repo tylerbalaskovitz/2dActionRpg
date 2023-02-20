@@ -29,8 +29,10 @@ public class UI {
 	public String currentDialogue = "";
 	public int commandNum = 0;
 	public int titleScreenState = 0;//0: is the first screen, 1: the second screen, etc. etc.
-	public int slotCol = 0;
-	public int slotRow = 0;
+	public int playerSlotCol = 0;
+	public int playerSlotRow = 0;
+	public int npcSlotCol = 0;
+	public int npcSlotRow = 0;
 	public int subState = 0;
 	public int counter = 0;
 	public Entity npc;
@@ -99,7 +101,7 @@ public class UI {
 		//Character state	
 		if (gp.gameState == gp.characterState) {
 			drawCharacterScreen();
-			drawInventory();
+			drawInventory(gp.player, true);
 		}
 		//Options state
 		if (gp.gameState == gp.optionsState) {
@@ -438,12 +440,30 @@ public class UI {
 		g2.drawImage(gp.player.currentShield.down1, tailX- gp.tileSize, textY-24, null);
 		
 	}
-	public void drawInventory() {
+	public void drawInventory(Entity entity, boolean cursor) {
 		
-		int frameX = gp.tileSize*12;
-		int frameY = gp.tileSize;
-		int frameWidth = gp.tileSize*6;
-		int frameHeight = gp.tileSize*5;
+		int frameX = 0;
+		int frameY  = 0;
+		int frameWidth = 0;
+		int frameHeight = 0;
+		int slotCol = 0;
+		int slotRow = 0;
+		
+		if (entity == gp.player) {
+			frameX = gp.tileSize*12;
+			frameY = gp.tileSize;
+			frameWidth = gp.tileSize*6;
+			frameHeight = gp.tileSize*5;
+			slotCol = playerSlotCol;
+			slotRow = playerSlotRow;
+		} else {
+			frameX = gp.tileSize*2;
+			frameY = gp.tileSize;
+			frameWidth = gp.tileSize*6;
+			frameHeight = gp.tileSize*5;
+			slotCol = npcSlotCol;
+			slotRow = npcSlotRow;
+		}
 		drawSubWindow(frameX, frameY, frameWidth, frameHeight);
 		
 		//Code for different slots
@@ -454,15 +474,15 @@ public class UI {
 		int slotSize = gp.tileSize+3;
 		
 		//Drawing the player's items
-		for (int i = 0; i < gp.player.inventory.size(); i++) {
+		for (int i = 0; i < entity.inventory.size(); i++) {
 			
 			//Cursor used for equipping items
-			if (gp.player.inventory.get(i) == gp.player.currentWeapon || gp.player.inventory.get(i) == gp.player.currentShield) {
+			if (entity.inventory.get(i) == entity.currentWeapon || entity.inventory.get(i) == entity.currentShield) {
 				g2.setColor(new Color(240, 190, 90));
 				g2.fillRoundRect(slotX, slotY, gp.tileSize, gp.tileSize, 10, 10);
 			}
 			
-			g2.drawImage(gp.player.inventory.get(i).down1, slotX, slotY, null);
+			g2.drawImage(entity.inventory.get(i).down1, slotX, slotY, null);
 			
 			slotX += slotSize;
 			if (i == 4|| i == 9 || i == 14) {
@@ -473,43 +493,42 @@ public class UI {
 		
 		
 		//Drawing a cursor so we can move an item
-		int cursorX = slotXStart + (slotSize * slotCol);
-		int cursorY = slotYStart + (slotSize * slotRow);
-		int cursorWidth = gp.tileSize;
-		int cursorHeight = gp.tileSize;
-		
-		//Drawing the cursor
-		g2.setColor(Color.white);
-		g2.setStroke(new BasicStroke(3));
-		g2.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight, 10, 10);
-		
-		//Description frame
-		int dFrameX = frameX;
-		int dFrameY = frameY + frameHeight;
-		int dFrameWidth = frameWidth;
-		int dFrameHeight = gp.tileSize*3;
-		
-	
-		
-		//draw the text for the description
-		int textX = dFrameX + 20;
-		int textY = dFrameY + gp.tileSize;
-		g2.setFont(g2.getFont().deriveFont(28F));
-		
-		int itemIndex = getItemIndexOnSlot();
-		
-		if (itemIndex < gp.player.inventory.size()) {
+		if (cursor == true) {
+			int cursorX = slotXStart + (slotSize * playerSlotCol);
+			int cursorY = slotYStart + (slotSize * playerSlotRow);
+			int cursorWidth = gp.tileSize;
+			int cursorHeight = gp.tileSize;
 			
-			drawSubWindow(dFrameX, dFrameY, dFrameWidth, dFrameHeight);
+			//Drawing the cursor
+			g2.setColor(Color.white);
+			g2.setStroke(new BasicStroke(3));
+			g2.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight, 10, 10);
 			
-			for (String line: gp.player.inventory.get(itemIndex).description.split("\n")) {
-				g2.drawString(line, textX, textY);
-				textY += 32;
+			//Description frame
+			int dFrameX = frameX;
+			int dFrameY = frameY + frameHeight;
+			int dFrameWidth = frameWidth;
+			int dFrameHeight = gp.tileSize*3;
+			
+		
+			
+			//draw the text for the description
+			int textX = dFrameX + 20;
+			int textY = dFrameY + gp.tileSize;
+			g2.setFont(g2.getFont().deriveFont(28F));
+			
+			int itemIndex = getItemIndexOnSlot();
+			
+			if (itemIndex < entity.inventory.size()) {
+				
+				drawSubWindow(dFrameX, dFrameY, dFrameWidth, dFrameHeight);
+				
+				for (String line: entity.inventory.get(itemIndex).description.split("\n")) {
+					g2.drawString(line, textX, textY);
+					textY += 32;
+				}
 			}
-			
-			
 		}
-		
 	}
 	
 	public void drawGameOverScreen() {
@@ -862,7 +881,7 @@ public class UI {
 	}
 	
 	public int getItemIndexOnSlot() {
-		int itemIndex = slotCol + (slotRow*5);
+		int itemIndex = playerSlotCol + (playerSlotRow*5);
 		return itemIndex;
 	}
 	

@@ -199,29 +199,29 @@ public class KeyHandler implements KeyListener{
 		
 		}
 		if (code == KeyEvent.VK_W) {
-			if(gp.ui.slotRow != 0) {
-				gp.ui.slotRow--;
+			if(gp.ui.playerSlotRow != 0) {
+				gp.ui.playerSlotRow--;
 				gp.playSE(9);
 			}
 		}
 		
 		if (code == KeyEvent.VK_A) {
-			if (gp.ui.slotCol != 0) {
-				gp.ui.slotCol--;		
+			if (gp.ui.playerSlotCol != 0) {
+				gp.ui.playerSlotCol--;		
 				gp.playSE(9);	
 			}
 		}
 		
 		if (code == KeyEvent.VK_S) {
-			if(gp.ui.slotRow != 3) {
-				gp.ui.slotRow++;
+			if(gp.ui.playerSlotRow != 3) {
+				gp.ui.playerSlotRow++;
 				gp.playSE(9);
 		}
 		}
 		
 		if (code == KeyEvent.VK_D) {
-			if (gp.ui.slotCol != 4) {
-				gp.ui.slotCol++;
+			if (gp.ui.playerSlotCol != 4) {
+				gp.ui.playerSlotCol++;
 				gp.playSE(9);
 			}
 		}

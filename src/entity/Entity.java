@@ -361,6 +361,66 @@ public class Entity {
 		
 		if (gp.pFinder.search() == true) {
 			//Next WorldX & World Y
+			int nextX = gp.pFinder.pathList.get(0).col * gp.tileSize;
+			int nextY = gp.pFinder.pathList.get(0).row * gp.tileSize;
+			
+			//Getting the Entity's current solid Area position
+			int enLeftX = worldX + solidArea.x;
+			int enRightX = worldX + solidArea.x + solidArea.width;
+			int enTopY = worldY = solidArea.y;
+			int enBottomY = worldY + solidArea.y + solidArea.height;
+			
+			if (enTopY > nextY && enLeftX >= nextX && enRightX < nextX + gp.tileSize) {
+				direction = "up";
+			}
+			else if (enTopY < nextY && enLeftX >= nextX && enRightX < nextX + gp.tileSize) {
+				direction = "down";
+			}
+			else if (enTopY >= nextY && enBottomY < nextY + gp.tileSize) {
+				if (enLeftX > nextX) {
+					direction = "left";
+				}
+				if (enLeftX < nextX) {
+					direction = "right";
+				}
+			}
+			else if (enTopY > nextY && enLeftX > nextX) {
+				//Up or left because the entity's Y position is below the next tile
+				direction = "up";
+				checkCollision();
+				if(collisionOn == true) {
+					direction = "left";
+				}
+			}
+			else if (enTopY > nextY && enLeftX < nextX) {
+				//Direction should be up or right
+				direction = "up";
+				checkCollision();
+				if(collisionOn == true) {
+					direction = "right";
+				}
+			}	
+			else if ( enTopY < nextY && enLeftX > nextX) {
+				direction = "down";
+				checkCollision();
+				if (collision == true) {
+					direction = "left";
+				}
+			}
+			else if ( enTopY < nextY && enLeftX < nextX) {
+				direction = "down";
+				checkCollision();
+				if (collision == true) {
+					direction = "right";
+				}
+			}
+				
+			//if the entity reaches the goal, stop searching.
+				int nextCol = gp.pFinder.pathList.get(0).col;
+				int nextRow = gp.pFinder.pathList.get(0).row;
+				if (nextCol == goalCol && nextRow == goalRow) {
+					onPath = false;
+				}
 			
 		}
 		

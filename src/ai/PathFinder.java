@@ -65,7 +65,138 @@ public class PathFinder {
 	public void setNodes( int startCol, int startRow, int goalCol, int goalRow, Entity entity) {
 		
 		resetNodes();
+		startNode = node[startCol][startRow];
+		currentNode = startNode;
+		goalNode = node[goalCol][goalRow];
+		openList.add(currentNode);
 		
+		int col = 0;
+		int row = 0;
+		
+		while (col < gp.maxWorldCol && row < gp.maxWorldRow) {
+			
+			//set solid node and check the tiles
+			
+			int tileNum = gp.tileM.mapTileNum[gp.currentMap][col][row];
+			//this first checks the regular tiles through the TileManager to see if they are solid or not solid. From there
+			// the value is converted into the boolean of whether or not the node of the equivalent size is solid or not
+			if (gp.tileM.tile[tileNum].collision == true) {
+				node[col][row].solid = true;
+			}
+			
+			//Check interacive Tiles
+			for (int i = 0; i < gp.iTile[1].length; i++) {
+				if (gp.iTile[gp.currentMap][i] != null && gp.iTile[gp.currentMap][i].destructible == true) {
+					int itCol = gp.iTile[gp.currentMap][i].worldX/gp.tileSize;
+					int itRow = gp.iTile[gp.currentMap][i].worldY/gp.tileSize;
+					node [itCol][itRow].solid = true;
+				}
+			}
+			
+			getCost(node[col][row]);
+			
+			col++;
+			if (col == gp.maxWorldCol) {
+				col = 0;
+				row++;
+			}
+		}
+		
+	}
+	
+	public void getCost(Node node) {
+		//Finding the G cost. Current distance from the start.
+		int xDistance = Math.abs(node.col - startNode.col);
+		int yDistance = Math.abs(node.row - startNode.row);
+		
+		node.gCost = xDistance + yDistance;
+		
+		//Finding the H cost. Current distance from the goal.
+		xDistance = Math.abs(node.col - goalNode.col);
+		yDistance = Math.abs(node.row - goalNode.row);
+		node.hCost = xDistance + yDistance;
+		
+		//Finding the F cost
+		node.fCost = node.gCost + node.hCost;
+	}
+	
+	public boolean search() {
+		while (goalReached == false && step < 500) {
+			int col = currentNode.col;
+			int row = currentNode.row;
+			
+			//Check the current node
+			currentNode.checked = true;
+			openList.remove(currentNode);
+			
+			//open the up now
+			if (row - 1 >= 0) {
+				openNode(node[col][row-1]);
+			}
+			if (col - 1 >= 0) {
+				openNode(node[col-1][row]);
+			}
+			if (row + 1 >= 0) {
+				openNode(node[col][row+1]);
+			}
+			if (col + 1 >= 0) {
+				openNode(node[col+1][row]);
+			}
+			
+			//Finding the best node for doing pathfinding
+			int bestNodeIndex = 0;
+			int bestNodeFCost = 999;
+			
+			for (int i = 0; i < openList.size(); i++) {
+				//Check if this node's F cost is better
+				if (openList.get(i).fCost < bestNodeFCost) {
+					bestNodeIndex = i;
+					bestNodeFCost = openList.get(i).fCost;
+				}
+				//If F cost is equal then check the G cost
+				else if (openList.get(i).fCost == bestNodeFCost) {
+					if (openList.get(i).gCost < openList.get(bestNodeIndex).gCost) {
+						bestNodeIndex = i;
+					}
+				}
+			}
+
+			//If there is no node in the openList, then end the loop
+			if (openList.size()== 0) {
+				break;
+			}
+			
+			//After the loop, openList[bestNodeIndex] is the next step
+			currentNode = openList.get(bestNodeIndex);
+			
+			if (currentNode == goalNode) {
+				goalReached = true;
+				trackThePath();
+			}
+			step++;
+		}
+		
+		return goalReached;
+	}
+	
+	public void openNode(Node node) {
+		if (node.open == false && node.checked == false && node.solid == false) {
+			
+			node.open = true;
+			node.parent = currentNode;
+			openList.add(node);
+			
+		}
+	}
+	
+	public void trackThePath() {
+		Node current = goalNode;
+		while (current != startNode) {
+			
+			//With this list NPC's and monsters are able to track the path to the person
+			pathList.add(0, current);
+			current = current.parent;
+		}
 	}
 	
 }

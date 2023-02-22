@@ -36,6 +36,7 @@ public class Entity {
 	public boolean dying = false;
 	public boolean alive = true;
 	public boolean hpBarOn = false;
+	public boolean onPath = false;
 
 	//Counters for the sprite, how long someone is invisble
 	public int spriteCounter = 0;
@@ -179,10 +180,7 @@ public class Entity {
 		gp.particleList.add(p4);
 	}
 	
-	public void update() {
-		
-		setAction();
-		
+	public void checkCollision() {
 		collisionOn = false;
 		gp.cChecker.checkTile(this);
 		gp.cChecker.checkObject(this, false);
@@ -194,6 +192,15 @@ public class Entity {
 		if (this.type == type_monster && contactPlayer == true) {
 			damagePlayer(attack);
 		}
+	}
+	
+	public void update() {
+		
+		setAction();
+		
+		checkCollision();
+		
+		
 		
 		if (collisionOn == false) {
 			switch(direction) {
@@ -343,6 +350,19 @@ public class Entity {
 		}
 		
 		return image;
+		
+	}
+	
+	public void searchPath(int goalCol, int goalRow) {
+		int startCol = (worldX + solidArea.x)/gp.tileSize;
+		int startRow = (worldY + solidArea.y)/gp.tileSize;
+		
+		gp.pFinder.setNodes(startCol, startRow, goalCol, goalRow, this);
+		
+		if (gp.pFinder.search() == true) {
+			//Next WorldX & World Y
+			
+		}
 		
 	}
 }

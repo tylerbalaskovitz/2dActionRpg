@@ -189,7 +189,7 @@ public class Entity {
 		gp.cChecker.checkEntity(this, gp.iTile);
 		boolean contactPlayer = gp.cChecker.checkPlayer(this);
 		
-		if (this.type == type_monster && contactPlayer == true) {
+		if (type == type_monster && contactPlayer == true) {
 			damagePlayer(attack);
 		}
 	}
@@ -357,7 +357,7 @@ public class Entity {
 		int startCol = (worldX + solidArea.x)/gp.tileSize;
 		int startRow = (worldY + solidArea.y)/gp.tileSize;
 		
-		gp.pFinder.setNodes(startCol, startRow, goalCol, goalRow, this);
+		gp.pFinder.setNodes(startCol, startRow, goalCol, goalRow);
 		
 		if (gp.pFinder.search() == true) {
 			//Next WorldX & World Y

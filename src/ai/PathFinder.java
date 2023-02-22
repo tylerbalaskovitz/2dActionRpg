@@ -17,7 +17,7 @@ public class PathFinder {
 	
 	public PathFinder (GamePanel gp) {
 		this.gp = gp;
-		
+		instantiateNodes();
 	}
 	
 	public void instantiateNodes() {
@@ -62,7 +62,7 @@ public class PathFinder {
 		
 	}
 	
-	public void setNodes( int startCol, int startRow, int goalCol, int goalRow, Entity entity) {
+	public void setNodes( int startCol, int startRow, int goalCol, int goalRow) {
 		
 		resetNodes();
 		startNode = node[startCol][startRow];

@@ -11,7 +11,6 @@ public class NPC_OldMan extends Entity{
 		
 		direction = "down";
 		speed = 1;
-		
 		getImage();
 		setDialogue();
 	}
@@ -42,7 +41,7 @@ public class NPC_OldMan extends Entity{
 	public void setAction() {
 		
 		if (onPath == true) {
-			int goalCol = 12;
+			int goalCol = 14;
 			int goalRow = 9;
 			searchPath(goalCol, goalRow);
 		}

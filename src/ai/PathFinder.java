@@ -27,7 +27,7 @@ public class PathFinder {
 		int row = 0;
 		
 		while (col < gp.maxWorldCol && row < gp.maxWorldRow) {
-			node [col][row] = new Node (col, row);
+			node[col][row] = new Node(col, row);
 			
 			col++;
 			if (col == gp.maxWorldCol) {
@@ -62,7 +62,7 @@ public class PathFinder {
 		
 	}
 	
-	public void setNodes( int startCol, int startRow, int goalCol, int goalRow) {
+	public void setNodes(int startCol, int startRow, int goalCol, int goalRow) {
 		
 		resetNodes();
 		startNode = node[startCol][startRow];
@@ -136,10 +136,10 @@ public class PathFinder {
 			if (col - 1 >= 0) {
 				openNode(node[col-1][row]);
 			}
-			if (row + 1 >= 0) {
+			if (row + 1 < gp.maxWorldRow) {
 				openNode(node[col][row+1]);
 			}
-			if (col + 1 >= 0) {
+			if (col + 1 < gp.maxWorldCol) {
 				openNode(node[col+1][row]);
 			}
 			

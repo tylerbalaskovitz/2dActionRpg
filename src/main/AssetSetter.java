@@ -71,7 +71,7 @@ public class AssetSetter {
 		int mapNum = 0;
 		int i = 0;
 		gp.npc[mapNum][i] = new NPC_OldMan(gp);
-		gp.npc[mapNum][i].worldX = gp.tileSize * 21;
+		gp.npc[mapNum][i].worldX = gp.tileSize * 17;
 		gp.npc[mapNum][i].worldY = gp.tileSize * 21;
 		i++;
 		//i++ is used for everything within the first map. 
@@ -95,18 +95,18 @@ public class AssetSetter {
 		i++;
 		
 		gp.monster[mapNum][i] = new MON_GreenSlime(gp);
-		gp.monster[mapNum][i].worldX = gp.tileSize*11;
+		gp.monster[mapNum][i].worldX = gp.tileSize*36;
 		gp.monster[mapNum][i].worldY = gp.tileSize*10;
 		i++;
 		
 		gp.monster[mapNum][i] = new MON_GreenSlime(gp);
-		gp.monster[mapNum][i].worldX = gp.tileSize*11;
-		gp.monster[mapNum][i].worldY = gp.tileSize*11;
+		gp.monster[mapNum][i].worldX = gp.tileSize*37;
+		gp.monster[mapNum][i].worldY = gp.tileSize*6;
 		i++;
 		
 		gp.monster[mapNum][i] = new MON_GreenSlime(gp);
-		gp.monster[mapNum][i].worldX = gp.tileSize*13;
-		gp.monster[mapNum][i].worldY = gp.tileSize*11;
+		gp.monster[mapNum][i].worldX = gp.tileSize*39;
+		gp.monster[mapNum][i].worldY = gp.tileSize*9;
 		i++;
 		
 		gp.monster[mapNum][i] = new MON_GreenSlime(gp);

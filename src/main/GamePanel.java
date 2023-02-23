@@ -73,7 +73,8 @@ public class GamePanel extends JPanel implements Runnable{
 	//This is used to create a large entity list so that way the order can be sorted out the order so the entity with the lower worldY value comes in at index 0.
 	//this is used to solve the drawing order for entities so there isn't any awkard overlapping and what not. 
 	public InteractiveTile iTile[][] = new InteractiveTile[maxMap][50];
-	public ArrayList<Entity> projectileList = new ArrayList<>();
+	public Entity projectile[][] = new Entity [maxMap][20];
+//	public ArrayList<Entity> projectileList = new ArrayList<>();
 	public ArrayList<Entity> particleList = new ArrayList<>();
 	public ArrayList<Entity> entityList = new ArrayList<>();
 	
@@ -225,13 +226,13 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		//The array list allows you to perform the action on the ArrayList with projectiles. The projectiles have an update method that is executed while they're alive.
 		// if the projecitle is no longer alive, the second if statement is executed removing it from the list and thus the projectile is destroyed. 
-		for (int i = 0; i < projectileList.size(); i++) {
-			if (projectileList.get(i) != null) {
-				if (projectileList.get(i).alive == true) {
-					projectileList.get(i).update();
+		for (int i = 0; i < projectile[1].length; i++) {
+			if (projectile[currentMap][i] != null) {
+				if (projectile[currentMap][i].alive == true) {
+					projectile[currentMap][i].update();
 				}
-				if(projectileList.get(i).alive == false) {
-					projectileList.remove(i);
+				if(projectile[currentMap][i].alive == false) {
+					projectile[currentMap][i] = null;
 				}
 			}
 		}
@@ -304,9 +305,9 @@ public class GamePanel extends JPanel implements Runnable{
 				entityList.add(monster[currentMap][i]);
 			}
 		}
-		for (int i = 0; i < projectileList.size(); i++) {
-			if (projectileList.get(i) != null) {
-				entityList.add(projectileList.get(i));
+		for (int i = 0; i < projectile[1].length; i++) {
+			if (projectile[currentMap][i] != null) {
+				entityList.add(projectile[currentMap][i]);
 			}
 		}
 		for (int i =0; i < particleList.size(); i++) {

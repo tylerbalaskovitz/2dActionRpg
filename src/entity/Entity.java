@@ -37,6 +37,7 @@ public class Entity {
 	public boolean alive = true;
 	public boolean hpBarOn = false;
 	public boolean onPath = false;
+	public boolean knockBack = false;
 
 	//Counters for the sprite, how long someone is invisble
 	public int spriteCounter = 0;
@@ -45,10 +46,12 @@ public class Entity {
 	public int shotAvailableCounter = 0;
 	public int dyingCounter;
 	int hpBarCounter = 0;
+	int knockBackCounter = 0;
 	
 	//Character attributes
 	public int map;
 	public String name;
+	public int defaultSpeed;
 	public int speed;
 	public int maxLife;
 	public int life;
@@ -76,6 +79,7 @@ public class Entity {
 	public String description = "";
 	public int useCost;
 	public int price;
+	public int knockBackPower = 0;
 	
 	
 	//TYpe of monster, npc, item, etc.
@@ -196,20 +200,50 @@ public class Entity {
 	
 	public void update() {
 		
-		setAction();
-		
-		checkCollision();
-		
-		
-		
-		if (collisionOn == false) {
-			switch(direction) {
-			case "up": worldY -= speed; break;
-			case "down": worldY += speed; break;
-			case "left": worldX -= speed; break;
-			case "right": worldX += speed; break;
+		if (knockBack == true) {
+			checkCollision();
+			
+			if (collisionOn == true) {
+				knockBackCounter = 0;
+				knockBack = false;
+				speed = defaultSpeed;
+			}
+			else if (collisionOn == false) {
+				switch(gp.player.direction) {
+				case "up": worldY -= speed; break;
+				case "down": worldY += speed; break;
+				case "left": worldX -= speed; break;
+				case "right": worldX += speed; break;
+				
+				}
+			}
+			
+			knockBackCounter++;
+			if (knockBackCounter == 10) {
+				knockBackCounter = 0;
+				knockBack = false;
+				speed = defaultSpeed;
+			}
+		} else {
+			
+			setAction();
+			
+			checkCollision();
+			
+			if (collisionOn == false) {
+				switch(direction) {
+				case "up": worldY -= speed; break;
+				case "down": worldY += speed; break;
+				case "left": worldX -= speed; break;
+				case "right": worldX += speed; break;
+				}
 			}
 		}
+
+		
+		
+		
+
 		
 		spriteCounter++;
 		if (spriteCounter > 15) {

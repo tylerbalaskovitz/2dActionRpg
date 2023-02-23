@@ -50,9 +50,43 @@ public class MON_GreenSlime extends Entity{
 		right2 = setup("/monster/greenslime_down_2", gp.tileSize, gp.tileSize);
 	}
 	
+	public void update() {
+		super.update();
+		//This super.update() will handle all of the normal stuff that occurs in the super class' update method. So, essentially, this is an implemenation of the template
+		//design pattern since the Entity class services as the template, and then subclasses are able to make smaller modifications based on what they need to implement
+		//different variations / features
+		int xDistance = Math.abs(worldX - gp.player.worldX);
+		int yDistance = Math.abs(worldY - gp.player.worldY);
+		int tileDistance = (xDistance + yDistance)/gp.tileSize;
+		
+		if (onPath == false && tileDistance < 5) {
+			int i = new Random().nextInt(100) +1;
+			if (i > 50) {
+				onPath = true;
+			}
+			
+		}
+		if (onPath == true && tileDistance > 20) {
+			onPath = false;
+		}
+		
+	}
+	
 	public void setAction() {
 		//this allows us to set the behavior of the monster. This is more or less the same thing as the old man's AI.
 		
+		if (onPath == true) {
+			int goalCol = (gp.player.worldX + gp.player.solidArea.x)/gp.tileSize;
+			int goalRow = (gp.player.worldY + gp.player.solidArea.y)/gp.tileSize;
+			searchPath(goalCol, goalRow);
+			int i = new Random().nextInt(200) + 1;
+			if (i < 197 && projectile.alive == false && shotAvailableCounter == 30) {
+				projectile.set(gp.currentMap, worldX, worldY, direction, true, this);
+				gp.projectileList.add(projectile);
+				shotAvailableCounter = 0;
+			}
+		}
+		else {
 		actionLockCounter++;
 		
 		if(actionLockCounter == 120) {
@@ -80,19 +114,16 @@ public class MON_GreenSlime extends Entity{
 			
 			
 		}
-		int i = new Random().nextInt(100) + 1;
-		if (i < 99 && projectile.alive == false && shotAvailableCounter == 30) {
-			projectile.set(gp.currentMap, worldX, worldY, direction, true, this);
-			gp.projectileList.add(projectile);
-			shotAvailableCounter = 0;
+			
+
 		}
 	}
 	
 	public void damageReaction() {
 		
 		actionLockCounter = 0;
-		direction = gp.player.direction;
-		
+		//direction = gp.player.direction;
+		onPath = true;
 	}
 	
 	public void checkDrop() {

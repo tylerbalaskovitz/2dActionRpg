@@ -13,6 +13,14 @@ public class NPC_OldMan extends Entity{
 		speed = 1;
 		getImage();
 		setDialogue();
+		solidArea.x = 8;
+		solidArea.y= 16;
+		
+		solidAreaDefaultX = solidArea.x;
+		solidAreaDefaultY = solidArea.y;
+		
+		solidArea.width = 32;
+		solidArea.height = 32;
 		
 	}
 	
@@ -42,8 +50,13 @@ public class NPC_OldMan extends Entity{
 	public void setAction() {
 		
 		if (onPath == true) {
+			/*
 			int goalCol = (gp.player.worldX + gp.player.solidArea.x)/gp.tileSize;
 			int goalRow = (gp.player.worldY + gp.player.solidArea.y)/gp.tileSize;
+			*/
+			int goalCol = 12;
+			int goalRow = 10;
+			
 			searchPath(goalCol, goalRow);
 		}
 		else {

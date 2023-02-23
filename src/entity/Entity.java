@@ -354,6 +354,7 @@ public class Entity {
 	}
 	
 	public void searchPath(int goalCol, int goalRow) {
+		
 		int startCol = (worldX + solidArea.x)/gp.tileSize;
 		int startRow = (worldY + solidArea.y)/gp.tileSize;
 		
@@ -367,7 +368,7 @@ public class Entity {
 			//Getting the Entity's current solid Area position
 			int enLeftX = worldX + solidArea.x;
 			int enRightX = worldX + solidArea.x + solidArea.width;
-			int enTopY = worldY = solidArea.y;
+			int enTopY = worldY + solidArea.y;
 			int enBottomY = worldY + solidArea.y + solidArea.height;
 			
 			if (enTopY > nextY && enLeftX >= nextX && enRightX < nextX + gp.tileSize) {
@@ -403,14 +404,14 @@ public class Entity {
 			else if ( enTopY < nextY && enLeftX > nextX) {
 				direction = "down";
 				checkCollision();
-				if (collision == true) {
+				if (collisionOn == true) {
 					direction = "left";
 				}
 			}
 			else if ( enTopY < nextY && enLeftX < nextX) {
 				direction = "down";
 				checkCollision();
-				if (collision == true) {
+				if (collisionOn == true) {
 					direction = "right";
 				}
 			}

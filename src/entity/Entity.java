@@ -92,6 +92,7 @@ public class Entity {
 	public final int type_shield = 5;
 	public final int type_consumable = 6;
 	public final int type_pickupOnly = 7;
+	public final int type_obstacle = 8;
 	
 	
 	
@@ -124,12 +125,15 @@ public class Entity {
 		
 	}
 	}
+	
+	public void interact() {
+		
+	}
+	
 	//meant to be overridden so it is left empty
 	public void use (Entity entity) {}
 	
-	public void checkDrop() {
-		
-	}
+	public void checkDrop() {}
 	
 	public void dropItem(Entity droppedItem) {
 		for (int i = 0; i < gp.obj[1].length; i++) {

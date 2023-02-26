@@ -486,6 +486,22 @@ public class UI {
 			
 			g2.drawImage(entity.inventory.get(i).down1, slotX, slotY, null);
 			
+			// Display the amount for stackable items
+			if (entity.inventory.get(i).amount > 1) {
+				g2.setFont(g2.getFont().deriveFont(32f));
+				int amountX;
+				int amountY;
+				
+				String s = "" + entity.inventory.get(i).amount;
+				amountX = getXForAlignToRightText(s, slotX + 44);
+				amountY = slotY = gp.tileSize;
+				
+				//Drawing a shadow onto the numbers
+				g2.setColor(new Color(60, 60 , 60));
+				g2.drawString(s, amountX, amountY);
+				g2.drawString(s, amountX-3, amountY-3);
+			}
+			
 			slotX += slotSize;
 			if (i == 4|| i == 9 || i == 14) {
 				slotX = slotXStart;

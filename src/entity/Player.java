@@ -349,8 +349,6 @@ public class Player extends Entity{
 			String text;
 			
 			if (canObtainItem(gp.obj[gp.currentMap][i]) == true) {
-			
-				inventory.add(gp.obj[gp.currentMap][i]);
 				gp.playSE(1);
 				text = "Got a " + gp.obj[gp.currentMap][i].name + "!";
 			}
@@ -488,7 +486,12 @@ public class Player extends Entity{
 			if (selectedItem.type == type_consumable) {
 				//later consumables will be added into the game
 				if (selectedItem.use(this) == true) {
-					inventory.remove(itemIndex);
+					if (selectedItem.amount > 1) {
+						selectedItem.amount--;
+					} else {
+						inventory.remove(itemIndex);
+					}
+					
 				}
 			}
 		}
@@ -520,6 +523,7 @@ public class Player extends Entity{
 				
 			}
 			else { 
+				//this is a new item and must be checked to see whether or not it can go inside of one's inventory.
 				if (inventory.size() != maxInventorySize) {
 					inventory.add(item);
 					canObtain = true;
@@ -527,7 +531,7 @@ public class Player extends Entity{
 			}
 		}
 		else {
-			// Not stackable
+			// Not stackable so check whether or not it can be added into the inventory
 			if (inventory.size() != maxInventorySize) {
 				inventory.add(item);
 				canObtain = true;

@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import ai.PathFinder;
 import entity.Entity;
 import entity.Player;
+import environment.EnvironmentManager;
 import tile.TileManager;
 import tile_interactive.InteractiveTile;
 
@@ -62,6 +63,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public EventHandler eHandler = new EventHandler(this); 
 	Config config = new Config(this);
 	public PathFinder pFinder = new PathFinder(this);
+	EnvironmentManager eManager = new EnvironmentManager(this);
 	Thread gameThread;
 	
 	//Entity and Object
@@ -107,6 +109,7 @@ public class GamePanel extends JPanel implements Runnable{
 		aSetter.setNPC();
 		aSetter.setMonster();
 		aSetter.setInteractiveTile();
+		eManager.setup();
 		gameState = titleState;
 		
 		tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
@@ -333,6 +336,9 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		//Reset entityList otherwise it gets larger in every loop and will consume more resources
 		entityList.clear();
+		
+		//Drawing the environment
+		eManager.draw(g2);
 		
 		//UI since it comes at the top of the layers
 		ui.draw(g2);

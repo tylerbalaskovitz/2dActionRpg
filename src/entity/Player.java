@@ -146,6 +146,17 @@ public class Player extends Entity{
 		}
 	}
 	
+	public void getSleepingImage(BufferedImage image) {
+		up1 = image;
+		up2 = image;
+		down1 = image;
+		down2 = image;
+		left1 = image;
+		left2 = image;
+		right1 = image;
+		right2 = image;
+	}
+	
 	public void update() {
 		
 		if (attacking == true) {
@@ -186,7 +197,10 @@ public class Player extends Entity{
 		int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
 		contactMonster(monsterIndex);
 		
-		//checks collision with the interactive tiles
+		//checks collision with the interactive tiles. Using the @SuppressWarnings annotation as a way to supress the compiler from thinking iTileIndex isn't used,
+		//when it is being used with the method of checkEntity as a way to ensure collision. Good to know to prevent the accidental deletion of code. 
+		@SuppressWarnings(value = { "unused"})
+		int iTileIndex = gp.cChecker.checkEntity(this, gp.iTile);
 		
 		//checks the event
 		gp.eHandler.checkEvent();

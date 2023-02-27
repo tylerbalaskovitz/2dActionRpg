@@ -16,7 +16,11 @@ public class EnvironmentManager {
 	
 	public void setup() {
 		//instantiate the lighting class. If you adjust the integer below, it changes the size of the circle that is going to be put in as a lighting circle
-		lighting = new Lighting(gp, 350);
+		lighting = new Lighting(gp);
+	}
+	
+	public void update() {
+		lighting.update();
 	}
 	
 	public void draw(Graphics2D g2) {

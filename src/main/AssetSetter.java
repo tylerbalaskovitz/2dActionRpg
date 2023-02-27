@@ -33,8 +33,8 @@ public class AssetSetter {
 		i++;
 		
 		gp.obj[mapNum][i] = new OBJ_Lantern(gp);
-		gp.obj[mapNum][i].worldX = gp.tileSize*18;
-		gp.obj[mapNum][i].worldY = gp.tileSize*20;
+		gp.obj[mapNum][i].worldX = gp.tileSize*23;
+		gp.obj[mapNum][i].worldY = gp.tileSize*22;
 		i++;
 		
 		

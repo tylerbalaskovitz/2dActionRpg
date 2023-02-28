@@ -169,6 +169,27 @@ public class Entity {
 		}
 	}
 	
+	public int getXDistance(Entity target) {
+		int xDistance = Math.abs(worldX - target.worldX);
+		return xDistance;
+	}
+	
+	public int getYDistance(Entity target) {
+		int yDistance = Math.abs(worldY - target.worldY);
+		return yDistance;
+	}
+	public int getTileDistance(Entity target) {
+		int tileDistance = (getXDistance(target)+getYDistance(target));
+		return tileDistance;
+	}
+	public int getGoalCol(Entity target) {
+		int goalCol = (target.worldX + target.solidArea.x)/gp.tileSize;
+		return goalCol;
+	}
+	public int getGoalRow(Entity target) {
+		int goalRow = (target.worldY + target.solidArea.y)/gp.tileSize;
+		return goalRow;
+	}
 	public void setAction() {}
 	
 	public void damageReaction() {}

@@ -270,7 +270,7 @@ public class GamePanel extends JPanel implements Runnable{
 	}
 	
 	public void drawToTempScreen() {
-
+		
 		//Code that's used to Debug the rest of the game
 		long drawStart = 0;
 		if (keyH.showDebugText == true) {

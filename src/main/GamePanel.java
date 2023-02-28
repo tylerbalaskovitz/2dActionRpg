@@ -18,6 +18,7 @@ import ai.PathFinder;
 import entity.Entity;
 import entity.Player;
 import environment.EnvironmentManager;
+import tile.Map;
 import tile.TileManager;
 import tile_interactive.InteractiveTile;
 
@@ -64,6 +65,7 @@ public class GamePanel extends JPanel implements Runnable{
 	Config config = new Config(this);
 	public PathFinder pFinder = new PathFinder(this);
 	EnvironmentManager eManager = new EnvironmentManager(this);
+	Map map = new Map(this);
 	Thread gameThread;
 	
 	//Entity and Object
@@ -92,6 +94,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int transitionState = 7;
 	public final int tradeState = 8;
 	public final int sleepState = 9;
+	public final int mapState = 10;
 	
 	
 	
@@ -276,6 +279,11 @@ public class GamePanel extends JPanel implements Runnable{
 		//Title Screen
 		if (gameState == titleState) {
 			
+		}
+		
+		//Map Screen
+		else if (gameState == mapState) {
+			map.drawFullMapScreen(g2);
 		}
 		
 		

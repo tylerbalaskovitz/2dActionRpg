@@ -54,6 +54,9 @@ public class KeyHandler implements KeyListener{
 		else if (gp.gameState == gp.tradeState) {
 			tradeState(code);
 		}
+		else if (gp.gameState == gp.mapState) {
+			mapState(code);
+		}
 		
 	}
 	
@@ -159,6 +162,9 @@ public class KeyHandler implements KeyListener{
 		if (code == KeyEvent.VK_ESCAPE) {
 			gp.gameState = gp.optionsState;
 		}
+		if(code == KeyEvent.VK_M) {
+			gp.gameState = gp.mapState;
+		}
 		
 		
 		//Used to enable/disable Debugging information
@@ -179,6 +185,12 @@ public class KeyHandler implements KeyListener{
 			
 		}
 		
+	}
+	
+	public void mapState (int code) {
+		if (code == KeyEvent.VK_M) {
+			gp.gameState = gp.playState;
+		}
 	}
 	
 	public void pauseState(int code) {

@@ -19,7 +19,7 @@ import object.OBJ_ManaCrystal;
 public class UI {
 	
 	//handles text messages, item icons, etc.
-	Font maruMonica, purisaB;
+	public Font maruMonica, purisaB;
 	BufferedImage heart_full, heart_half, heart_blank, crystal_full, crystal_blank, coin;
 	GamePanel gp;
 	Graphics2D g2;

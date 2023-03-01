@@ -53,68 +53,27 @@ public class MON_GreenSlime extends Entity{
 	
 	
 	public void setAction() {
-		
-		int xDistance = Math.abs(worldX - gp.player.worldX);
-		int yDistance = Math.abs(worldY - gp.player.worldY);
-		int tileDistance = (xDistance + yDistance)/gp.tileSize;
-		
+	
 		if (onPath == true) {
-			if (tileDistance > 20) {
-				onPath = false;
-			}
+			//Check if it stops chasing the player, by its distance and the chance it will continue to chase.
+			checkStopChasingOrNot(gp.player, 15, 100);
 			
-			int goalCol = (gp.player.worldX + gp.player.solidArea.x)/gp.tileSize;
-			int goalRow = (gp.player.worldY + gp.player.solidArea.y)/gp.tileSize;
-			searchPath(goalCol, goalRow);
-			int i = new Random().nextInt(200) + 1;
-			if (i < 197 && projectile.alive == false && shotAvailableCounter == 30) {
-				projectile.set(gp.currentMap, worldX, worldY, direction, true, this);
+			//Searches for the direction to go via A* by getting the player's Column value and Row value.
+			searchPath(getGoalCol(gp.player), getGoalRow(gp.player));
 
-				//Check vancancy
-				for (int j = 0; j < gp.projectile[1].length; j++) {
-					if (gp.projectile[gp.currentMap][j] == null) {
-						gp.projectile[gp.currentMap][j] = projectile;
-						break;
-					}
-				}
-				
-				shotAvailableCounter = 0;
-			}
+			//checks whether or not it shoots a projectile
+			checkShootOrNot(200, 30);
 			
 		} else {
-			if (tileDistance < 5) {
-				int i = new Random().nextInt(100) +1;
-				if (i > 50) {
-					onPath = true;
-				}
-			}
-			actionLockCounter++;
 			
-			if(actionLockCounter == 120) {
+			//Check if it starts chasing or not
+			checkStartChasingOrNot(gp.player, 5, 100);
 			
-			Random random = new Random();
-			int i = random.nextInt(100) + 1; //pick a number from 1 to 100;
-			
-				if (i <= 25) {
-					direction = "up";
-				}
-				
-				if (i > 25 && i <= 50 ) {
-					direction = "down";
-				}
-				
-				if (i > 50 && i <= 75) {
-					direction = "left";
-				}
-				
-				if (i > 75 && i <=100 ) {
-					direction = "right";
-				}
-				
-				actionLockCounter = 0;
-			}
+			getRandomDirection();
 		}
 	}
+	
+
 	
 	public void damageReaction() {
 		

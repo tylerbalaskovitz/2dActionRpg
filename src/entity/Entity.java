@@ -7,6 +7,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 
@@ -191,6 +192,64 @@ public class Entity {
 		return goalRow;
 	}
 	public void setAction() {}
+	
+	public void checkStartChasingOrNot(Entity target, int distance, int rate) {
+		if (getTileDistance(target) < distance) {
+			int i = new Random().nextInt(rate);
+			if (i == 0) {
+				onPath = true;
+			}
+		}
+	}
+	
+	public void checkStopChasingOrNot(Entity target, int distance, int rate) {
+		if (getTileDistance(target) > distance) {
+			int i = new Random().nextInt(rate);
+			if (i == 0) {
+				onPath = false;
+			}
+		}
+	}
+	
+	public void getRandomDirection() {
+		//Get a random direciton if its not on path
+		actionLockCounter++;
+		
+		if(actionLockCounter == 120) {
+		
+		Random random = new Random();
+		int i = random.nextInt(100) + 1; //pick a number from 1 to 100;
+		
+			if (i <= 25) {direction = "up";}
+			
+			if (i > 25 && i <= 50 ) {direction = "down";}
+			
+			if (i > 50 && i <= 75) {direction = "left";}
+			
+			if (i > 75 && i <=100 ) {direction = "right";}
+			
+			actionLockCounter = 0;
+		}
+	}
+	
+	//chooses the rate of fire as well as the interval as to when it's going to be shot
+	public void checkShootOrNot(int rate, int shotInterval) {
+		int i = new Random().nextInt(rate);
+		//searches for the direction to shoot a projectile
+		if (i == 0 && projectile.alive == false && shotAvailableCounter == shotInterval) {
+			projectile.set(gp.currentMap, worldX, worldY, direction, true, this);
+
+			//Check vancancy
+			for (int j = 0; j < gp.projectile[1].length; j++) {
+				if (gp.projectile[gp.currentMap][j] == null) {
+					gp.projectile[gp.currentMap][j] = projectile;
+					break;
+				}
+			}
+			
+			shotAvailableCounter = 0;
+		}
+	}
 	
 	public void damageReaction() {}
 	

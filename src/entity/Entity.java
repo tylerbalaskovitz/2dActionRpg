@@ -25,6 +25,7 @@ public class Entity {
 	public int solidAreaDefaultX, solidAreaDefaultY;
 	public boolean collision = false;
 	String dialogues[] = new String[20];
+	public Entity attacker;
 	
 	//State
 	public int worldX, worldY;
@@ -388,6 +389,11 @@ public class Entity {
 
 			gp.player.invincible = true;
 		}
+	}
+	
+	public void setKnockBack(Entity entity, int knockBackPower) {
+		entity.speed += knockBackPower;
+		entity.knockBack = true;
 	}
 	
 	public void draw(Graphics2D g2) {

@@ -36,6 +36,8 @@ GamePanel gp;
 		solidAreaDefaultY = solidArea.y;
 		attackArea.width = 48;
 		attackArea.height = 48;
+		motion1_duration = 40;
+		motion2_duration = 85;
 		
 		getImage();
 		getAttackImage();
@@ -81,6 +83,10 @@ GamePanel gp;
 			checkStartChasingOrNot(gp.player, 5, 100);
 			
 			getRandomDirection();
+		}
+		
+		if (attacking == false) {
+			checkAttackOrNot(30, gp.tileSize*4, gp.tileSize);
 		}
 	}
 	

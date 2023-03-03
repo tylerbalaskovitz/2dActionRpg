@@ -69,6 +69,8 @@ public class Entity {
 	public int exp;
 	public int nextLevelExp;
 	public int coin;
+	public int motion1_duration;
+	public int motion2_duration;
 	public Entity currentWeapon;
 	public Entity currentShield; 
 	public Entity currentLight;
@@ -236,6 +238,40 @@ public class Entity {
 	
 	public void checkAttackOrNot(int rate, int straight, int horizontal) {
 		//only attacks when the target is in a certain distance.
+		boolean targetInRange = false;
+		
+		int xDist = getXDistance(gp.player);
+		int yDist = getYDistance(gp.player);
+		switch(direction) {
+		case "up": if (gp.player.worldY < worldY && yDist < straight && xDist < horizontal) {
+			targetInRange = true;
+		}
+		break;
+		case "down": if (gp.player.worldY > worldY && yDist < straight && xDist < horizontal) {
+			targetInRange = true;
+		}
+		break;
+		case "left": if (gp.player.worldX < worldX && xDist < straight && yDist < horizontal) {
+			targetInRange = true;
+		}
+		break;
+		case "right": if (gp.player.worldY > worldY && yDist < straight && xDist < horizontal) {
+			targetInRange = true;
+		}
+		break;
+		}
+		
+		if (targetInRange == true) {
+			//check if it initiates an attack
+			int i = new Random().nextInt(rate);
+			if (i == 0) {
+				attacking = true;
+				spriteNum = 1;
+				spriteCounter = 0;
+				shotAvailableCounter = 0;
+			}
+			
+		}
 		
 	}
 	
@@ -338,7 +374,10 @@ public class Entity {
 				knockBack = false;
 				speed = defaultSpeed;
 			}
-		} else {
+		} else if (attacking == true) {
+			attacking();
+		}
+		else {
 			
 			setAction();
 			
@@ -352,24 +391,18 @@ public class Entity {
 				case "right": worldX += speed; break;
 				}
 			}
+			spriteCounter++;
+				if (spriteCounter > 15) {
+					if (spriteNum == 1) {
+						spriteNum = 2;
+					}
+					else if (spriteNum == 2) {
+						spriteNum = 1;
+					}
+					spriteCounter = 0;
+				}
 		}
 
-		
-		
-		
-
-		
-		spriteCounter++;
-		if (spriteCounter > 15) {
-			if (spriteNum == 1) {
-				spriteNum = 2;
-			}
-			else if (spriteNum == 2) {
-				spriteNum = 1;
-			}
-			spriteCounter = 0;
-		}
-		
 		if (invincible == true) {
 			invincibleCounter++;
 			if(invincibleCounter > 40) {
@@ -384,10 +417,10 @@ public class Entity {
 	
 	public void attacking () {
 		spriteCounter++;
-		if(spriteCounter <= 5) {
+		if(spriteCounter <= motion1_duration) {
 			spriteNum = 1;
 		}
-		if(spriteCounter > 5 && spriteCounter <25) {
+		if(spriteCounter > motion1_duration && spriteCounter < motion2_duration) {
 			spriteNum = 2;
 			
 			//Save the current WorldX, Y and solid area values
@@ -435,7 +468,7 @@ public class Entity {
 			
 			
 		}
-		if (spriteCounter > 25) {
+		if (spriteCounter > motion2_duration) {
 			spriteNum = 1;
 			spriteCounter = 0;
 			attacking = false;
@@ -476,26 +509,52 @@ public class Entity {
 				worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
 				worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
 			
-			
+			int tempScreenX = screenX;
+			int tempScreenY = screenY;
 			
 			switch(direction) {
 			case "up":
-				if (spriteNum == 1 ) {image=up1;}
-				if (spriteNum == 2 ) {image=up2;}
+				if (attacking == false) {
+					if (spriteNum == 1 ) {image=up1;}
+					if (spriteNum == 2 ) {image=up2;}
+				}
+				if (attacking == true) {
+					tempScreenY = screenY - gp.tileSize;
+					if (spriteNum == 1 ) {image=attackUp1;}
+					if (spriteNum == 2 ) {image=attackUp2;}
+				}
 				break;
 			case "down":
-				if (spriteNum ==1) {image=down1;}
-				if (spriteNum ==2) {image=down2;}
+				if (attacking == false) {
+					if (spriteNum ==1) {image=down1;}
+					if (spriteNum ==2) {image=down2;}
+				}
+				if (attacking == true) {
+					if (spriteNum ==1) {image=attackDown1;}
+					if (spriteNum ==2) {image=attackDown2;}
+				}
 				break;
 			case "left":
-				if (spriteNum ==1) {image=left1;}
-				if (spriteNum ==2) {image=left2;}
+				if (attacking == false) {
+					if (spriteNum ==1) {image=left1;}
+					if (spriteNum ==2) {image=left2;}
+				}
+				if (attacking == true) {
+					tempScreenX = screenX - gp.tileSize;
+					if (spriteNum ==1) {image=attackLeft1;}
+					if (spriteNum ==2) {image=attackLeft2;}
+				}
 				break;
 			case "right":
-				if (spriteNum ==1) {image=right1;}
-				if (spriteNum ==2) {image=right2;}
+				if (attacking == false) {
+					if (spriteNum ==1) {image=right1;}
+					if (spriteNum ==2) {image=right2;}
+				}
+				if (attacking == true ) {
+					if (spriteNum ==1) {image=attackRight1;}
+					if (spriteNum ==2) {image=attackRight2;}
+				}
 				break;
-			
 			}
 			
 			//Drawing the monster H2 bar
@@ -525,7 +584,7 @@ public class Entity {
 			if(dying == true) {
 				dyingAnimation(g2);
 			}
-				g2.drawImage(image, screenX, screenY, null);
+				g2.drawImage(image, tempScreenX, tempScreenY, null);
 			
 				changeAlpha(g2, 1f);
 			}

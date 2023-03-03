@@ -40,6 +40,7 @@ public class Entity {
 	public boolean hpBarOn = false;
 	public boolean onPath = false;
 	public boolean knockBack = false;
+	public String knockBackDirection;
 
 	//Counters for the sprite, how long someone is invisble
 	public int spriteCounter = 0;
@@ -181,7 +182,7 @@ public class Entity {
 		return yDistance;
 	}
 	public int getTileDistance(Entity target) {
-		int tileDistance = (getXDistance(target)+getYDistance(target));
+		int tileDistance = (getXDistance(target)+getYDistance(target))/gp.tileSize;
 		return tileDistance;
 	}
 	public int getGoalCol(Entity target) {
@@ -231,6 +232,11 @@ public class Entity {
 			
 			actionLockCounter = 0;
 		}
+	}
+	
+	public void checkAttackOrNot(int rate, int straight, int horizontal) {
+		//only attacks when the target is in a certain distance.
+		
 	}
 	
 	//chooses the rate of fire as well as the interval as to when it's going to be shot
@@ -317,7 +323,7 @@ public class Entity {
 				speed = defaultSpeed;
 			}
 			else if (collisionOn == false) {
-				switch(gp.player.direction) {
+				switch(knockBackDirection) {
 				case "up": worldY -= speed; break;
 				case "down": worldY += speed; break;
 				case "left": worldX -= speed; break;
@@ -376,6 +382,66 @@ public class Entity {
 		}
 	}
 	
+	public void attacking () {
+		spriteCounter++;
+		if(spriteCounter <= 5) {
+			spriteNum = 1;
+		}
+		if(spriteCounter > 5 && spriteCounter <25) {
+			spriteNum = 2;
+			
+			//Save the current WorldX, Y and solid area values
+			int currentWorldX = worldX;
+			int currentWorldY = worldY;
+			int solidAreaWidth = solidArea.width;
+			int solidAreaHeight = solidArea.height;
+			
+			//Adjust the player's worldX and Y for the attackArea
+			switch (direction) {
+			case "up": worldY -= attackArea.height;break;
+			case "down": worldY += attackArea.height; break;
+			case "left": worldX -= attackArea.width; break;
+			case "right": worldX += attackArea.width; break;
+			}
+			
+			//attackArea becomes the solid area
+			solidArea.width = attackArea.width;
+			solidArea.height = attackArea.height;
+			
+			if (type == type_monster) {
+				if (gp.cChecker.checkPlayer(this) == true) {
+					damagePlayer(attack);
+				}
+				
+			} else {
+				//checks the monster collision with the update world X and world Y and solidArea
+				int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
+				gp.player.damageMonster(monsterIndex, this, attack, currentWeapon.knockBackPower);
+				
+				int iTileIndex = gp.cChecker.checkEntity(this, gp.iTile);
+				gp.player.damageInteractiveTile(iTileIndex);
+				
+				int projectileIndex = gp.cChecker.checkEntity(this, gp.projectile);
+				gp.player.damageProjectile(projectileIndex);
+			}
+			
+
+			
+			//After checking collision, then restore the original data. 
+			worldX = currentWorldX;
+			worldY = currentWorldY;
+			solidArea.width = solidAreaWidth;
+			solidArea.height = solidAreaHeight;
+			
+			
+		}
+		if (spriteCounter > 25) {
+			spriteNum = 1;
+			spriteCounter = 0;
+			attacking = false;
+		}
+	}
+	
 	public void damagePlayer(int attack)	{
 		if (gp.player.invincible == false) {
 			//we can give damage 
@@ -391,9 +457,12 @@ public class Entity {
 		}
 	}
 	
-	public void setKnockBack(Entity entity, int knockBackPower) {
-		entity.speed += knockBackPower;
-		entity.knockBack = true;
+	public void setKnockBack(Entity target, Entity attacker, int knockBackPower) {
+		this.attacker = attacker;
+		target.knockBackDirection = attacker.direction;
+		
+		target.speed += knockBackPower;
+		target.knockBack = true;
 	}
 	
 	public void draw(Graphics2D g2) {

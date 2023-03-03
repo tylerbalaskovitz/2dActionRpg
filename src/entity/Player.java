@@ -316,7 +316,7 @@ public class Player extends Entity{
 			
 			//checks the monster collision with the update world X and world Y and solidArea
 			int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
-			damageMonster(monsterIndex, attack, currentWeapon.knockBackPower);
+			damageMonster(monsterIndex, this, attack, currentWeapon.knockBackPower);
 			
 			int iTileIndex = gp.cChecker.checkEntity(this, gp.iTile);
 			damageInteractiveTile(iTileIndex);
@@ -398,14 +398,14 @@ public class Player extends Entity{
 		}
 	}
 	
-	public void damageMonster(int i, int attack, int knockBackPower) { 
+	public void damageMonster(int i, Entity attacker, int attack, int knockBackPower) { 
 		if (i != 999) {
 			
 			if(gp.monster[gp.currentMap][i].invincible == false) {
 				gp.playSE(5);
 				
 				if (knockBackPower > 0) {
-				knockBack(gp.monster[gp.currentMap][i], currentWeapon.knockBackPower);
+				setKnockBack(gp.monster[gp.currentMap][i], attacker, knockBackPower);
 				}
 				
 				int damage = attack - gp.monster[gp.currentMap][i].defense;
@@ -432,11 +432,7 @@ public class Player extends Entity{
 		}
 	}
 	
-	public void knockBack(Entity entity, int knockBackPower) {
-		entity.direction = direction;
-		entity.speed += knockBackPower;
-		entity.knockBack = true;
-	}
+
 	
 	public void damageInteractiveTile(int i) {
 		if (i != 999 && gp.iTile[gp.currentMap][i].destructible == true && gp.iTile[gp.currentMap][i].invincible == false && gp.iTile[gp.currentMap][i].isCorrectItem(this) == true) {

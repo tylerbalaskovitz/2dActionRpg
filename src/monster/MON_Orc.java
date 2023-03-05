@@ -26,6 +26,7 @@ GamePanel gp;
 		attack = 8;
 		defense = 2;
 		exp = 10;
+		knockBackPower = 5;
 		//setting a solid area of the slime. Since it's smaller it needs to be customized.
 		
 		solidArea.x = 4;

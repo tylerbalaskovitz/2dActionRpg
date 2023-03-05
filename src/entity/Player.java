@@ -91,6 +91,7 @@ public class Player extends Entity{
 		life = maxLife;
 		mana = maxMana;
 		invincible = false;
+		transparent = false;
 	}
 	
 	public void setItems() {
@@ -171,11 +172,49 @@ public class Player extends Entity{
 	
 	public void update() {
 		
-		if (attacking == true) {
+		if (knockBack == true) {
+			collisionOn = false;
+			gp.cChecker.checkTile(this);
+			
+			gp.cChecker.checkObject(this, true);
+			
+			//Checking NPC Collision
+			gp.cChecker.checkEntity(this, gp.npc);
+			//checks the collision of monsters
+			gp.cChecker.checkEntity(this, gp.monster);
+			//checks collision with the interactive tiles. Using the @SuppressWarnings annotation as a way to supress the compiler from thinking iTileIndex isn't used,
+			//when it is being used with the method of checkEntity as a way to ensure collision. Good to know to prevent the accidental deletion of code. 
+			@SuppressWarnings(value = { "unused"})
+			int iTileIndex = gp.cChecker.checkEntity(this, gp.iTile);
+			
+			if (collisionOn == true) {
+				knockBackCounter = 0;
+				knockBack = false;
+				speed = defaultSpeed;
+			}
+			else if (collisionOn == false) {
+				switch(knockBackDirection) {
+				case "up": worldY -= speed; break;
+				case "down": worldY += speed; break;
+				case "left": worldX -= speed; break;
+				case "right": worldX += speed; break;
+				
+				}
+			}
+			
+			knockBackCounter++;
+			if (knockBackCounter == 10) {
+				knockBackCounter = 0;
+				knockBack = false;
+				speed = defaultSpeed;
+			}
+		} 
+		else if (attacking == true) {
 			attacking();
 		}
 		else if (keyH.spacePressed == true) {
 			guarding = true;
+			guardCounter++;
 		}
 		else if (keyH.upPressed == true || keyH.downPressed == true || keyH.leftPressed == true || keyH.rightPressed == true || keyH.enterPressed == true) {
 		
@@ -238,10 +277,9 @@ public class Player extends Entity{
 		}
 		
 		attackCanceled = false;
-		
 		gp.keyH.enterPressed = false;
-		
 		guarding = false;
+		guardCounter = 0;
 		
 		spriteCounter++;
 		if (spriteCounter > 15) {
@@ -285,6 +323,7 @@ public class Player extends Entity{
 			invincibleCounter++;
 			if (invincibleCounter > 60) {
 				invincible = false;
+				transparent = false;
 				invincibleCounter = 0;
 			}
 		}
@@ -359,9 +398,14 @@ public class Player extends Entity{
 		if (i != 999) {
 			if (invincible == false && gp.monster[gp.currentMap][i].dying == false) {
 				int damage = gp.monster[gp.currentMap][i].attack - defense;
+				if (damage < 1) {
+					damage = 1;
+				}
+				
 			gp.playSE(6);
 			life -= damage;
 			invincible = true;
+			transparent = true;
 			}
 		}
 	}
@@ -374,6 +418,10 @@ public class Player extends Entity{
 				
 				if (knockBackPower > 0) {
 				setKnockBack(gp.monster[gp.currentMap][i], attacker, knockBackPower);
+				}
+				
+				if (gp.monster[gp.currentMap][i].offBalance == true) {
+					attack *= 5;
 				}
 				
 				int damage = attack - gp.monster[gp.currentMap][i].defense;
@@ -594,7 +642,7 @@ public class Player extends Entity{
 		}
 		
 		//drawing the player so they are somewhat more transparent depending on whether or not they are under the timer of being invincible
-		if (invincible == true) {
+		if (transparent == true) {
 			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
 		}
 		

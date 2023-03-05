@@ -44,6 +44,7 @@ public class Player extends Entity{
 		setDefaultValues();
 		getPlayerImage();
 		getPlayerAttackImage();
+		getGuardImage();
 		setItems();
 	}
 	
@@ -71,6 +72,7 @@ public class Player extends Entity{
 		projectile = new OBJ_Fireball(gp);
 		attack = getAttack(); //Total attack value is decided by strength and weapon
 		defense = getDefense(); //the total defense is decided by dexterity and your shield. So both of these stats are based on multiple elements
+		
 	}
 	
 	public void setDefaultPosition() {
@@ -148,6 +150,14 @@ public class Player extends Entity{
 		}
 	}
 	
+	public void getGuardImage() {
+		guardUp = setup("/player/boy_guard_up", gp.tileSize, gp.tileSize);
+		guardDown = setup("/player/boy_guard_down", gp.tileSize, gp.tileSize);
+		guardLeft = setup("/player/boy_guard_left", gp.tileSize, gp.tileSize);
+		guardRight = setup("/player/boy_guard_right", gp.tileSize, gp.tileSize);
+		
+	}
+	
 	public void getSleepingImage(BufferedImage image) {
 		up1 = image;
 		up2 = image;
@@ -163,6 +173,9 @@ public class Player extends Entity{
 		
 		if (attacking == true) {
 			attacking();
+		}
+		else if (keyH.spacePressed == true) {
+			guarding = true;
 		}
 		else if (keyH.upPressed == true || keyH.downPressed == true || keyH.leftPressed == true || keyH.rightPressed == true || keyH.enterPressed == true) {
 		
@@ -227,6 +240,8 @@ public class Player extends Entity{
 		attackCanceled = false;
 		
 		gp.keyH.enterPressed = false;
+		
+		guarding = false;
 		
 		spriteCounter++;
 		if (spriteCounter > 15) {
@@ -532,6 +547,9 @@ public class Player extends Entity{
 				if (spriteNum == 1 ) {image=attackUp1;}
 				if (spriteNum == 2 ) {image=attackUp2;}
 			}
+			if (guarding == true) {
+				image = guardUp;
+			}
 			break;
 		case "down":
 			if (attacking == false) {
@@ -541,6 +559,9 @@ public class Player extends Entity{
 			if (attacking == true) {
 				if (spriteNum ==1) {image=attackDown1;}
 				if (spriteNum ==2) {image=attackDown2;}
+			}
+			if (guarding == true) {
+				image = guardDown;
 			}
 			break;
 		case "left":
@@ -553,6 +574,9 @@ public class Player extends Entity{
 				if (spriteNum ==1) {image=attackLeft1;}
 				if (spriteNum ==2) {image=attackLeft2;}
 			}
+			if (guarding == true) {
+				image = guardLeft;
+			}
 			break;
 		case "right":
 			if (attacking == false) {
@@ -562,6 +586,9 @@ public class Player extends Entity{
 			if (attacking == true ) {
 				if (spriteNum ==1) {image=attackRight1;}
 				if (spriteNum ==2) {image=attackRight2;}
+			}
+			if (guarding == true) {
+				image = guardRight;
 			}
 			break;
 		}

@@ -15,6 +15,8 @@ import java.util.Comparator;
 import javax.swing.JPanel;
 
 import ai.PathFinder;
+import data.DataStorage;
+import data.GameItems;
 import data.SaveLoad;
 import entity.Entity;
 import entity.Player;
@@ -67,6 +69,8 @@ public class GamePanel extends JPanel implements Runnable{
 	public PathFinder pFinder = new PathFinder(this);
 	EnvironmentManager eManager = new EnvironmentManager(this);
 	Map map = new Map(this);
+	public GameItems gameItems = new GameItems(this);
+	DataStorage dataStorage = new DataStorage();
 	SaveLoad saveLoad = new SaveLoad(this);
 	Thread gameThread;
 	

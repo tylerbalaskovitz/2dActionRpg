@@ -6,7 +6,6 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import entity.Entity;
 import main.GamePanel;
 
 public class SaveLoad {
@@ -17,12 +16,6 @@ public class SaveLoad {
 		this.gp = gp;
 	}
 	
-	public Entity getObject(String itemName) {
-		Entity obj = null;
-		switch(itemName) {
-		
-		}
-	}
 	
 	public void save() {
 		try {
@@ -40,6 +33,9 @@ public class SaveLoad {
 				ds.nextLevelExp = gp.player.nextLevelExp;
 				ds.coin = gp.player.coin;
 				
+				ds.itemAmounts.clear();
+				ds.itemAmounts.clear();
+				
 				//Player Inventory
 				for (int i = 0; i < gp.player.inventory.size(); i++) {
 					ds.itemNames.add(gp.player.inventory.get(i).name);
@@ -50,6 +46,7 @@ public class SaveLoad {
 				//Write the DataStorage object
 				
 				oos.writeObject(ds);
+				oos.close();
 				
 				
 			} catch (Exception e) {
@@ -75,6 +72,17 @@ public class SaveLoad {
 			gp.player.nextLevelExp = ds.nextLevelExp;
 			gp.player.coin = ds.coin;
 			
+			gp.player.inventory.clear();
+			
+			for (int i = 0; i < ds.itemNames.size(); i++) {
+				for (int j = 0; j < gp.gameItems.itemList.size(); j++) {
+					if (ds.itemNames.get(i).equals(gp.gameItems.itemList.get(j).name)){
+						gp.player.inventory.add(gp.gameItems.itemList.get(j));
+							gp.player.inventory.get(i).amount = ds.itemAmounts.get(i);
+					}
+				}
+			}
+			ois.close();
 			
 		} catch (Exception e) {
 			e.printStackTrace();

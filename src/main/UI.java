@@ -803,6 +803,7 @@ public class UI {
 				subState = 0;
 				gp.gameState = gp.titleState;
 				gp.music.stop();
+				gp.resetGame(true);
 			}
 		}
 		

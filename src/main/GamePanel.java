@@ -15,6 +15,7 @@ import java.util.Comparator;
 import javax.swing.JPanel;
 
 import ai.PathFinder;
+import data.SaveLoad;
 import entity.Entity;
 import entity.Player;
 import environment.EnvironmentManager;
@@ -66,6 +67,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public PathFinder pFinder = new PathFinder(this);
 	EnvironmentManager eManager = new EnvironmentManager(this);
 	Map map = new Map(this);
+	SaveLoad saveLoad = new SaveLoad(this);
 	Thread gameThread;
 	
 	//Entity and Object
@@ -128,23 +130,19 @@ public class GamePanel extends JPanel implements Runnable{
 		
 	}
 	
-	public void retry() {
-		player.restoreLifeAndMana();
+	public void resetGame(boolean restart) {
+		player.restoreGameStatesAndStats();
 		aSetter.setNPC();
 		aSetter.setMonster();
 		player.setDefaultPosition();
-		player.restoreLifeAndMana();
-	}
-	
-	public void restart() {
-		player.restoreLifeAndMana();
+		player.restoreGameStatesAndStats();
+		 if (restart == true) {
 		player.setDefaultValues();
-		player.setDefaultPosition();
 		player.setItems();
-		aSetter.setInteractiveTile();
-		aSetter.setNPC();
-		aSetter.setMonster();
 		aSetter.setObject();
+		aSetter.setInteractiveTile();
+		eManager.lighting.resetDay();
+		 }
 	}
 	
 	public void setFullScreen() {

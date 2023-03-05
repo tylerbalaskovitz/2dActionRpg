@@ -42,10 +42,7 @@ public class Player extends Entity{
 		solidArea.height = 32;
 		
 		setDefaultValues();
-		getPlayerImage();
-		getPlayerAttackImage();
-		getGuardImage();
-		setItems();
+
 	}
 	
 	public void setDefaultValues() {
@@ -69,10 +66,15 @@ public class Player extends Entity{
 		coin = 550;
 		currentWeapon = new OBJ_Sword_Normal(gp);
 		currentShield = new OBJ_Shield_Wood(gp);
+		currentLight = null;
 		projectile = new OBJ_Fireball(gp);
 		attack = getAttack(); //Total attack value is decided by strength and weapon
 		defense = getDefense(); //the total defense is decided by dexterity and your shield. So both of these stats are based on multiple elements
 		
+		getPlayerImage();
+		getPlayerAttackImage();
+		getGuardImage();
+		setItems();
 	}
 	
 	public void setDefaultPosition() {
@@ -87,11 +89,15 @@ public class Player extends Entity{
 		direction = "down";
 	}
 	
-	public void restoreLifeAndMana(){
+	public void restoreGameStatesAndStats(){
 		life = maxLife;
 		mana = maxMana;
 		invincible = false;
 		transparent = false;
+		attacking = false;
+		guarding = false;
+		knockBack = false;
+		lightUpdated = true;
 	}
 	
 	public void setItems() {

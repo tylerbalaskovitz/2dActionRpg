@@ -50,4 +50,14 @@ public class GameItems {
 		itemList.add(new OBJ_Tent(gp));
 	}
 	
+	public Entity getGameItem( String itemName) {
+		Entity item = null;
+		for (int i = 0; i < itemList.size(); i++) {
+			if (itemName.equals(itemList.get(i).name)) {
+				item = itemList.get(i);
+			}
+		}
+		return item;
+	}
+	
 }

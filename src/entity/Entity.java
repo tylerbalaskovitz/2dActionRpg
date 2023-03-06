@@ -46,6 +46,7 @@ public class Entity {
 	public boolean transparent = false;
 	public boolean offBalance = false;
 	public Entity loot;
+
 	public boolean opened = false;
 
 	//Counters for the sprite, how long someone is invisble
@@ -204,8 +205,18 @@ public class Entity {
 		return goalRow;
 	}
 	
-	public void setLoot(Entity entity) {}
+	public void setLoot(Entity loot) {
+		this.loot = loot;
+	}
 	
+	public boolean isOpened() {
+		return opened;
+	}
+
+	public void setOpened(boolean opened) {
+		this.opened = opened;
+	}
+
 	public void setAction() {}
 	
 	public void checkStartChasingOrNot(Entity target, int distance, int rate) {

@@ -21,7 +21,6 @@ public class OBJ_Chest extends Entity {
 		image2 = setup("/objects/chest_opened", gp.tileSize, gp.tileSize);
 		down1 = image;
 		collision = true;
-		
 		solidArea.x = 4;
 		solidArea.y = 16;
 		solidArea.width = 40;
@@ -48,14 +47,15 @@ public class OBJ_Chest extends Entity {
 			else {
 				sb.append("\nThe " + loot.name + " has been added to your inventory!");
 				down1 = image2;
-				opened = true;
+				setOpened(true); 
 			}
 			gp.ui.currentDialogue = sb.toString();
 			
 			} else {
 				gp.ui.currentDialogue = "It's empty.";
-						
+				setOpened(true); 
 			}
 	}
+
 	
 }

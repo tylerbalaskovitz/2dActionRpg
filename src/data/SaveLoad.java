@@ -54,7 +54,7 @@ public class SaveLoad {
 				ds.mapObjectLootNames = new String[gp.maxMap][gp.obj[1].length];
 				ds.mapObjectOpened = new boolean [gp.maxMap][gp.obj[1].length];
 				
-				for (int mapNum =0; mapNum < gp.maxMap; mapNum++) {
+				for (int mapNum = 0; mapNum < gp.maxMap; mapNum++) {
 					for (int i = 0; i < gp.obj[1].length; i++) {
 						if (gp.obj[mapNum][i] == null) {
 							ds.mapObjectNames[mapNum][i] = "NA";
@@ -62,11 +62,27 @@ public class SaveLoad {
 							ds.mapObjectNames[mapNum][i] = gp.obj[mapNum][i].name;
 							ds.mapObjectWorldX[mapNum][i] = gp.obj[mapNum][i].worldX;
 							ds.mapObjectWorldY[mapNum][i] = gp.obj[mapNum][i].worldY;
+							
+							System.out.println("------------------------------");
+							System.out.println(gp.obj[mapNum][i].name);
+							System.out.println(gp.obj[mapNum][i].worldX);
+							System.out.println(gp.obj[mapNum][i].worldY);
+							
+							
+							
 							if (gp.obj[mapNum][i].loot != null) {
-								ds.mapObjectLootNames[mapNum][i]=gp.obj[mapNum][i].loot.name;
-								
+								ds.mapObjectLootNames[mapNum][i] = gp.obj[mapNum][i].loot.name;
+								System.out.println(gp.obj[mapNum][i].loot.name);
 							}
-							ds.mapObjectOpened[mapNum][i] = gp.obj[mapNum][i].opened;
+							if (gp.obj[mapNum][i].opened == true) {
+								ds.mapObjectOpened[mapNum][i] = true;
+							}
+							
+							System.out.println(gp.obj[mapNum][i].opened);
+							if (ds.mapObjectOpened[mapNum][i] == true) {
+								System.out.println("TRUE");
+							}
+
 						}
 					}
 				}
@@ -120,27 +136,49 @@ public class SaveLoad {
 			//loading objects on the name.
 			for (int mapNum =0; mapNum < gp.maxMap; mapNum++) {
 				for (int i = 0; i < gp.obj[1].length; i++) {
+					
+					
 					if(ds.mapObjectNames[mapNum][i].equals("NA")) {
 						gp.obj[mapNum][i] = null;
 					}
 					else {
-						if (ds.mapObjectNames[mapNum][i].equals(gp.gameItems.itemList.get(i).name)) {
+						
+						gp.obj[mapNum][i] = gp.gameItems.getGameItem(ds.mapObjectNames[mapNum][i]);
+						gp.obj[mapNum][i].worldX = ds.mapObjectWorldX[mapNum][i];
+						gp.obj[mapNum][i].worldY = ds.mapObjectWorldY[mapNum][i];
+						if (ds.mapObjectLootNames[mapNum][i] != null ) {
+							gp.obj[mapNum][i].setLoot(gp.gameItems.getGameItem(ds.mapObjectLootNames[mapNum][i]));
+						}
+						
+						gp.obj[mapNum][i].setOpened(ds.mapObjectOpened[mapNum][i]);
+						System.out.println("00000000000000000000000000000000000000000");
+						System.out.println(gp.obj[mapNum][i].opened);
+						System.out.println("00000000000000000000000000000000000000000");
+						if (gp.obj[mapNum][i].opened == true) {
+							System.out.println("yes, it's opened.");
+							gp.obj[mapNum][i].down1 = gp.obj[mapNum][i].image2;
+						}
+						
+						/*
+					if (ds.mapObjectNames[mapNum][i].equals(gp.gameItems.itemList.get(i).name)) {
 						gp.obj[mapNum][i] = gp.gameItems.itemList.get(i);
 						gp.obj[mapNum][i].worldX = ds.mapObjectWorldX[mapNum][i];
 						gp.obj[mapNum][i].worldY = ds.mapObjectWorldY[mapNum][i];
-						
-						if (ds.mapObjectLootNames[mapNum][i] != null && gp.obj[mapNum][i].loot.name.equals(gp.gameItems.itemList.get(i).name)) {
-							gp.obj[mapNum][i].loot = gp.gameItems.itemList.get(i);
-						}
-						
 						gp.obj[mapNum][i].opened = ds.mapObjectOpened[mapNum][i];
-						if (gp.obj[mapNum][i].opened == true) {
-							gp.obj[mapNum][i].down1 = gp.obj[mapNum][i].image2;
+							//if (ds.mapObjectLootNames[mapNum][i] != null && ds.mapObjectLootNames[mapNum][i].equals(gp.gameItems.itemList.get(i).name)) {
+							if (ds.mapObjectLootNames[mapNum][i] != null && gp.obj[mapNum][i].loot.name.equals(gp.gameItems.itemList.get(i).name)) {
+								gp.obj[mapNum][i].loot = gp.gameItems.itemList.get(i);
+							}
+						gp.obj[mapNum][i].setOpened(ds.mapObjectOpened[mapNum][i]);
+							if (gp.obj[mapNum][i].opened == true) {
+								//gp.obj[mapNum][i].loot = null;
+								gp.obj[mapNum][i].down1 = gp.obj[mapNum][i].image2;
+							}
 						}
-							
-						}
+						*/
 						
-					}	
+					}
+					
 				}
 			}
 			

@@ -21,8 +21,9 @@ public class NPC_OldMan extends Entity{
 		
 		solidArea.width = 32;
 		solidArea.height = 32;
-		
 		dialogueSet = -1;
+		
+		
 	}
 	
 	public void getImage() {

@@ -37,6 +37,8 @@ public class UI {
 	public int subState = 0;
 	public int counter = 0;
 	public Entity npc;
+	int charIndex = 0;
+	String combinedText = "";
 
 	
 	
@@ -335,9 +337,27 @@ public class UI {
 		//Checking to see if there's any text within the dialogue array
 		if (npc.dialogues[npc.dialogueSet][npc.dialogueIndex] != null) {
 			
-			currentDialogue = npc.dialogues[npc.dialogueSet][npc.dialogueIndex];
+			
+			
+			// currentDialogue = npc.dialogues[npc.dialogueSet][npc.dialogueIndex];
+			
+			char characters[] = npc.dialogues[npc.dialogueSet][npc.dialogueIndex].toCharArray();
+			
+			if (charIndex < characters.length) {
+				
+				gp.playSE(17);
+				String s = String.valueOf(characters[charIndex]);
+				combinedText = combinedText + s;
+				currentDialogue = combinedText;
+				
+				charIndex++;
+			}
 			
 			if (gp.keyH.enterPressed == true) {
+				
+				charIndex = 0;
+				combinedText = "";
+				
 				if (gp.gameState == gp.dialogueState) {
 					npc.dialogueIndex++;
 					gp.keyH.enterPressed = false;

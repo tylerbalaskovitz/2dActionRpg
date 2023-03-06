@@ -39,12 +39,16 @@ public class NPC_OldMan extends Entity{
 	
 	public void setDialogue() {
 		
-		dialogues[0] = "Hello, back in the day,";
-		dialogues[1] = "I used to sell nice rock";
-		dialogues[2] = "Now, all I do is sell ho's.";
-		dialogues[3] = "Lemme know if you're buying you";
+		dialogues[0][0] = "Hello, back in the day,";
+		dialogues[0][1] = "I used to sell nice rock";
+		dialogues[0][2] = "Now, all I do is sell ho's.";
+		dialogues[0][3] = "Lemme know if you're buying you";
 		
-		
+		dialogues[1][0] = "If you become tired, try resting at the water";
+		dialogues[1][1] = "However, the monsters reappear when you rest.\nThey see it as a moment to safely return.";
+		dialogues[1][2] = "Anyway, I'm going to go back to slinging";
+				
+		dialogues[2][0] = "I wonder how to open these doors...";
 	}
 	
 	public void setAction() {
@@ -88,9 +92,9 @@ public class NPC_OldMan extends Entity{
 		}
 	}
 		
-	public void speak() {
+	public void facePlayer() {
 
-	super.speak();
+	super.facePlayer();
 	
 	onPath = true;
 	

@@ -52,8 +52,8 @@ public class NPC_Merchant extends Entity{
 		inventory.add(new OBJ_Shield_Blue(gp));
 	}
 	
-	public void speak() {
-		super.speak();
+	public void facePlayer() {
+		super.facePlayer();
 		gp.gameState = gp.tradeState;
 		gp.ui.npc = this;
 	}

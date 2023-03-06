@@ -3,9 +3,9 @@ package data;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import main.GamePanel;
 
 public class DataStorage implements Serializable{
+	private static final long serialVersionUID = -5900677515883187253L;
 
 	
 	public DataStorage() {
@@ -21,6 +21,12 @@ public class DataStorage implements Serializable{
 	
 	int currentWeaponSlot;
 	int currentShieldSlot;
+	
+	String mapObjectNames[][];
+	int mapObjectWorldX[][];
+	int mapObjectWorldY[][];
+	String mapObjectLootNames[][];
+	boolean mapObjectOpened[][];
 	
 
 	

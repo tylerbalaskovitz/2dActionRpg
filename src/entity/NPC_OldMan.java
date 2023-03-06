@@ -22,6 +22,7 @@ public class NPC_OldMan extends Entity{
 		solidArea.width = 32;
 		solidArea.height = 32;
 		
+		dialogueSet = -1;
 	}
 	
 	public void getImage() {
@@ -91,13 +92,18 @@ public class NPC_OldMan extends Entity{
 			}
 		}
 	}
+	public void speak() {
+		facePlayer();
+		startDialogue(this, dialogueSet);
 		
-	public void facePlayer() {
-
-	startDialogue(this, dialogueSet);
-	
-	onPath = true;
-	
+		dialogueSet++;
+		
+		if (dialogues[dialogueSet][0] == null) {
+			dialogueSet = 0;
+		}
+		
+		//onPath = true;
 	}
+		
 	
 }

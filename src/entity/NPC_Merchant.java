@@ -39,7 +39,10 @@ public class NPC_Merchant extends Entity{
 	public void setDialogue() {
 		
 		dialogues[0][0] = "He he he, so you found me\nI have some good shit\nBut it ain't free";
-		
+		dialogues[1][0] = "Come again, you little prick!";
+		dialogues[2][0] = "You need more money to buy that!";
+		dialogues[3][0] = "You can't carry any more items!";
+		dialogues[4][0] = "You cannot sell an equipped item!";
 		
 	}
 	
@@ -52,8 +55,8 @@ public class NPC_Merchant extends Entity{
 		inventory.add(new OBJ_Shield_Blue(gp));
 	}
 	
-	public void facePlayer() {
-		super.facePlayer();
+	public void speak() {
+		facePlayer();
 		gp.gameState = gp.tradeState;
 		gp.ui.npc = this;
 	}

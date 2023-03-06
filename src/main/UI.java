@@ -332,6 +332,27 @@ public class UI {
 		x+= gp.tileSize;
 		y+= gp.tileSize;
 		
+		//Checking to see if there's any text within the dialogue array
+		if (npc.dialogues[npc.dialogueSet][npc.dialogueIndex] != null) {
+			
+			currentDialogue = npc.dialogues[npc.dialogueSet][npc.dialogueIndex];
+			
+			if (gp.keyH.enterPressed == true) {
+				if (gp.gameState == gp.dialogueState) {
+					npc.dialogueIndex++;
+					gp.keyH.enterPressed = false;
+				}
+			}
+			
+			
+		}else { //if no text is in the array, then the conversation is ended and the dialogue index must be reset
+			npc.dialogueIndex = 0;
+			if (gp.gameState == gp.dialogueState) {
+				gp.gameState = gp.playState;
+			}
+			
+		}
+		
 		for(String line : currentDialogue.split("\n")) {
 			g2.drawString(line, x, y);
 			y+= 40;

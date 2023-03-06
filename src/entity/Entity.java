@@ -25,15 +25,15 @@ public class Entity {
 	public Rectangle attackArea = new Rectangle(0, 0, 0, 0);
 	public int solidAreaDefaultX, solidAreaDefaultY;
 	public boolean collision = false;
-	String dialogues[][] = new String[20][20];
+	public String dialogues[][] = new String[20][20];
 	public Entity attacker;
 	
 	//State
 	public int worldX, worldY;
 	public String direction = "down";
 	public int spriteNum = 1;
-	int dialogueSet = 0;
-	int dialogueIndex = 0;
+	public int dialogueSet = 0;
+	public int dialogueIndex = 0;
 	public boolean collisionOn = false;
 	public boolean invincible = false;
 	public boolean attacking = false;

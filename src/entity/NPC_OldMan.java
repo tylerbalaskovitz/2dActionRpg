@@ -94,7 +94,8 @@ public class NPC_OldMan extends Entity{
 		
 	public void facePlayer() {
 
-	super.facePlayer();
+	facePlayer();
+	startDialogue(this, dialogueSet);
 	
 	onPath = true;
 	

@@ -414,7 +414,6 @@ public class Player extends Entity{
 		if (gp.keyH.enterPressed == true) {
 		if (i != 999) {
 				attackCanceled = true;
-				gp.gameState = gp.dialogueState;
 				gp.npc[gp.currentMap][i].facePlayer();
 		}
 		}

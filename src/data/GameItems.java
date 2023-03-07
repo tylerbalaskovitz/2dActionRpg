@@ -32,6 +32,7 @@ public class GameItems {
 	}
 	
 	public void addGameItems() {
+		itemList.clear();
 		itemList.add(new OBJ_Axe(gp));
 		itemList.add(new OBJ_Boots(gp));
 		itemList.add(new OBJ_Chest(gp));
@@ -51,6 +52,7 @@ public class GameItems {
 	}
 	
 	public Entity getGameItem( String itemName) {
+		addGameItems();
 		Entity item = null;
 		for (int i = 0; i < itemList.size(); i++) {
 			if (itemName.equals(itemList.get(i).name)) {

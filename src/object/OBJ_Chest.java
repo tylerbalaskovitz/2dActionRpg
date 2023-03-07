@@ -55,11 +55,14 @@ public class OBJ_Chest extends Entity {
 			else {
 				startDialogue(this, 1);
 				down1 = image2;
-				setOpened(true); 
+				setOpened(true);
+				this.opened = true;
 			}
 			
-			} else {
+			} else if (this.loot != null && opened == true){
+				setDialogue();
 				startDialogue(this, 2);
+				gp.ui.drawDialogueScreen();
 			}
 	}
 

@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import entity.Entity;
 import main.GamePanel;
 
 public class SaveLoad {
@@ -69,8 +70,10 @@ public class SaveLoad {
 							System.out.println(gp.obj[mapNum][i].worldY);
 							
 							
-							
 							if (gp.obj[mapNum][i].loot != null) {
+								System.out.println("===============================================");
+								System.out.println("Saving the map loot");
+								
 								ds.mapObjectLootNames[mapNum][i] = gp.obj[mapNum][i].loot.name;
 								System.out.println(gp.obj[mapNum][i].loot.name);
 							}
@@ -147,13 +150,21 @@ public class SaveLoad {
 						gp.obj[mapNum][i].worldX = ds.mapObjectWorldX[mapNum][i];
 						gp.obj[mapNum][i].worldY = ds.mapObjectWorldY[mapNum][i];
 						if (ds.mapObjectLootNames[mapNum][i] != null ) {
-							gp.obj[mapNum][i].setLoot(gp.gameItems.getGameItem(ds.mapObjectLootNames[mapNum][i]));
+							Entity loot = null;
+							gp.obj[mapNum][i].setLoot(loot);
+							loot = gp.gameItems.getGameItem(ds.mapObjectLootNames[mapNum][i]);
+							gp.obj[mapNum][i].setLoot(loot);
+							if (gp.obj[mapNum][i].loot == null) {
+								System.out.println("The loot is null");
+							}
+							if(gp.obj[mapNum][i].loot != null) {
+								System.out.println("The loot is not null");
+							}
+							
 						}
 						
 						gp.obj[mapNum][i].setOpened(ds.mapObjectOpened[mapNum][i]);
-						System.out.println("00000000000000000000000000000000000000000");
 						System.out.println(gp.obj[mapNum][i].opened);
-						System.out.println("00000000000000000000000000000000000000000");
 						if (gp.obj[mapNum][i].opened == true) {
 							System.out.println("yes, it's opened.");
 							gp.obj[mapNum][i].down1 = gp.obj[mapNum][i].image2;

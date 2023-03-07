@@ -145,7 +145,7 @@ public class EventHandler {
 		if (gp.keyH.enterPressed) {
 			gp.gameState = gp.dialogueState;
 			gp.player.attackCanceled = true;
-			entity.facePlayer();
+			entity.speak();
 		}
 	}
 	

@@ -9,7 +9,8 @@ public class OBJ_Chest extends Entity {
 	Entity loot;
 	boolean opened = false;
 	
-	public OBJ_Chest(GamePanel gp) {
+	//have both the variables at the same time and during the save/load class, have the loot return to the same
+	public OBJ_Chest(GamePanel gp, Entity loot) {
 		
 		super(gp);
 		this.gp = gp;
@@ -27,14 +28,10 @@ public class OBJ_Chest extends Entity {
 		solidArea.height = 32;
 		solidAreaDefaultX = solidArea.x;
 		solidAreaDefaultY = solidArea.y;
-		
+		this.loot = loot;
 		
 	}
 	
-	public void setLoot(Entity loot) {
-		this.loot = loot;
-		setDialogue();
-	}
 	
 	public void setDialogue(){
 		dialogues[0][0] = "You opend the chest and find a " + loot.name + "!" + "\n...But you cannot carry anymore items!";

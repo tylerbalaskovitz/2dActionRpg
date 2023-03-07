@@ -35,7 +35,7 @@ public class GameItems {
 		itemList.clear();
 		itemList.add(new OBJ_Axe(gp));
 		itemList.add(new OBJ_Boots(gp));
-		itemList.add(new OBJ_Chest(gp));
+		itemList.add(new OBJ_Chest(gp, new OBJ_Key(gp)));
 		itemList.add(new OBJ_Coin_Bronze(gp));
 		itemList.add(new OBJ_Door(gp));
 		itemList.add(new OBJ_Fireball(gp));

@@ -45,12 +45,13 @@ public class TileManager {
 			e.printStackTrace();
 		}
 		
+		//initializes the tile array based on the fileNames size
 		tile = new Tile[fileNames.size()];
 		getTileImage();
 		
 		
 	
-		is = getClass().getResourceAsStream("/maps/sample.txt");
+		is = getClass().getResourceAsStream("/maps/worldmap.txt");
 		br = new BufferedReader(new InputStreamReader(is));
 		
 		try {

@@ -872,6 +872,8 @@ public class UI {
 		g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
 		
 		if (counter == 50) {
+			
+			//The transiation from one map to the next is done here
 			counter = 0;
 			gp.gameState = gp.playState;
 			gp.currentMap = gp.eHandler.tempMap;
@@ -879,7 +881,7 @@ public class UI {
 			gp.player.worldY = gp.tileSize * gp.eHandler.tempRow;
 			gp.eHandler.previousEventX = gp.player.worldX;
 			gp.eHandler.previousEventY = gp.player.worldY;
-			
+			gp.changeArea();
 		}
 	}
 	

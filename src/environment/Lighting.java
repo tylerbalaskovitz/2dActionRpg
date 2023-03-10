@@ -116,7 +116,7 @@ public class Lighting {
 		//check the state of the day
 		if (dayState == day) {
 			dayCounter++;
-			if(dayCounter > 600) {
+			if(dayCounter > 3600) {
 				dayState = dusk;
 				dayCounter = 0;
 			}
@@ -132,7 +132,7 @@ public class Lighting {
 		if (dayState == night) {
 			dayCounter++;
 			
-			if (dayCounter > 600) {
+			if (dayCounter > 3600) {
 				dayState = dawn;
 				dayCounter = 0;
 			}
@@ -149,8 +149,15 @@ public class Lighting {
 	
 	public void draw(Graphics2D g2) {
 		
-		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, filterAlpha));
-		g2.drawImage(darknessFilter, 0, 0, null);
+		//If the current area is outside, then the filter is set to G2 with teh applied filter alpha, whereas if it's a dungeon, then the value will stay at 1f
+		//However, if it's indoors then we don't apply any darkness effect. 
+		if (gp.currentArea == gp.outside) {
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, filterAlpha));
+		}
+		if (gp.currentArea == gp.outside || gp.currentArea == gp.dungeon) {
+			g2.drawImage(darknessFilter, 0, 0, null);
+
+		}
 		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 		
 		//INformation for debugging

@@ -12,6 +12,7 @@ import object.OBJ_Heart;
 import object.OBJ_Key;
 import object.OBJ_Lantern;
 import object.OBJ_ManaCrystal;
+import object.OBJ_Pickaxe;
 import object.OBJ_Potion_Red;
 import object.OBJ_Shield_Blue;
 import object.OBJ_Tent;
@@ -100,7 +101,12 @@ public class AssetSetter {
 		gp.obj[mapNum][i].worldY = gp.tileSize*37;
 		i++;
 		
-		
+		mapNum = 2;
+		i = 0;
+		gp.obj[mapNum][i] = new OBJ_Chest((gp), new OBJ_Pickaxe(gp));
+		gp.obj[mapNum][i].worldX = gp.tileSize*40;
+		gp.obj[mapNum][i].worldY = gp.tileSize*41;
+		i++;
 		
 	}
 	

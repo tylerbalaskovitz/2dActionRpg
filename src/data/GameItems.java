@@ -14,6 +14,7 @@ import object.OBJ_Heart;
 import object.OBJ_Key;
 import object.OBJ_Lantern;
 import object.OBJ_ManaCrystal;
+import object.OBJ_Pickaxe;
 import object.OBJ_Potion_Red;
 import object.OBJ_Rock;
 import object.OBJ_Shield_Blue;
@@ -49,6 +50,7 @@ public class GameItems {
 		itemList.add(new OBJ_Shield_Wood(gp));
 		itemList.add(new OBJ_Sword_Normal(gp));
 		itemList.add(new OBJ_Tent(gp));
+		itemList.add(new OBJ_Pickaxe(gp));
 	}
 	
 	public Entity getGameItem( String itemName) {

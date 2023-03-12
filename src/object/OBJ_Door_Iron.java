@@ -7,6 +7,10 @@ public class OBJ_Door_Iron extends Entity{
 
 	GamePanel gp;
 	
+	public OBJ_Door_Iron() {
+		name = "Iron Door";
+	}
+	
 	public OBJ_Door_Iron(GamePanel gp) {
 		super(gp);
 		this.gp = gp;

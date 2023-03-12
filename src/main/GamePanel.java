@@ -441,6 +441,8 @@ public class GamePanel extends JPanel implements Runnable{
 				playMusic(19);
 				
 			}
+			
+			aSetter.setNPC();
 		}
 		
 		currentArea = nextArea;

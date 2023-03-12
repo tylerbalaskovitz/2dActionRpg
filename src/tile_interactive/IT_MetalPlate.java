@@ -5,9 +5,15 @@ import main.GamePanel;
 public class IT_MetalPlate extends InteractiveTile {
 
 		GamePanel gp;
+		
+		public IT_MetalPlate() {
+			name = "Metal Plate";
+		}
 	
 		public IT_MetalPlate(GamePanel gp, int col, int row) {
 		super(gp, col, row);
+		
+		name = "Metal Plate";
 
 		this.worldX = gp.tileSize * col;
 		this.worldY = gp.tileSize * row;

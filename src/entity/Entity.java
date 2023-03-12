@@ -27,6 +27,7 @@ public class Entity {
 	public boolean collision = false;
 	public String dialogues[][] = new String[20][20];
 	public Entity attacker;
+	public Entity linkedEntity;
 	
 	//State
 	public int worldX, worldY;
@@ -115,7 +116,9 @@ public class Entity {
 	public final int type_pickaxe = 10;
 	
 	
-	
+	public Entity () {
+		
+	}
 	
 	public Entity(GamePanel gp) {
 		this.gp = gp;
@@ -170,6 +173,8 @@ public class Entity {
 		dialogueSet = setNum;
 		
 	}
+	
+	public void move(String direction) {}
 	
 	public void interact() {
 		

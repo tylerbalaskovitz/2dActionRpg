@@ -11,6 +11,9 @@ public class InteractiveTile extends Entity {
 	
 	public boolean destructible = false;
 	
+	public InteractiveTile() {
+		
+	}
 	
 	public InteractiveTile(GamePanel gp, int col, int row) {
 		super(gp);

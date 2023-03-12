@@ -12,7 +12,7 @@ public class IT_MetalPlate extends InteractiveTile {
 		this.worldX = gp.tileSize * col;
 		this.worldY = gp.tileSize * row;
 	
-		down1 = setup("/tiles_interactive/trunk", gp.tileSize, gp.tileSize);
+		down1 = setup("/tiles_interactive/metalplate", gp.tileSize, gp.tileSize);
 		destructible = false;
 	
 		solidArea.x = 0;

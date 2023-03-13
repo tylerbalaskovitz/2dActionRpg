@@ -150,10 +150,7 @@ public class SaveLoad {
 						gp.obj[mapNum][i].worldX = ds.mapObjectWorldX[mapNum][i];
 						gp.obj[mapNum][i].worldY = ds.mapObjectWorldY[mapNum][i];
 						if (ds.mapObjectLootNames[mapNum][i] != null ) {
-							Entity loot = null;
-							gp.obj[mapNum][i].setLoot(loot);
-							loot = gp.gameItems.getGameItem(ds.mapObjectLootNames[mapNum][i]);
-							gp.obj[mapNum][i].setLoot(loot);
+							gp.obj[mapNum][i].setLoot(gp.gameItems.getGameItem(ds.mapObjectLootNames[mapNum][i]));
 							if (gp.obj[mapNum][i].loot == null) {
 								System.out.println("The loot is null");
 							}

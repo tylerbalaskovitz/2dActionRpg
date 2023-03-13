@@ -83,7 +83,7 @@ GamePanel gp;
 			//Check if it starts chasing or not
 			checkStartChasingOrNot(gp.player, 5, 100);
 			
-			getRandomDirection();
+			getRandomDirection(120);
 		}
 		
 		if (attacking == false) {

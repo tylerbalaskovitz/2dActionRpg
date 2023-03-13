@@ -10,7 +10,7 @@ public class OBJ_Chest extends Entity {
 	boolean opened = false;
 	
 	//have both the variables at the same time and during the save/load class, have the loot return to the same
-	public OBJ_Chest(GamePanel gp, Entity loot) {
+	public OBJ_Chest(GamePanel gp) {
 		
 		super(gp);
 		this.gp = gp;
@@ -28,8 +28,11 @@ public class OBJ_Chest extends Entity {
 		solidArea.height = 32;
 		solidAreaDefaultX = solidArea.x;
 		solidAreaDefaultY = solidArea.y;
+	}
+	
+	public void setLoot(Entity loot) {
 		this.loot = loot;
-		
+		setDialogue();
 	}
 	
 	

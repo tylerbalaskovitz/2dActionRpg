@@ -9,31 +9,30 @@ import object.OBJ_Heart;
 import object.OBJ_ManaCrystal;
 import object.OBJ_Rock;
 
-public class MON_Red_Slime extends Entity {
+public class MON_Bat extends Entity {
 
-	GamePanel gp;
+GamePanel gp;
 	
-	public MON_Red_Slime(GamePanel gp) {
+	public MON_Bat(GamePanel gp) {
 		super(gp);
 		
 		this.gp = gp;
 		
 		type = type_monster;
-		name = "Red Slime";
-		defaultSpeed = 2;
+		name = "Bat";
+		defaultSpeed = 4;
 		speed = defaultSpeed;;
-		maxLife = 8;
+		maxLife = 7;
 		life = maxLife;
 		attack = 7;
 		defense = 0;
-		exp = 2;
-		projectile = new OBJ_Rock(gp);
+		exp = 7;
 		//setting a solid area of the slime. Since it's smaller it needs to be customized.
 		
 		solidArea.x = 3;
 		solidArea.y = 18;
 		solidArea.width = 42;
-		solidArea.height = 30;
+		solidArea.height = 21;
 		solidAreaDefaultX = solidArea.x;
 		solidAreaDefaultY = solidArea.y;
 		
@@ -42,14 +41,14 @@ public class MON_Red_Slime extends Entity {
 	
 	public void getImage() {
 		
-		up1 = setup("/monster/redslime_down_1", gp.tileSize, gp.tileSize);
-		up2 = setup("/monster/redslime_down_2", gp.tileSize, gp.tileSize);
-		down1 = setup("/monster/redslime_down_1", gp.tileSize, gp.tileSize);
-		down2 = setup("/monster/redslime_down_2", gp.tileSize, gp.tileSize);
-		left1 = setup("/monster/redslime_down_1", gp.tileSize, gp.tileSize);
-		left2 = setup("/monster/redslime_down_2", gp.tileSize, gp.tileSize);
-		right1 = setup("/monster/redslime_down_1", gp.tileSize, gp.tileSize);
-		right2 = setup("/monster/redslime_down_2", gp.tileSize, gp.tileSize);
+		up1 = setup("/monster/bat_down_1", gp.tileSize, gp.tileSize);
+		up2 = setup("/monster/bat_down_2", gp.tileSize, gp.tileSize);
+		down1 = setup("/monster/bat_down_1", gp.tileSize, gp.tileSize);
+		down2 = setup("/monster/bat_down_2", gp.tileSize, gp.tileSize);
+		left1 = setup("/monster/bat_down_1", gp.tileSize, gp.tileSize);
+		left2 = setup("/monster/bat_down_2", gp.tileSize, gp.tileSize);
+		right1 = setup("/monster/bat_down_1", gp.tileSize, gp.tileSize);
+		right2 = setup("/monster/bat_down_2", gp.tileSize, gp.tileSize);
 	}
 	
 	
@@ -57,20 +56,19 @@ public class MON_Red_Slime extends Entity {
 	
 		if (onPath == true) {
 			//Check if it stops chasing the player, by its distance and the chance it will continue to chase.
-			checkStopChasingOrNot(gp.player, 15, 100);
+			//checkStopChasingOrNot(gp.player, 15, 100);
 			
 			//Searches for the direction to go via A* by getting the player's Column value and Row value.
-			searchPath(getGoalCol(gp.player), getGoalRow(gp.player));
+			//searchPath(getGoalCol(gp.player), getGoalRow(gp.player));
 
 			//checks whether or not it shoots a projectile
-			checkShootOrNot(200, 30);
 			
 		} else {
 			
 			//Check if it starts chasing or not
-			checkStartChasingOrNot(gp.player, 5, 100);
+			//checkStartChasingOrNot(gp.player, 5, 100);
 			
-			getRandomDirection(120);
+			getRandomDirection(10);
 		}
 	}
 	
@@ -80,7 +78,7 @@ public class MON_Red_Slime extends Entity {
 		
 		actionLockCounter = 0;
 		//direction = gp.player.direction;
-		onPath = true;
+		//onPath = true;
 	}
 	
 	public void checkDrop() {

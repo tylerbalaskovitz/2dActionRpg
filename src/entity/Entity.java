@@ -166,6 +166,8 @@ public class Entity {
 	}
 	}
 	
+	public void setDialogue() {}
+	
 	public void startDialogue(Entity entity, int setNum) {
 	
 		gp.gameState = gp.dialogueState;
@@ -232,6 +234,7 @@ public class Entity {
 	
 	public void setLoot(Entity loot) {
 		this.loot = loot;
+		setDialogue();
 	}
 	
 	public boolean isOpened() {
@@ -262,11 +265,11 @@ public class Entity {
 		}
 	}
 	
-	public void getRandomDirection() {
+	public void getRandomDirection(int interval) {
 		//Get a random direciton if its not on path
 		actionLockCounter++;
 		
-		if(actionLockCounter == 120) {
+		if(actionLockCounter == interval) {
 		
 		Random random = new Random();
 		int i = random.nextInt(100) + 1; //pick a number from 1 to 100;

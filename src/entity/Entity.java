@@ -48,8 +48,8 @@ public class Entity {
 	public boolean transparent = false;
 	public boolean offBalance = false;
 	public Entity loot;
-
 	public boolean opened = false;
+	public boolean inRage = false;
 
 	//Counters for the sprite, how long someone is invisble
 	public int spriteCounter = 0;
@@ -489,12 +489,21 @@ public class Entity {
 		
 		if (actionLockCounter > interval) {
 			if (getXDistance(gp.player) > getYDistance(gp.player)) {
-				
-			} else if (getXDistance(gp.player) < getYDistance(gp.player)) {
-				
+				if (gp.player.getCenterX() < getCenterX()) {
+					direction = "left";
+				}  else {
+					direction = "right";
+				}
 			}
+			if (getXDistance(gp.player) < getYDistance(gp.player)) {
+				if (gp.player.getCenterY() < getCenterY()) {
+					direction = "up";
+				}else {
+					direction = "down";
+				}
+			} 
+			actionLockCounter = 0;
 		}
-		
 	}
 	
 	public String getOppositeDirection (String direction) {

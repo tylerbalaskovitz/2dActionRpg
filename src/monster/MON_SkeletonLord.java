@@ -17,7 +17,7 @@ public static final String monName = "Skeleton Lord";
 		super(gp);
 		
 		this.gp = gp;
-		
+		boss = true;
 		type = type_monster;
 		name = "Skeleton Lord";
 		defaultSpeed = 1;

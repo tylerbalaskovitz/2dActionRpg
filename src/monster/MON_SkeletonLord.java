@@ -28,6 +28,7 @@ public static final String monName = "Skeleton Lord";
 		defense = 2;
 		exp = 50;
 		knockBackPower = 5;
+		sleep = true;
 		//setting a solid area of the slime. Since it's smaller it needs to be customized.
 		
 		int size = gp.tileSize*5;
@@ -95,6 +96,14 @@ public static final String monName = "Skeleton Lord";
 					attackRight1 = setup("/monster/skeletonlord_phase2_attack_right_1", gp.tileSize*i*2, gp.tileSize*i);
 					attackRight2 = setup("/monster/skeletonlord_phase2_attack_right_2", gp.tileSize*i*2, gp.tileSize*i);
 				}
+	}
+	
+	public void setDialogue() {
+		dialogues[0][0] = "No one can steal my treausre!";
+		dialogues[0][1] = "You will die here! You little prick!";
+		dialogues[0][2] = "Unless.....";
+		dialogues[0][3] = "You want to have fun playing with my bones.";
+		
 	}
 	
 	public void setAction() {

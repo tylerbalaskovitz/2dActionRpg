@@ -77,7 +77,8 @@ public class EventHandler {
 		else if (hit(0, 12, 9, "any") == true) { teleport(2, 9, 41, gp.dungeon);} // to the dungeon
 		else if (hit(2, 9, 41, "any") == true) { teleport(0, 12, 9, gp.outside);} //to world map
 		else if (hit(2, 8, 7, "any") == true) { teleport(3, 26, 41, gp.dungeon);} // to the second floor of the basement
-		else if (hit(3, 26, 41, "any") == true) { teleport(2, 8, 7, gp.dungeon);} // to the first floor of the basement. 
+		else if (hit(3, 26, 41, "any") == true) { teleport(2, 8, 7, gp.dungeon);} // to the first floor of the basement.
+		else if (hit(3, 26, 41, "any") == true) { skeletonLord();}
 		}
 		
 	}
@@ -152,6 +153,15 @@ public class EventHandler {
 			gp.player.attackCanceled = true;
 			entity.speak();
 		}
+	}
+	
+	public void skeletonLord() {
+		
+		if (gp.bossBattleOn == false) {
+			gp.gameState = gp.cutSceneState;
+			gp.csManager.sceneNum = gp.csManager.skeletonLord;
+		}
+		
 	}
 	
 	

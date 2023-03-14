@@ -72,6 +72,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public GameItems gameItems = new GameItems(this);
 	DataStorage dataStorage = new DataStorage();
 	SaveLoad saveLoad = new SaveLoad(this);
+	public CutsceneManager csManager = new CutsceneManager(this);
 	Thread gameThread;
 	
 	//Entity and Object
@@ -101,6 +102,10 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int tradeState = 8;
 	public final int sleepState = 9;
 	public final int mapState = 10;
+	public final int cutSceneState = 11;
+	
+	//Others
+	public boolean bossBattleOn = false;
 	
 	//area state variables
 	public int currentArea;
@@ -364,6 +369,9 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		//drawing the minimap so it doesn't hide the ui
 		map.drawMiniMap(g2);
+		
+		//Drawing cutscenes
+		csManager.draw(g2);
 		
 		
 		//UI since it comes at the top of the layers

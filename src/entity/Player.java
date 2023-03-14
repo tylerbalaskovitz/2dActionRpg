@@ -85,10 +85,6 @@ public class Player extends Entity{
 		gp.currentMap = 0;
 		worldX = gp.tileSize * 23;
 		worldY = gp.tileSize * 21;
-		
-		
-		
-		
 		direction = "down";
 	}
 	

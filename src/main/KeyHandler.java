@@ -9,6 +9,7 @@ public class KeyHandler implements KeyListener{
 	
 	//Variables used for Debugging
 	boolean showDebugText = false; 
+	public boolean godModeOn = false;
 	
 	public KeyHandler(GamePanel gp) {
 		this.gp = gp;
@@ -185,10 +186,17 @@ public class KeyHandler implements KeyListener{
 		if (code == KeyEvent.VK_T) {
 			if (showDebugText == false) {
 				showDebugText = true;
+				if (godModeOn == false) {
+					godModeOn = true;
+				}
 			}
 			else if (showDebugText == true) {
 				showDebugText = false;
+				if (godModeOn == true) {
+					godModeOn = false;
+				}
 			}
+			
 			
 		}
 		if(code == KeyEvent.VK_R) {

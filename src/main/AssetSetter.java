@@ -6,6 +6,7 @@ import entity.NPC_OldMan;
 import monster.MON_Bat;
 import monster.MON_GreenSlime;
 import monster.MON_Orc;
+import monster.MON_SkeletonLord;
 import object.OBJ_Axe;
 import object.OBJ_Chest;
 import object.OBJ_Coin_Bronze;
@@ -135,10 +136,12 @@ public class AssetSetter {
 		gp.obj[mapNum][i].worldY = gp.tileSize*15;
 		i++;
 		
+		
 		gp.obj[mapNum][i] = new OBJ_Door_Iron(gp);
 		gp.obj[mapNum][i].worldX = gp.tileSize*18;
-		gp.obj[mapNum][i].worldY = gp.tileSize*23;
+		gp.obj[mapNum][i].worldY = gp.tileSize*24;
 		i++;
+		
 		
 		
 	}
@@ -147,8 +150,8 @@ public class AssetSetter {
 		int mapNum = 0;
 		int i = 0;
 		gp.npc[mapNum][i] = new NPC_OldMan(gp);
-		gp.npc[mapNum][i].worldX = gp.tileSize * 17;
-		gp.npc[mapNum][i].worldY = gp.tileSize * 21;
+		gp.npc[mapNum][i].worldX = gp.tileSize * 23;
+		gp.npc[mapNum][i].worldY = gp.tileSize * 23;
 		i++;
 		//i++ is used for everything within the first map. 
 
@@ -240,6 +243,13 @@ public class AssetSetter {
 		gp.monster[mapNum][i] = new MON_Bat(gp);
 		gp.monster[mapNum][i].worldX = gp.tileSize*10;
 		gp.monster[mapNum][i].worldY = gp.tileSize*11;
+		i++;
+		
+		mapNum = 3;
+		i = 0;
+		gp.monster[mapNum][i] = new MON_SkeletonLord(gp);
+		gp.monster[mapNum][i].worldX = gp.tileSize*23;
+		gp.monster[mapNum][i].worldY = gp.tileSize*16;
 		i++;
 	}
 	

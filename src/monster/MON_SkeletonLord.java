@@ -33,14 +33,14 @@ public static final String monName = "Skeleton Lord";
 		int size = gp.tileSize*5;
 		solidArea.x = 4;
 		solidArea.y = 4;
-		solidArea.width = 40;
-		solidArea.height = 44;
+		solidArea.width = size - 48*2;
+		solidArea.height = size - 48;
 		solidAreaDefaultX = solidArea.x;
 		solidAreaDefaultY = solidArea.y;
-		attackArea.width = 48;
-		attackArea.height = 48;
-		motion1_duration = 40;
-		motion2_duration = 85;
+		attackArea.width = 170;
+		attackArea.height = 170;
+		motion1_duration = 25;
+		motion2_duration = 50;
 		
 		getImage();
 		getAttackImage();
@@ -75,23 +75,17 @@ public static final String monName = "Skeleton Lord";
 	public void setAction() {
 	
 		if (onPath == true) {
-			//Check if it stops chasing the player, by its distance and the chance it will continue to chase.
-			checkStopChasingOrNot(gp.player, 15, 100);
-			
-			//Searches for the direction to go via A* by getting the player's Column value and Row value.
-			searchPath(getGoalCol(gp.player), getGoalRow(gp.player));
-
 			
 		} else {
 			
 			//Check if it starts chasing or not
-			checkStartChasingOrNot(gp.player, 5, 100);
+			
 			
 			getRandomDirection(120);
 		}
 		
 		if (attacking == false) {
-			checkAttackOrNot(30, gp.tileSize*4, gp.tileSize);
+			checkAttackOrNot(60, gp.tileSize*10, gp.tileSize*5);
 		}
 	}
 	

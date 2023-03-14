@@ -81,11 +81,18 @@ public class Player extends Entity{
 	}
 	
 	public void setDefaultPosition() {
-		
+		/*
 		gp.currentMap = 0;
 		worldX = gp.tileSize * 23;
 		worldY = gp.tileSize * 21;
 		direction = "down";
+		*/
+		
+		gp.currentMap = 3;
+		worldX = gp.tileSize * 25;
+		worldY = gp.tileSize * 31;
+		direction = "down";
+		
 	}
 	
 	public void setDialogue() {
@@ -380,11 +387,14 @@ public class Player extends Entity{
 		if(mana > maxMana) {
 			mana = maxMana;
 		}
-		if (life <= 0) {
-			gp.gameState = gp.gameOverState;
-			gp.ui.commandNum = -1;
-			gp.playSE(12);
+		if (keyH.godModeOn == false) {
+			if (life <= 0) {
+				gp.gameState = gp.gameOverState;
+				gp.ui.commandNum = -1;
+				gp.playSE(12);
+			}
 		}
+
 	}
 	
 	

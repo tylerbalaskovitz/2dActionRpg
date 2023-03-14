@@ -198,13 +198,24 @@ public class Entity {
 		}
 	}
 	
+	public int getCenterX() {
+		int centerX = worldX + left1.getWidth()/2;
+		return centerX;
+	}
+	
+	public int getCenterY() {
+		int centerY = worldY + up1.getHeight()/2;
+		return centerY;
+		
+	}
+	
 	public int getXDistance(Entity target) {
-		int xDistance = Math.abs(worldX - target.worldX);
+		int xDistance = Math.abs(getCenterX() - target.getCenterX());
 		return xDistance;
 	}
 	
 	public int getYDistance(Entity target) {
-		int yDistance = Math.abs(worldY - target.worldY);
+		int yDistance = Math.abs(getCenterY() - target.getCenterY());
 		return yDistance;
 	}
 	public int getTileDistance(Entity target) {
@@ -269,7 +280,7 @@ public class Entity {
 		//Get a random direciton if its not on path
 		actionLockCounter++;
 		
-		if(actionLockCounter == interval) {
+		if(actionLockCounter > interval) {
 		
 		Random random = new Random();
 		int i = random.nextInt(100) + 1; //pick a number from 1 to 100;
@@ -293,19 +304,19 @@ public class Entity {
 		int xDist = getXDistance(gp.player);
 		int yDist = getYDistance(gp.player);
 		switch(direction) {
-		case "up": if (gp.player.worldY < worldY && yDist < straight && xDist < horizontal) {
+		case "up": if (gp.player.getCenterY() < getCenterY() && yDist < straight && xDist < horizontal) {
 			targetInRange = true;
 		}
 		break;
-		case "down": if (gp.player.worldY > worldY && yDist < straight && xDist < horizontal) {
+		case "down": if (gp.player.getCenterY() > getCenterY() && yDist < straight && xDist < horizontal) {
 			targetInRange = true;
 		}
 		break;
-		case "left": if (gp.player.worldX < worldX && xDist < straight && yDist < horizontal) {
+		case "left": if (gp.player.getCenterX() < getCenterX() && xDist < straight && yDist < horizontal) {
 			targetInRange = true;
 		}
 		break;
-		case "right": if (gp.player.worldY > worldY && yDist < straight && xDist < horizontal) {
+		case "right": if (gp.player.getCenterX() > getCenterX() && xDist < straight && yDist < horizontal) {
 			targetInRange = true;
 		}
 		break;
@@ -472,6 +483,20 @@ public class Entity {
 		}
 	}
 	
+	public void moveTowardPlayer(int interval) {
+		
+		actionLockCounter++;
+		
+		if (actionLockCounter > interval) {
+			if (getXDistance(gp.player) > getYDistance(gp.player)) {
+				
+			} else if (getXDistance(gp.player) < getYDistance(gp.player)) {
+				
+			}
+		}
+		
+	}
+	
 	public String getOppositeDirection (String direction) {
 		String oppositeDirection = "";
 		switch (direction) {
@@ -598,9 +623,11 @@ public class Entity {
 		int screenX = worldX - gp.player.worldX + gp.player.screenX;
 		int screenY = worldY - gp.player.worldY + gp.player.screenY;
 		
-		if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
+		
+		//these are the margins set for when to draw NPC's within the game and where to draw them
+		if (worldX + gp.tileSize*5 > gp.player.worldX - gp.player.screenX &&
 				worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
-				worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
+				worldY + gp.tileSize*5 > gp.player.worldY - gp.player.screenY &&
 				worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
 			
 			int tempScreenX = screenX;
@@ -613,7 +640,7 @@ public class Entity {
 					if (spriteNum == 2 ) {image=up2;}
 				}
 				if (attacking == true) {
-					tempScreenY = screenY - gp.tileSize;
+					tempScreenY = screenY - up1.getHeight();
 					if (spriteNum == 1 ) {image=attackUp1;}
 					if (spriteNum == 2 ) {image=attackUp2;}
 				}
@@ -634,7 +661,7 @@ public class Entity {
 					if (spriteNum ==2) {image=left2;}
 				}
 				if (attacking == true) {
-					tempScreenX = screenX - gp.tileSize;
+					tempScreenX = screenX - left1.getHeight();
 					if (spriteNum ==1) {image=attackLeft1;}
 					if (spriteNum ==2) {image=attackLeft2;}
 				}

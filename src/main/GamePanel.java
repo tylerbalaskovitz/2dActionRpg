@@ -52,7 +52,7 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	//FPS
 	
-	int FPS = 60;
+	final int FPS = 60;
 	
 	
 	//System
@@ -384,15 +384,10 @@ public class GamePanel extends JPanel implements Runnable{
 			
 			g2.drawString("WorldX" + player.worldX, x, y); y+=lineHeight;
 			g2.drawString("WorldY" + player.worldY, x, y); y+=lineHeight;
-			
 			g2.drawString("Col"+ (player.worldX + player.solidArea.x)/tileSize,x, y);y+=lineHeight;
 			g2.drawString("Row"+ (player.worldY + player.solidArea.y)/tileSize,x, y);y+=lineHeight;
-			
-			
-			g2.setColor(Color.white);
-			g2.drawString("Draw Time: " + passed, x, y);
-			
-			System.out.println("Draw Time: " + passed);
+			g2.drawString("Draw Time: " + passed, x, y); y+=lineHeight;
+			g2.drawString("God Mode" + keyH.godModeOn, x, y);
 		}
 		
 		if (gameState == titleState) {

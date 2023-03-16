@@ -40,9 +40,18 @@ public class CutsceneManager {
 					gp.obj[gp.currentMap][i].worldY = gp.tileSize*28;
 					gp.obj[gp.currentMap][i].temp = true;
 					gp.playSE(21);
+					break;
 				}
 			}
 			
+			gp.player.drawing = false;
+			
+			scenePhase++;
+			
+		}
+		
+		if (scenePhase == 1) {
+			gp.player.worldY -= 2;
 		}
 	}
 	

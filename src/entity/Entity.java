@@ -52,6 +52,7 @@ public class Entity {
 	public boolean opened = false;
 	public boolean inRage = false;
 	public boolean sleep = false;
+	public boolean drawing = true;
 
 	//Counters for the sprite, how long someone is invisble
 	public int spriteCounter = 0;

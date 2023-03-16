@@ -2,6 +2,7 @@ package monster;
 
 import java.util.Random;
 
+import data.Progress;
 import entity.Entity;
 import main.GamePanel;
 import object.OBJ_Coin_Bronze;
@@ -142,6 +143,7 @@ public static final String monName = "Skeleton Lord";
 	public void checkDrop() {
 		
 		gp.bossBattleOn = false;
+		Progress.skeletonLordDefeated = true;
 		
 		//restore the previouis music
 		gp.stopMusic();

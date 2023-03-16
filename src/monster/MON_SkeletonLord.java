@@ -5,6 +5,7 @@ import java.util.Random;
 import entity.Entity;
 import main.GamePanel;
 import object.OBJ_Coin_Bronze;
+import object.OBJ_Door_Iron;
 import object.OBJ_Heart;
 import object.OBJ_ManaCrystal;
 
@@ -45,6 +46,7 @@ public static final String monName = "Skeleton Lord";
 		
 		getImage();
 		getAttackImage();
+		setDialogue();
 	}
 	
 	public void getImage() {
@@ -138,6 +140,23 @@ public static final String monName = "Skeleton Lord";
 	}
 	
 	public void checkDrop() {
+		
+		gp.bossBattleOn = false;
+		
+		//restore the previouis music
+		gp.stopMusic();
+		gp.playMusic(19);
+		
+		//seraching for iron doors in the multidimensional array and deleting them.
+		for (int i = 0; i < gp.obj[1].length; i++) {
+			if (gp.obj[gp.currentMap][i] != null && gp.obj[gp.currentMap][i].name.equals(new OBJ_Door_Iron(gp).name)) {
+				gp.playSE(21);
+				
+				gp.obj[gp.currentMap][i] = null;
+			}
+			
+			
+		}
 		
 		//Casting a D100 die
 		int i = new Random().nextInt(100)+1;

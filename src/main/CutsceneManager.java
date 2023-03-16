@@ -2,6 +2,8 @@ package main;
 
 import java.awt.Graphics2D;
 
+import object.OBJ_Door_Iron;
+
 public class CutsceneManager {
 
 	GamePanel gp;
@@ -19,6 +21,29 @@ public class CutsceneManager {
 	
 	public void draw (Graphics2D g2	) {
 		this.g2 = g2;
+		
+		switch(sceneNum) {
+		case skeletonLord: scene_skeletonLord(); break;
+		
+		}
+	}
+	
+	public void scene_skeletonLord() {
+		if (scenePhase == 0) {
+			
+			gp.bossBattleOn = true;
+			
+			for (int i = 0; i < gp.obj[1].length; i ++) {
+				if (gp.obj[gp.currentMap][i] == null) {
+					gp.obj[gp.currentMap][i] = new OBJ_Door_Iron(gp);
+					gp.obj[gp.currentMap][i].worldX = gp.tileSize*25;
+					gp.obj[gp.currentMap][i].worldY = gp.tileSize*28;
+					gp.obj[gp.currentMap][i].temp = true;
+					gp.playSE(21);
+				}
+			}
+			
+		}
 	}
 	
 }

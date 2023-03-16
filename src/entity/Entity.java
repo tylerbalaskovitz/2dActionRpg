@@ -28,6 +28,7 @@ public class Entity {
 	public String dialogues[][] = new String[20][20];
 	public Entity attacker;
 	public Entity linkedEntity;
+	public boolean temp = false;
 	
 	//State
 	public int worldX, worldY;

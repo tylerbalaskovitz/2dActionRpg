@@ -16,6 +16,10 @@ public class CutsceneManager {
 	//Scene number
 	public final int NA = 0;
 	public final int skeletonLord = 1;
+	public final int ending = 2;
+	int counter = 0;
+	float alpha = 0f;
+	int y;
 	
 	public CutsceneManager(GamePanel gp) {
 		this.gp = gp;
@@ -26,6 +30,7 @@ public class CutsceneManager {
 		
 		switch(sceneNum) {
 		case skeletonLord: scene_skeletonLord(); break;
+		case ending: scene_ending(); break;
 		
 		}
 	}
@@ -118,6 +123,10 @@ public class CutsceneManager {
 			gp.stopMusic();
 			gp.playMusic(22);
 		}
+	}
+	
+	public void scene_ending() {
+		
 	}
 	
 }

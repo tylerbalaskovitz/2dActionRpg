@@ -9,6 +9,7 @@ import monster.MON_GreenSlime;
 import monster.MON_Orc;
 import monster.MON_SkeletonLord;
 import object.OBJ_Axe;
+import object.OBJ_BlueHeart;
 import object.OBJ_Chest;
 import object.OBJ_Coin_Bronze;
 import object.OBJ_Door;
@@ -149,6 +150,11 @@ public class AssetSetter {
 		gp.obj[mapNum][i] = new OBJ_Door_Iron(gp);
 		gp.obj[mapNum][i].worldX = gp.tileSize*25;
 		gp.obj[mapNum][i].worldY = gp.tileSize*15;
+		i++;
+		
+		gp.obj[mapNum][i] = new OBJ_BlueHeart(gp);
+		gp.obj[mapNum][i].worldX = gp.tileSize*25;
+		gp.obj[mapNum][i].worldY = gp.tileSize*8;
 		i++;
 		
 		

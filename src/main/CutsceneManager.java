@@ -23,9 +23,17 @@ public class CutsceneManager {
 	int counter = 0;
 	float alpha = 0f;
 	int y;
+	String endCredits;
 	
 	public CutsceneManager(GamePanel gp) {
 		this.gp = gp;
+		
+		endCredits = "Programming/Music/Art\n"
+		+"Tyler Balaskovitz"
+		+"\n\n\n\n\n\n\n"
+		+"Special Thanks\n"
+		+"Evelyn Balaskovitz\n"
+		+"Thank you for playing!";
 	}
 	
 	public void draw (Graphics2D g2	) {
@@ -186,8 +194,47 @@ public class CutsceneManager {
 			drawString(alpha, 38f, 200, text, 70);
 			
 			if (counterReached(600) == true) {
+				gp.playMusic(0);
 				scenePhase++;
 			}
+			
+		}
+		
+		if (scenePhase == 6) {
+			// having the game draw the game title so it looks like the game has come full circle and is now complete
+
+			y = gp.screenHeight/2;
+			
+			drawBlackBackground(1f);
+			
+			drawString(1f, 120f, y, "Defender Rush", 40);
+			
+			if (counterReached(480) == true) {
+				gp.playMusic(0);
+				scenePhase++;
+			}
+		
+		}
+		
+		if (scenePhase == 7) {
+			
+			drawBlackBackground(1f);
+			
+			//displaying the credits for the game and begin to scroll up
+			
+			drawString (1f, 38f, gp.screenHeight/2, endCredits, 40);
+			
+			if (counterReached(480) == true) {
+				scenePhase++;
+			}
+			
+		}
+		if (scenePhase == 8) {
+			//TExt begins to scroll up
+			drawBlackBackground(1f);
+			y--;
+			drawString(1f, 38f, y, endCredits, 40);
+			
 			
 		}
 		

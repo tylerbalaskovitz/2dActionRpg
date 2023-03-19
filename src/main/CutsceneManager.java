@@ -168,6 +168,28 @@ public class CutsceneManager {
 			}
 			
 		}
+		if (scenePhase == 5) {
+			//displaying a message that closes the rest of the game out
+			// a black background is used
+			drawBlackBackground(1f);
+			alpha += 0.005f;
+			if (alpha > 1f) {
+				alpha = 1f;
+			}
+			
+			//Typing the narrative message and then going from there.
+			String text = "After a fierce and boney battle with the Skeleton Lord, \n"
+					+ "the Texas-shaped hero found the legendary treausre. \n"
+					+ "Although it was mostly forgotten, I'm sure someone \n"
+					+ "vaguely remembers its midrange value and its near timeless.\n" +
+					"story";
+			drawString(alpha, 38f, 200, text, 70);
+			
+			if (counterReached(600) == true) {
+				scenePhase++;
+			}
+			
+		}
 		
 	}
 	public boolean counterReached (int target) {
@@ -187,6 +209,25 @@ public class CutsceneManager {
 		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
 		g2.setColor(Color.black);
 		g2.fillRect(0,0, gp.screenWidth, gp.screenHeight);
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+		
+	}
+	
+	public void drawString(float alpha, float fontSize, int y, String text, int lineHeight) {
+		
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+		g2.setColor(Color.white);
+		g2.setFont(g2.getFont().deriveFont(fontSize));
+		
+		// a for loop that splits the text at the line break symbols so there can be texts with multiple lines 
+		
+		
+		for (String line: text.split("\n")) {
+			int x = gp.ui.getXForCenteredText(line);
+			g2.drawString(line, x, y);
+			y += lineHeight;
+			
+		}
 		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 		
 	}

@@ -1,9 +1,12 @@
 package main;
 
+import java.awt.AlphaComposite;
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 import entity.PlayerDummy;
 import monster.MON_SkeletonLord;
+import object.OBJ_BlueHeart;
 import object.OBJ_Door_Iron;
 
 public class CutsceneManager {
@@ -126,6 +129,65 @@ public class CutsceneManager {
 	}
 	
 	public void scene_ending() {
+		if (scenePhase == 0 ) {
+			gp.stopMusic();
+			//used to instaniate and set the dialogues for the final cutscene
+			gp.ui.npc = new OBJ_BlueHeart(gp);
+			scenePhase++;
+		}
+		if (scenePhase == 1) {
+			gp.ui.drawDialogueScreen();
+			
+		}
+		
+		if (scenePhase == 2) {
+			
+			//Play the fanfare sound effect
+			gp.playSE(4);
+			scenePhase++;
+			
+		}
+		if (scenePhase == 3) {
+			//makes the screen darker subtely and then transition to a final message
+			if (counterReached(300) == true) {
+				scenePhase++;
+			}
+			
+		}
+		if (scenePhase == 4) {
+			//Making the screen get darker
+			alpha += 0.005f;
+			if (alpha > 1f) {
+				alpha = 1f;
+			}
+			drawBlackBackground(alpha);
+			
+			if (alpha == 1f) {
+				alpha = 0;
+				scenePhase++;
+			}
+			
+		}
+		
+	}
+	public boolean counterReached (int target) {
+		boolean counterReached = false;
+		
+		counter++;
+		if (counter >target) {
+			counterReached = true;
+			counter = 0;
+		}
+		
+		return counterReached;
+	}
+	
+	public void drawBlackBackground(float alpha) {
+		
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+		g2.setColor(Color.black);
+		g2.fillRect(0,0, gp.screenWidth, gp.screenHeight);
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 		
 	}
 	

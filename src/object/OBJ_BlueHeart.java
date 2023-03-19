@@ -29,6 +29,7 @@ public class OBJ_BlueHeart extends Entity{
 	public boolean use(Entity entity) {
 		gp.gameState = gp.cutSceneState;
 		gp.csManager.sceneNum = gp.csManager.ending;
+		
 		return true;
 	}
 	

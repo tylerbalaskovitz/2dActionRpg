@@ -8,6 +8,7 @@ public class PlayerDummy extends Entity{
 	
 	public PlayerDummy(GamePanel gp) {
 		super(gp);
+		name = npcName;
 		getPlayerImage();
 	}
 	

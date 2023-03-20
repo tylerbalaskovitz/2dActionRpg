@@ -154,7 +154,7 @@ public class AssetSetter {
 		
 		gp.obj[mapNum][i] = new OBJ_BlueHeart(gp);
 		gp.obj[mapNum][i].worldX = gp.tileSize*25;
-		gp.obj[mapNum][i].worldY = gp.tileSize*8;
+		gp.obj[mapNum][i].worldY = gp.tileSize*9;
 		i++;
 		
 		
@@ -189,6 +189,11 @@ public class AssetSetter {
 		gp.npc[mapNum][i] = new NPC_BigRock(gp);
 		gp.npc[mapNum][i].worldX = gp.tileSize * 23;
 		gp.npc[mapNum][i].worldY = gp.tileSize * 14;
+		i++;
+		
+		gp.npc[mapNum][i] = new NPC_BigRock(gp);
+		gp.npc[mapNum][i].worldX = gp.tileSize * 19;
+		gp.npc[mapNum][i].worldY = gp.tileSize * 26;
 		i++;
 	}
 	

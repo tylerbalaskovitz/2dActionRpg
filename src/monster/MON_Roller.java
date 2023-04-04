@@ -76,8 +76,8 @@ GamePanel gp;
 	public void damageReaction() {
 		
 		actionLockCounter = 0;
-		//direction = gp.player.direction;
-		//onPath = true;
+		direction = gp.player.direction;
+		onPath = true;
 	}
 	
 	public void checkDrop() {
